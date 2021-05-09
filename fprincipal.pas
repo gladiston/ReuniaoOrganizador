@@ -63,6 +63,7 @@ type
     actParaMidiaAnterior: TAction;
     actParaMidiaPosterior: TAction;
     actMostrarListaOuNao: TAction;
+    Action1: TAction;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -106,6 +107,7 @@ type
     procedure PaginasMouseEnter(Sender: TObject);
     procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure FiguraDblClick(Sender: TObject);
   private
     { Private declarations }
     FWebBrowserComplete: Boolean;
@@ -156,6 +158,7 @@ type
     procedure Adequar_Figura;
     procedure Adequar_Video;
     procedure Lista_ArquivosAutoWidth;
+    procedure SendTrayMessage(ACaption, AText:String);
   end;
 
 const
@@ -522,12 +525,8 @@ begin
         ' foi copiado para clipboard, agora dê ctrl+v ' +
         'na jenela de seleção de arquivo.';
       StatusMsg := sMsg;
-      TrayIcon1.BalloonTitle := ExtractFileName(sArquivo);
-      TrayIcon1.BalloonHint := sMsg;
-      TrayIcon1.BalloonFlags := bfInfo;
-      TrayIcon1.Visible := true;
-      TrayIcon1.Animate := true;
-      TrayIcon1.ShowBalloonHint;
+      SendTrayMessage(ExtractFileName(sArquivo), sMsg);
+
       actCopiarLocalizacaoParaClipboard.Tag := 1;
     finally
 
@@ -814,6 +813,23 @@ begin
       // Self.ClientHandle
       Application.ProcessMessages;
     until (not bIsVerScroll) and (Self.Height < Screen.Height);
+  end;
+end;
+
+procedure TfmPrincipal.FiguraDblClick(Sender: TObject);
+var
+  sTitulo:String;
+begin
+  Figura.Proportional:=(not Figura.Proportional);
+  if Figura.Tag<3 then
+  begin
+    // este aviso é mostrado no maximo 3 vezes
+    sTitulo:='A imagem está proporcional';
+    if not Figura.Proportional then
+      sTitulo:='A imagem foi esticada';
+    SendTrayMessage(sTitulo,
+      'Quando você dá um duplo clique na imagem ela será exibida proporcional ou esticada');
+    Figura.Tag:=Figura.Tag+1;
   end;
 end;
 
@@ -1296,7 +1312,7 @@ begin
     Left := MyIni.ReadInteger('Config', 'Left', Self.Left);
     Width := MyIni.ReadInteger('Config', 'Width', Self.Width);
     Height := MyIni.ReadInteger('Config', 'Height', Self.Height);
-
+    Figura.Proportional:=MyIni.ReadBool('Config','Figura.Proportional', Figura.Proportional);
     if FileExists(sListaAtual) then
     begin
       ListaAtual := sListaAtual;
@@ -1306,6 +1322,26 @@ begin
       end;
     end;
 
+  finally
+    if Assigned(MyIni) then
+      FreeAndNil(MyIni);
+  end;
+
+end;
+
+procedure TfmPrincipal.WriteConfig;
+var
+  MyIni: TIniFile;
+begin
+  try
+    MyIni := TIniFile.Create(FConfigFile);
+    MyIni.WriteString('Config', 'ListaAtual', FListaAtual);
+    MyIni.WriteString('Config', 'MediaAtual', FMediaAtual);
+    MyIni.WriteInteger('Config', 'Top', Self.Top);
+    MyIni.WriteInteger('Config', 'Left', Self.Left);
+    MyIni.WriteInteger('Config', 'Width', Self.Width);
+    MyIni.WriteInteger('Config', 'Height', Self.Height);
+    MyIni.WriteBool('Config','Figura.Proportional', Figura.Proportional);
   finally
     if Assigned(MyIni) then
       FreeAndNil(MyIni);
@@ -1397,23 +1433,20 @@ begin
 
 end;
 
-procedure TfmPrincipal.WriteConfig;
-var
-  MyIni: TIniFile;
+
+
+procedure TfmPrincipal.SendTrayMessage(ACaption, AText: String);
 begin
   try
-    MyIni := TIniFile.Create(FConfigFile);
-    MyIni.WriteString('Config', 'ListaAtual', FListaAtual);
-    MyIni.WriteString('Config', 'MediaAtual', FMediaAtual);
-    MyIni.WriteInteger('Config', 'Top', Self.Top);
-    MyIni.WriteInteger('Config', 'Left', Self.Left);
-    MyIni.WriteInteger('Config', 'Width', Self.Width);
-    MyIni.WriteInteger('Config', 'Height', Self.Height);
+    TrayIcon1.BalloonTitle := ACaption;
+    TrayIcon1.BalloonHint := AText;
+    TrayIcon1.BalloonFlags := bfInfo;
+    TrayIcon1.Visible := true;
+    TrayIcon1.Animate := true;
+    TrayIcon1.ShowBalloonHint;
   finally
-    if Assigned(MyIni) then
-      FreeAndNil(MyIni);
-  end;
 
+  end;
 end;
 
 procedure TfmPrincipal.SetConfigFile(const Value: String);

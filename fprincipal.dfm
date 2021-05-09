@@ -46,6 +46,7 @@ object fmPrincipal: TfmPrincipal
     TabOrder = 0
     ViewStyle = vsReport
     OnCustomDrawItem = Lista_ArquivosCustomDrawItem
+    OnDblClick = actCopiarLocalizacaoParaClipboardExecute
     OnDragDrop = Lista_ArquivosDragDrop
     OnDragOver = Lista_ArquivosDragOver
     OnMouseDown = Lista_ArquivosMouseDown
@@ -73,6 +74,7 @@ object fmPrincipal: TfmPrincipal
         Margins.Bottom = 0
         Align = alClient
         Stretch = True
+        OnDblClick = FiguraDblClick
         ExplicitLeft = 2
         ExplicitTop = -2
       end
@@ -921,6 +923,9 @@ object fmPrincipal: TfmPrincipal
         'Ctrl+H')
       ShortCut = 72
       OnExecute = actMostrarListaOuNaoExecute
+    end
+    object Action1: TAction
+      Caption = 'Action1'
     end
   end
   object Timer_TurnOFF_Status: TTimer
