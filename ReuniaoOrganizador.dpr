@@ -2,8 +2,7 @@ program ReuniaoOrganizador;
 
 uses
   Vcl.Forms,
-  uPrincipal in 'uPrincipal.pas' {fmPrincipal},
-  AcroPDFLib_TLB in 'AcroPDFLib_TLB.pas',
+  fprincipal in 'fprincipal.pas' {fmPrincipal},
   Vcl.Themes,
   Vcl.Styles;
 
@@ -12,8 +11,8 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.Title := 'Organizador de reunião';
   TStyleManager.TrySetStyle('Windows10 Dark');
+  Application.Title := 'Organizador de Reunião';
   Application.CreateForm(TfmPrincipal, fmPrincipal);
   Application.Run;
 end.

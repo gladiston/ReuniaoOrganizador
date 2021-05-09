@@ -1,507 +1,123 @@
 object fmPrincipal: TfmPrincipal
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'fmPrincipal'
-  ClientHeight = 620
-  ClientWidth = 795
+  ClientHeight = 539
+  ClientWidth = 808
   Color = clWindow
-  Constraints.MinHeight = 50
-  Constraints.MinWidth = 256
+  Constraints.MinHeight = 240
+  Constraints.MinWidth = 320
   Ctl3D = False
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -13
-  Font.Name = 'Segoe UI'
+  Font.Height = -11
+  Font.Name = 'Tahoma'
   Font.Style = []
-  Icon.Data = {
-    0000010001002020000001002000A81000001600000028000000200000004000
-    0000010020000000000000000000000000000000000000000000000000000000
-    000000000000000000020000005E000000BC000000E8000000EE000000EE0000
-    00EE000000EE000000EE000000EE000000EE000000EE000000EE000000EE0000
-    00EE000000EE000000EE000000EE000000EE000000EE000000EE000000EE0000
-    00EE000000EE000000E8000000BC0000005E0000000200000000000000000000
-    000000000012000000C2000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000C200000012000000000000
-    0002000000C2000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000C2000000020000
-    005E000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF0000005E0000
-    00BC000000FF000000FF000000FF000000C00000002800000010000000100000
-    0010000000100000001000000010000000100000001000000010000000100000
-    0010000000100000001000000010000000100000001000000010000000100000
-    00100000001000000028000000C0000000FF000000FF000000FF000000BC0000
-    00E8000000FF000000FF000000FF000000280000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000028000000FF000000FF000000FF000000E80000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000F6000000F6000000F6000000F60000
-    00F6000000F6000000F6000000F6000000F6000000F6000000F6000000F60000
-    00F6000000F6000000F6000000F6000000F6000000F6000000F6000000F60000
-    00F6000000F6000000F6000000F6000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000180000000800000008000000080000
-    0008000000080000000800000008000000080000000800000008000000080000
-    0008000000080000000800000008000000080000000800000008000000080000
-    0008000000080000000800000018000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    000000000000000000000000000000000050000000E8000000E8000000680000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    0000000000000000000000000000000000E6000000FF000000FF000000FF0000
-    00BC000000200000000000000000000000000000000000000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    0000000000000000000000000000000000FA000000FF000000FF000000FF0000
-    00FF000000F20000006800000000000000000000000000000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    0000000000000000000000000000000000FA000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000BC000000200000000000000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    0000000000000000000000000000000000FA000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000F20000005000000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    0000000000000000000000000000000000FA000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000E600000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    0000000000000000000000000000000000FA000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000E400000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    0000000000000000000000000000000000FA000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000EE0000004C00000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    0000000000000000000000000000000000FA000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000B40000001C0000000000000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    0000000000000000000000000000000000FA000000FF000000FF000000FF0000
-    00FF000000EE0000006000000000000000000000000000000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    0000000000000000000000000000000000E4000000FF000000FF000000FF0000
-    00B40000001C0000000000000000000000000000000000000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00EE000000FF000000FF000000FF000000100000000000000000000000000000
-    00000000000000000000000000000000004A000000E0000000E0000000600000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000010000000FF000000FF000000FF000000EE0000
-    00E8000000FF000000FF000000FF000000280000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000028000000FF000000FF000000FF000000E80000
-    00BC000000FF000000FF000000FF000000C00000002800000010000000100000
-    0010000000100000001000000010000000100000001000000010000000100000
-    0010000000100000001000000010000000100000001000000010000000100000
-    00100000001000000028000000C0000000FF000000FF000000FF000000BC0000
-    005E000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF0000005E0000
-    0002000000C2000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000C2000000020000
-    000000000012000000C2000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-    00FF000000FF000000FF000000FF000000FF000000C200000012000000000000
-    000000000000000000020000005E000000BC000000E8000000EE000000EE0000
-    00EE000000EE000000EE000000EE000000EE000000EE000000EE000000EE0000
-    00EE000000EE000000EE000000EE000000EE000000EE000000EE000000EE0000
-    00EE000000EE000000E8000000BC0000005E000000020000000000000000F000
-    000FC0000003800000018000000107FFFFE00FFFFFF00FFFFFF00FFFFFF00000
-    00000000000000000000000000000FFFFFF00FFFFFF00FF9FFF00FF07FF00FF0
-    3FF00FF00FF00FF007F00FF003F00FF003F00FF007F00FF00FF00FF03FF00FF0
-    7FF00FF9FFF00FFFFFF007FFFFE08000000180000001C0000003F000000F}
+  KeyPreview = True
   OldCreateOrder = False
-  TipMode = tipOpen
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnMouseDown = FormMouseDown
+  OnMouseMove = FormMouseMove
+  OnMouseWheelDown = FormMouseWheelDown
+  OnMouseWheelUp = FormMouseWheelUp
   OnResize = FormResize
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 17
-  object Splitter1: TSplitter
-    Left = 150
-    Top = 0
-    Height = 601
-    OnMoved = Splitter1Moved
-    ExplicitLeft = 408
-    ExplicitTop = 280
-    ExplicitHeight = 100
-  end
-  object painel_area_principal: TPanel
-    Left = 153
-    Top = 0
-    Width = 642
-    Height = 601
-    Align = alClient
-    BevelOuter = bvNone
-    Caption = 'painel_area_principal'
-    ShowCaption = False
-    TabOrder = 0
-    object Paginas: TPageControl
-      Left = 0
-      Top = 0
-      Width = 642
-      Height = 601
-      ActivePage = TabFigura
-      Align = alClient
-      DoubleBuffered = True
-      ParentDoubleBuffered = False
-      TabOrder = 0
-      object TabFigura: TTabSheet
-        Caption = 'Figura'
-        object Figura: TImage
-          Left = 0
-          Top = 0
-          Width = 634
-          Height = 569
-          Align = alClient
-          Proportional = True
-          Stretch = True
-          OnMouseDown = FiguraMouseDown
-          ExplicitLeft = -4
-          ExplicitTop = 3
-          ExplicitWidth = 169
-          ExplicitHeight = 249
-        end
-      end
-      object TabVideo: TTabSheet
-        Caption = 'TabVideo'
-        ImageIndex = 1
-        object WebBrowser1: TWebBrowser
-          Left = 0
-          Top = 0
-          Width = 634
-          Height = 569
-          TabStop = False
-          Align = alClient
-          TabOrder = 0
-          ExplicitWidth = 644
-          ExplicitHeight = 581
-          ControlData = {
-            4C00000087410000CF3A00000000000000000000000000000000000000000000
-            000000004C000000000000000000000001000000E0D057007335CF11AE690800
-            2B2E12620A000000000000004C0000000114020000000000C000000000000046
-            8000000000000000000000000000000000000000000000000000000000000000
-            00000000000000000100000000000000000000000000000000000000}
-        end
-      end
-      object TabPDF: TTabSheet
-        Caption = 'TabPDF'
-        ImageIndex = 2
-      end
-    end
-  end
-  object SV_Inicio: TSplitView
+  TextHeight = 13
+  object Lista_Arquivos: TListView
     Left = 0
     Top = 0
-    Width = 150
-    Height = 601
-    CloseStyle = svcCompact
-    CompactWidth = 20
-    Locked = True
-    OpenedWidth = 150
-    Placement = svpLeft
+    Width = 250
+    Height = 520
+    Align = alLeft
+    BevelInner = bvNone
+    BevelOuter = bvNone
+    BorderStyle = bsNone
+    Columns = <>
+    ColumnClick = False
+    FlatScrollBars = True
+    ReadOnly = True
+    RowSelect = True
+    PopupMenu = Menu_Arquivos
+    ShowColumnHeaders = False
+    TabOrder = 0
+    ViewStyle = vsReport
+    OnCustomDrawItem = Lista_ArquivosCustomDrawItem
+    OnDragDrop = Lista_ArquivosDragDrop
+    OnDragOver = Lista_ArquivosDragOver
+    OnMouseDown = Lista_ArquivosMouseDown
+    OnSelectItem = Lista_ArquivosSelectItem
+  end
+  object Paginas: TPageControl
+    Left = 250
+    Top = 0
+    Width = 558
+    Height = 520
+    ActivePage = TabFigura
+    Align = alClient
     TabOrder = 1
-    UseAnimation = False
-    OnClosed = SV_InicioClosed
-    OnOpened = SV_InicioOpened
-    object Lista: TListView
-      AlignWithMargins = True
-      Left = 3
-      Top = 28
-      Width = 144
-      Height = 570
-      Align = alClient
-      BevelInner = bvNone
-      BevelOuter = bvNone
-      BorderStyle = bsNone
-      Columns = <
-        item
-        end
-        item
-        end>
-      ColumnClick = False
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      FlatScrollBars = True
-      FullDrag = True
-      HideSelection = False
-      HotTrackStyles = [htHandPoint]
-      ReadOnly = True
-      RowSelect = True
-      ParentColor = True
-      ParentFont = False
-      PopupMenu = Menu_Arquivos
-      ShowColumnHeaders = False
-      TabOrder = 0
-      ViewStyle = vsReport
-      OnDblClick = ListaDblClick
-      OnDragDrop = ListaDragDrop
-      OnDragOver = ListaDragOver
-      OnSelectItem = ListaSelectItem
-    end
-    object Painel_Inicio: TPanel
-      Left = 0
-      Top = 0
-      Width = 150
-      Height = 25
-      Align = alTop
-      BevelOuter = bvNone
-      Color = clBlack
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentBackground = False
-      ParentFont = False
-      ShowCaption = False
-      TabOrder = 1
-      OnMouseDown = Painel_InicioMouseDown
-      object BtnAcao_Inicio: TSpeedButton
+    OnMouseEnter = PaginasMouseEnter
+    object TabFigura: TTabSheet
+      Caption = 'TabFigura'
+      object Figura: TImage
         Left = 0
         Top = 0
-        Width = 81
-        Height = 25
-        Cursor = crHandPoint
-        Action = Acao_Inicio
-        Align = alLeft
-        Flat = True
-        Margin = 2
-        ParentShowHint = False
-        ShowHint = True
+        Width = 550
+        Height = 492
+        Margins.Left = 0
+        Margins.Top = 0
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Align = alClient
+        Stretch = True
+        ExplicitLeft = 2
+        ExplicitTop = -2
       end
+    end
+    object TabMedia: TTabSheet
+      Caption = 'TabMedia'
+      ImageIndex = 1
+      object WebBrowser1: TWebBrowser
+        Left = 0
+        Top = 0
+        Width = 550
+        Height = 492
+        Align = alClient
+        TabOrder = 0
+        OnBeforeNavigate2 = WebBrowser1BeforeNavigate2
+        OnNavigateComplete2 = WebBrowser1NavigateComplete2
+        OnDocumentComplete = WebBrowser1DocumentComplete
+        ExplicitLeft = 2
+        ExplicitTop = -2
+        ControlData = {
+          4C000000D8380000DA3200000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E12620B000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
+      end
+    end
+    object TabPDF: TTabSheet
+      Caption = 'TabPDF'
+      ImageIndex = 2
     end
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 601
-    Width = 795
+    Top = 520
+    Width = 808
     Height = 19
     Panels = <
       item
         Width = 50
       end>
   end
-  object Menu_Arquivos: TPopupMenu
-    Left = 224
-    Top = 80
-    object AcaoAdicionar1: TMenuItem
-      Action = Acao_Adicionar
-    end
-    object Copiaralocalizaoparaareadeclipboard1: TMenuItem
-      Action = Acao_Clipboard
-    end
-    object Abriroexplorernalocalizao1: TMenuItem
-      Action = Acao_Explorer
-      ShortCut = 16454
-    end
-    object N2: TMenuItem
-      Caption = '-'
-    end
-    object Removeroelementoselecionado1: TMenuItem
-      Action = Acao_Remover
-    end
-    object Alterarlegendadaimagem1: TMenuItem
-      Action = Acao_Inserir_legenda
-    end
-    object N1: TMenuItem
-      Action = Acao_Mover_Acima
-    end
-    object AcaoMoverAbaixo1: TMenuItem
-      Action = Acao_Mover_Abaixo
-    end
-    object N3: TMenuItem
-      Caption = '-'
-    end
-    object AcaoAbrir1: TMenuItem
-      Action = Acao_Abrir
-    end
-    object AcaoSalvar1: TMenuItem
-      Action = Acao_Salvar
-    end
-  end
-  object ActionList1: TActionList
-    Images = ImageList1
-    Left = 288
-    Top = 80
-    object Acao_Inicio: TAction
-      Category = 'Arquivo'
-      Caption = 'Inicio'
-      Hint = 'Clique aqui para expandir ou retrair'
-      ImageIndex = 0
-      OnExecute = Acao_InicioExecute
-    end
-    object Acao_Clipboard: TAction
-      Category = 'Arquivo'
-      Caption = 'Copiar a localiza'#231#227'o para a '#225'rea de clipboard'
-      Hint = 'Copiar a localiza'#231#227'o para a '#225'rea de clipboard'
-      ImageIndex = 1
-      ShortCut = 16451
-      OnExecute = Acao_ClipboardExecute
-    end
-    object Acao_Explorer: TAction
-      Category = 'Arquivo'
-      Caption = 'Localizar o arquivo usando o explroer'
-      Hint = 'Localizar o arquivo usando o explroer'
-      ImageIndex = 2
-      OnExecute = Acao_ExplorerExecute
-    end
-    object Acao_Salvar: TAction
-      Category = 'Arquivo'
-      Caption = 'Salvar a lista atual'
-      ImageIndex = 4
-      ShortCut = 16467
-      OnExecute = Acao_SalvarExecute
-    end
-    object Acao_Abrir: TAction
-      Category = 'Arquivo'
-      Caption = 'Abrir uma outra lista'
-      ImageIndex = 5
-      ShortCut = 16463
-      OnExecute = Acao_AbrirExecute
-    end
-    object Acao_Mover_Acima: TAction
-      Category = 'Arquivo'
-      Caption = 'Mover para cima'
-      ImageIndex = 6
-      ShortCut = 16422
-      OnExecute = Acao_Mover_AcimaExecute
-    end
-    object Acao_Mover_Abaixo: TAction
-      Category = 'Arquivo'
-      Caption = 'Mover para baixo'
-      ImageIndex = 7
-      ShortCut = 16424
-      OnExecute = Acao_Mover_AbaixoExecute
-    end
-    object Acao_Remover: TAction
-      Category = 'Arquivo'
-      Caption = 'Remover o elemento selecionado'
-      Hint = 'Remover o elemento selecionado'
-      ImageIndex = 9
-      ShortCut = 46
-      OnExecute = Acao_RemoverExecute
-    end
-    object Acao_Adicionar: TAction
-      Category = 'Arquivo'
-      Caption = 'Adicionar um novo arquivo '#224' lista'
-      Hint = 'Adicionar um novo arquivo '#224' lista'
-      ImageIndex = 8
-      ShortCut = 16429
-      OnExecute = Acao_AdicionarExecute
-    end
-    object Acao_ZoomMais: TAction
-      Category = 'Arquivo'
-      Caption = 'Acao_ZoomMais'
-      ImageIndex = 10
-      ShortCut = 16471
-      OnExecute = Acao_ZoomMaisExecute
-    end
-    object Acao_ZoomMenos: TAction
-      Category = 'Arquivo'
-      Caption = 'Acao_ZoomMenos'
-      ImageIndex = 11
-      ShortCut = 16466
-      OnExecute = Acao_ZoomMenosExecute
-    end
-    object Acao_Inserir_legenda: TAction
-      Category = 'Arquivo'
-      Caption = 'Incluir ou alterar a legenda da imagem'
-      Hint = 
-        'Inserir uma legenda para a imagem, assim quando a imagem for exi' +
-        'bida ent'#227'o a legenda ser'#225' exibida conjuntamente'
-      ImageIndex = 14
-      ShortCut = 16460
-      OnExecute = Acao_Inserir_legendaExecute
-    end
-    object Acao_Media_Prox: TAction
-      Category = 'Arquivo'
-      Caption = 'Acao_Media_Prox'
-      SecondaryShortCuts.Strings = (
-        'W'
-        'w')
-      ShortCut = 39
-      OnExecute = Acao_Media_ProxExecute
-    end
-    object Acao_Media_Anterior: TAction
-      Category = 'Arquivo'
-      Caption = 'Acao_Media_Anterior'
-      SecondaryShortCuts.Strings = (
-        'q'
-        'Q')
-      ShortCut = 37
-      OnExecute = Acao_Media_AnteriorExecute
-    end
-    object Acao_Minimizar: TAction
-      Category = 'Arquivo'
-      Hint = 'Minimizae'
-      ImageIndex = 7
-      OnExecute = Acao_MinimizarExecute
-    end
-    object Acao_Fechar: TAction
-      Category = 'Arquivo'
-      Caption = 'Acao_Fechar'
-      Hint = 'Fechar'
-      ImageIndex = 16
-      OnExecute = Acao_FecharExecute
-    end
-  end
-  object SaveDialog1: TSaveDialog
-    Left = 384
-    Top = 168
-  end
-  object OpenTextFileDialog1: TOpenTextFileDialog
-    Left = 232
-    Top = 128
-  end
   object OpenDialog1: TOpenDialog
-    Left = 443
-    Top = 259
+    Left = 312
+    Top = 152
   end
   object ImageList1: TImageList
     BlendColor = clWhite
@@ -1179,5 +795,139 @@ object fmPrincipal: TfmPrincipal
   object TrayIcon1: TTrayIcon
     Left = 408
     Top = 312
+  end
+  object Menu_Arquivos: TPopupMenu
+    Images = ImageList1
+    Left = 632
+    Top = 176
+    object Adicionarumoumaisarquivoslista1: TMenuItem
+      Action = actArquivos_Adicionar
+    end
+    object Copiaralocalizaoparaareadeclipboard1: TMenuItem
+      Action = actCopiarLocalizacaoParaClipboard
+    end
+    object Localizaroarquivousandooexplroer1: TMenuItem
+      Action = actAbrirLocalizacaoParaExplorer
+    end
+    object N1: TMenuItem
+      Caption = '-'
+    end
+    object actArquivosLegendaImagem1: TMenuItem
+      Action = actArquivos_Legenda_Imagem
+    end
+    object actArquivosRemover1: TMenuItem
+      Action = actArquivos_Remover
+    end
+    object N2: TMenuItem
+      Caption = '-'
+    end
+    object actArquivosMoverPCima1: TMenuItem
+      Action = actArquivos_MoverPCima
+    end
+    object actArquivosMoverPBaixo1: TMenuItem
+      Action = actArquivos_MoverPBaixo
+    end
+    object N3: TMenuItem
+      Caption = '-'
+    end
+    object Abrirumalistadearquivos1: TMenuItem
+      Action = actArquivos_Carregar_Lista
+    end
+    object actArquivosSalvarLista1: TMenuItem
+      Action = actArquivos_Salvar_Lista
+    end
+  end
+  object ActionList1: TActionList
+    Images = ImageList1
+    Left = 576
+    Top = 296
+    object actArquivos_Adicionar: TAction
+      Caption = 'Adicionar um ou mais arquivos '#224' lista'
+      Hint = 'Adicionar um ou mais arquivos '#224' lista'
+      ImageIndex = 8
+      ShortCut = 16429
+      OnExecute = actArquivos_AdicionarExecute
+    end
+    object actCopiarLocalizacaoParaClipboard: TAction
+      Caption = 'Copiar a localiza'#231#227'o para a '#225'rea de clipboard'
+      Hint = 'Copiar a localiza'#231#227'o para a '#225'rea de clipboard'
+      ImageIndex = 1
+      ShortCut = 16451
+      OnExecute = actCopiarLocalizacaoParaClipboardExecute
+    end
+    object actAbrirLocalizacaoParaExplorer: TAction
+      Caption = 'Localizar o arquivo usando o explroer'
+      ImageIndex = 2
+      ShortCut = 16453
+      OnExecute = actAbrirLocalizacaoParaExplorerExecute
+    end
+    object actArquivos_Legenda_Imagem: TAction
+      Caption = 'Incluir ou alterar a legenda'
+      Hint = 'Incluir ou alterar a legenda'
+      ImageIndex = 14
+      ShortCut = 16460
+      OnExecute = actArquivos_Legenda_ImagemExecute
+    end
+    object actArquivos_Remover: TAction
+      Caption = 'Remover o elemento selecionado'
+      Hint = 'Remover o elemento selecionado'
+      ImageIndex = 9
+      ShortCut = 16430
+      OnExecute = actArquivos_RemoverExecute
+    end
+    object actArquivos_MoverPCima: TAction
+      Caption = 'Mover para cima'
+      Hint = 'Mover para cima'
+      ImageIndex = 6
+      ShortCut = 16422
+      OnExecute = actArquivos_MoverPCimaExecute
+    end
+    object actArquivos_MoverPBaixo: TAction
+      Caption = 'Mover para baixo'
+      Hint = 'Mover para baixo'
+      ImageIndex = 7
+      ShortCut = 16424
+      OnExecute = actArquivos_MoverPBaixoExecute
+    end
+    object actArquivos_Salvar_Lista: TAction
+      Caption = 'Salvar a lista atual'
+      Hint = 'Salvar a lista atual'
+      ImageIndex = 4
+      ShortCut = 16467
+      OnExecute = actArquivos_Salvar_ListaExecute
+    end
+    object actArquivos_Carregar_Lista: TAction
+      Caption = 'Abrir uma lista de arquivos'
+      Hint = 'Abrir uma lista de arquivos'
+      ImageIndex = 5
+      ShortCut = 16463
+      OnExecute = actArquivos_Carregar_ListaExecute
+    end
+    object actParaMidiaAnterior: TAction
+      Caption = 'Ir para a midia anterior'
+      ImageIndex = 13
+      ShortCut = 81
+      OnExecute = actParaMidiaAnteriorExecute
+    end
+    object actParaMidiaPosterior: TAction
+      Caption = 'Ir para a midia posterior'
+      ImageIndex = 12
+      ShortCut = 87
+      OnExecute = actParaMidiaPosteriorExecute
+    end
+    object actMostrarListaOuNao: TAction
+      Caption = 'Mostrar a lista de arquivos ou n'#227'o'
+      SecondaryShortCuts.Strings = (
+        'Ctrl+H')
+      ShortCut = 72
+      OnExecute = actMostrarListaOuNaoExecute
+    end
+  end
+  object Timer_TurnOFF_Status: TTimer
+    Enabled = False
+    Interval = 3000
+    OnTimer = Timer_TurnOFF_StatusTimer
+    Left = 392
+    Top = 256
   end
 end
