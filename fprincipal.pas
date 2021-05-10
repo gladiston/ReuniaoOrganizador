@@ -63,7 +63,51 @@ type
     actParaMidiaAnterior: TAction;
     actParaMidiaPosterior: TAction;
     actMostrarListaOuNao: TAction;
-    Action1: TAction;
+    actAjuda: TAction;
+    TabAjuda: TTabSheet;
+    ScrollBox1: TScrollBox;
+    pnlExplica_Arquivos: TPanel;
+    Label1: TLabel;
+    Panel2: TPanel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Panel3: TPanel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Panel4: TPanel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Panel5: TPanel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Panel6: TPanel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Panel7: TPanel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Panel8: TPanel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Panel9: TPanel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Panel10: TPanel;
+    Label19: TLabel;
+    Label20: TLabel;
+    Panel11: TPanel;
+    Label21: TLabel;
+    Label22: TLabel;
+    Panel12: TPanel;
+    Label23: TLabel;
+    Label24: TLabel;
+    Panel14: TPanel;
+    Label27: TLabel;
+    Label28: TLabel;
+    Panel15: TPanel;
+    Label29: TLabel;
+    Label30: TLabel;
+    lblExplicacao: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -108,6 +152,7 @@ type
     procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure FiguraDblClick(Sender: TObject);
+    procedure actAjudaExecute(Sender: TObject);
   private
     { Private declarations }
     FWebBrowserComplete: Boolean;
@@ -123,6 +168,7 @@ type
     function FilePathToURL(const FilePath: string): string;
     function HTML_View(AArquivo: String; AIE: Boolean = false): String;
     procedure WMExitSizeMove(var Message: TMessage); message WM_EXITSIZEMOVE;
+    procedure AutoStart(var Message: TMessage); message wm_user;
     //
     procedure SetConfigFile(const Value: String);
     procedure SetLegendas(const Value: TStringList);
@@ -159,6 +205,8 @@ type
     procedure Adequar_Video;
     procedure Lista_ArquivosAutoWidth;
     procedure SendTrayMessage(ACaption, AText:String);
+    //procedure MoverMousePara(Controle:TWinControl);
+    procedure MoverMousePara(APosX, APosY:Integer);
   end;
 
 const
@@ -171,6 +219,7 @@ const
   _FWidth_Max = 852; // 480p = 852×
   _FHeight_Max = 480;
 
+
 var
   fmPrincipal: TfmPrincipal;
 
@@ -178,8 +227,10 @@ implementation
 
 uses
   IniFiles,
-  ClipBrd,
-  strUtils;
+  Math,
+  strUtils,
+  ClipBrd;
+
 
 {$R *.dfm}
 
@@ -300,6 +351,34 @@ begin
   begin
     StatusMsg := sys_last_error;
   end;
+
+end;
+
+procedure TfmPrincipal.actAjudaExecute(Sender: TObject);
+const
+  _explicacao=
+    'Arraste ou use o mouse para adicionar arquivos a lista. '+
+    'São permitidos arquivos de imagem, vídeos ou PDFs. '+
+    'O painel de arquivos é ocultado automaticamente quando alguma mídia é '+
+    'exibida, para exibir o painel novamente apenas aponte o mouse '+
+    'para o extremo esquerdo desta janela. '+
+    'Para maior produtividade use as teclas de atalho:';
+
+var
+  Button:TButton;
+begin
+  Paginas.ActivePage:=TabAjuda;
+  lblExplicacao.Caption:=_explicacao;
+  MenuAberto:=false;
+  //SetCursorPos(lblExplicacao.Left+lblExplicacao.Width, lblExplicacao.Top);
+  //MoverMousePara(0, lblExplicacao.Top+lblExplicacao.Height);
+  {Button:=TButton.Create(Self);
+  Button.Parent:=Self;
+  Button.Align:=alLeft;
+  Button.Width:=10;
+  Button.Caption:=' ';
+  MoverMousePara(Button);
+  Button.Free;}
 
 end;
 
@@ -518,15 +597,15 @@ begin
     end;
   end;
 
-  if (sys_last_error = '') and (actCopiarLocalizacaoParaClipboard.Tag = 0) then
+  if (sys_last_error = '') then
   begin
     try
       sMsg := ExtractFileName(sArquivo) +
         ' foi copiado para clipboard, agora dê ctrl+v ' +
         'na jenela de seleção de arquivo.';
       StatusMsg := sMsg;
-      SendTrayMessage(ExtractFileName(sArquivo), sMsg);
-
+      if (actCopiarLocalizacaoParaClipboard.Tag <= 0) then
+        SendTrayMessage(ExtractFileName(sArquivo), sMsg);
       actCopiarLocalizacaoParaClipboard.Tag := 1;
     finally
 
@@ -768,6 +847,11 @@ begin
 
 end;
 
+procedure TfmPrincipal.AutoStart(var Message: TMessage);
+begin
+   actAjudaExecute(nil);
+end;
+
 procedure TfmPrincipal.Adequar_Figura;
 var
   w, h:Integer;
@@ -817,18 +901,22 @@ begin
 end;
 
 procedure TfmPrincipal.FiguraDblClick(Sender: TObject);
+const
+  _Mensagem =
+   'Quando você dá um duplo clique na imagem ela será exibida proporcional '+
+   'ou esticada';
 var
   sTitulo:String;
 begin
   Figura.Proportional:=(not Figura.Proportional);
-  if Figura.Tag<3 then
+  if Figura.Tag<30 then
   begin
-    // este aviso é mostrado no maximo 3 vezes
+    // este aviso é mostrado no maximo 30 vezes
     sTitulo:='A imagem está proporcional';
     if not Figura.Proportional then
       sTitulo:='A imagem foi esticada';
-    SendTrayMessage(sTitulo,
-      'Quando você dá um duplo clique na imagem ela será exibida proporcional ou esticada');
+    //SendTrayMessage(sTitulo, _Mensagem);
+    StatusMsg:=sTitulo+': '+_Mensagem;
     Figura.Tag:=Figura.Tag+1;
   end;
 end;
@@ -947,6 +1035,8 @@ end;
 procedure TfmPrincipal.FormShow(Sender: TObject);
 begin
   //
+  PostMessage(Handle, wm_user, 0, 0);
+  //actAjudaExecute(Sender);
 end;
 
 procedure TfmPrincipal.FormDestroy(Sender: TObject);
@@ -1291,6 +1381,96 @@ begin
   end;
 end;
 
+procedure TfmPrincipal.MoverMousePara(APosX, APosY:Integer);
+var
+  psmouse:Tpoint;
+  pscontrole:Tpoint;
+  largura:integer;
+  altura:Integer;
+  sair:Boolean;
+begin
+  sair:=false;
+  psmouse:=mouse.CursorPos;
+  while not sair do
+  begin
+    sair:=true;
+    if psmouse.X> (APosX) then
+    begin
+      psmouse.X:=psmouse.X-1;
+      mouse.CursorPos:=psmouse;
+      sair:=false;
+    end;
+    if psmouse.X<(APosX) then
+    begin
+      psmouse.X:=psmouse.X+1;
+      mouse.CursorPos:=psmouse;
+      sair:=false;
+    end;
+    //
+    if psmouse.Y> (APosY) then
+    begin
+      psmouse.Y:=psmouse.Y-1;
+      mouse.CursorPos:=psmouse;
+      sair:=false;
+    end;
+    if psmouse.Y<(APosY) then
+    begin
+      psmouse.Y:=psmouse.Y+1;
+      mouse.CursorPos:=psmouse;
+      sair:=false;
+    end;
+    sleep(10);
+    Application.ProcessMessages;
+  end;
+end;
+{
+procedure TfmPrincipal.MoverMousePara(Controle: TWinControl);
+var
+  psmouse:Tpoint;
+  pscontrole:Tpoint;
+  largura:integer;
+  altura:Integer;
+  sair:Boolean;
+begin
+  sair:=false;
+  psmouse:=mouse.CursorPos;
+  pscontrole:=controle.ClientOrigin;
+  largura:=controle.Width div 2;
+  altura:=controle.Height div 2;
+  while not sair do
+  begin
+    sair:=true;
+    if psmouse.X> (pscontrole.x + largura) then
+    begin
+      psmouse.X:=psmouse.X-1;
+      mouse.CursorPos:=psmouse;
+      sair:=false;
+    end;
+    if psmouse.X<(pscontrole.X+largura) then
+    begin
+      psmouse.X:=psmouse.X+1;
+      mouse.CursorPos:=psmouse;
+      sair:=false;
+    end;
+    //
+    if psmouse.Y> (pscontrole.Y + altura) then
+    begin
+      psmouse.Y:=psmouse.Y-1;
+      mouse.CursorPos:=psmouse;
+      sair:=false;
+    end;
+    if psmouse.Y<(pscontrole.Y+altura) then
+    begin
+      psmouse.Y:=psmouse.Y+1;
+      mouse.CursorPos:=psmouse;
+      sair:=false;
+    end;
+    sleep(10);
+    Application.ProcessMessages;
+  end;
+end;
+}
+
 procedure TfmPrincipal.PaginasMouseEnter(Sender: TObject);
 begin
   if MenuAberto then
@@ -1432,6 +1612,7 @@ begin
     Adequar_Video;
 
 end;
+
 
 
 

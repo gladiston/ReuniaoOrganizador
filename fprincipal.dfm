@@ -3,15 +3,15 @@ object fmPrincipal: TfmPrincipal
   Top = 0
   Caption = 'fmPrincipal'
   ClientHeight = 539
-  ClientWidth = 808
+  ClientWidth = 838
   Color = clWindow
   Constraints.MinHeight = 240
   Constraints.MinWidth = 320
   Ctl3D = False
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
+  Font.Height = -13
+  Font.Name = 'Segoe UI'
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
@@ -26,12 +26,12 @@ object fmPrincipal: TfmPrincipal
   OnResize = FormResize
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 17
   object Lista_Arquivos: TListView
     Left = 0
     Top = 0
     Width = 250
-    Height = 520
+    Height = 512
     Align = alLeft
     BevelInner = bvNone
     BevelOuter = bvNone
@@ -55,9 +55,9 @@ object fmPrincipal: TfmPrincipal
   object Paginas: TPageControl
     Left = 250
     Top = 0
-    Width = 558
-    Height = 520
-    ActivePage = TabFigura
+    Width = 588
+    Height = 512
+    ActivePage = TabAjuda
     Align = alClient
     TabOrder = 1
     OnMouseEnter = PaginasMouseEnter
@@ -66,8 +66,8 @@ object fmPrincipal: TfmPrincipal
       object Figura: TImage
         Left = 0
         Top = 0
-        Width = 550
-        Height = 492
+        Width = 580
+        Height = 480
         Margins.Left = 0
         Margins.Top = 0
         Margins.Right = 0
@@ -77,6 +77,8 @@ object fmPrincipal: TfmPrincipal
         OnDblClick = FiguraDblClick
         ExplicitLeft = 2
         ExplicitTop = -2
+        ExplicitWidth = 550
+        ExplicitHeight = 492
       end
     end
     object TabMedia: TTabSheet
@@ -85,8 +87,8 @@ object fmPrincipal: TfmPrincipal
       object WebBrowser1: TWebBrowser
         Left = 0
         Top = 0
-        Width = 550
-        Height = 492
+        Width = 580
+        Height = 480
         Align = alClient
         TabOrder = 0
         OnBeforeNavigate2 = WebBrowser1BeforeNavigate2
@@ -94,8 +96,10 @@ object fmPrincipal: TfmPrincipal
         OnDocumentComplete = WebBrowser1DocumentComplete
         ExplicitLeft = 2
         ExplicitTop = -2
+        ExplicitWidth = 550
+        ExplicitHeight = 492
         ControlData = {
-          4C000000D8380000DA3200000000000000000000000000000000000000000000
+          4C000000F23B00009C3100000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E12620B000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -106,12 +110,588 @@ object fmPrincipal: TfmPrincipal
       Caption = 'TabPDF'
       ImageIndex = 2
     end
+    object TabAjuda: TTabSheet
+      Caption = 'TabAjuda'
+      ImageIndex = 3
+      object ScrollBox1: TScrollBox
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 574
+        Height = 474
+        Align = alClient
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BorderStyle = bsNone
+        TabOrder = 0
+        object pnlExplica_Arquivos: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 568
+          Height = 94
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 0
+          object Label1: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 562
+            Height = 17
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'Gerenciamento de arquivos'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            ExplicitWidth = 169
+          end
+          object lblExplicacao: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 26
+            Width = 562
+            Height = 65
+            Align = alClient
+            Caption = '...'
+            WordWrap = True
+            ExplicitWidth = 9
+            ExplicitHeight = 17
+          end
+        end
+        object Panel2: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 439
+          Width = 568
+          Height = 22
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 1
+          object Label3: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 150
+            Height = 16
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'F1'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitTop = 6
+          end
+          object Label4: TLabel
+            AlignWithMargins = True
+            Left = 159
+            Top = 3
+            Width = 406
+            Height = 16
+            Align = alClient
+            Caption = 'Mostra essa tela de ajuda'
+            ExplicitWidth = 152
+            ExplicitHeight = 17
+          end
+        end
+        object Panel3: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 411
+          Width = 568
+          Height = 22
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 2
+          object Label5: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 150
+            Height = 16
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'H ou Ctrl+H'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = -4
+          end
+          object Label6: TLabel
+            AlignWithMargins = True
+            Left = 159
+            Top = 3
+            Width = 406
+            Height = 16
+            Align = alClient
+            Caption = 'Mostrar ou n'#227'o o painel de arquivos'
+            ExplicitWidth = 216
+            ExplicitHeight = 17
+          end
+        end
+        object Panel4: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 383
+          Width = 568
+          Height = 22
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 3
+          object Label7: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 150
+            Height = 16
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'W ou Ctrl+W'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = -4
+          end
+          object Label8: TLabel
+            AlignWithMargins = True
+            Left = 159
+            Top = 3
+            Width = 406
+            Height = 16
+            Align = alClient
+            Caption = '(ou a rodinha do mouse) Ir para a midia posterior'
+            ExplicitWidth = 294
+            ExplicitHeight = 17
+          end
+        end
+        object Panel5: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 355
+          Width = 568
+          Height = 22
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 4
+          object Label9: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 150
+            Height = 16
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'Q ou Ctrl+Q'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = -4
+          end
+          object Label10: TLabel
+            AlignWithMargins = True
+            Left = 159
+            Top = 3
+            Width = 406
+            Height = 16
+            Align = alClient
+            Caption = '(ou a rodinha do mouse) Ir para a midia anterior'
+            ExplicitWidth = 286
+            ExplicitHeight = 17
+          end
+        end
+        object Panel6: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 327
+          Width = 568
+          Height = 22
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 5
+          object Label11: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 150
+            Height = 16
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'Ctrl+O'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = -4
+          end
+          object Label12: TLabel
+            AlignWithMargins = True
+            Left = 159
+            Top = 3
+            Width = 406
+            Height = 16
+            Align = alClient
+            Caption = 'Abrir uma lista de arquivos'
+            ExplicitWidth = 158
+            ExplicitHeight = 17
+          end
+        end
+        object Panel7: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 299
+          Width = 568
+          Height = 22
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 6
+          object Label13: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 150
+            Height = 16
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'Ctrl+S'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = -4
+            ExplicitTop = 6
+          end
+          object Label14: TLabel
+            AlignWithMargins = True
+            Left = 159
+            Top = 3
+            Width = 406
+            Height = 16
+            Align = alClient
+            Caption = 'Salvar a lista atual'
+            ExplicitWidth = 105
+            ExplicitHeight = 17
+          end
+        end
+        object Panel8: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 271
+          Width = 568
+          Height = 22
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 7
+          object Label15: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 150
+            Height = 16
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'Ctrl+Down'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = -4
+          end
+          object Label16: TLabel
+            AlignWithMargins = True
+            Left = 159
+            Top = 3
+            Width = 406
+            Height = 16
+            Align = alClient
+            Caption = 'Mover o arquivo selecionado para baixo'
+            ExplicitWidth = 239
+            ExplicitHeight = 17
+          end
+        end
+        object Panel9: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 243
+          Width = 568
+          Height = 22
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 8
+          object Label17: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 150
+            Height = 16
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'Ctrl+Up'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = -4
+          end
+          object Label18: TLabel
+            AlignWithMargins = True
+            Left = 159
+            Top = 3
+            Width = 406
+            Height = 16
+            Align = alClient
+            Caption = 'Mover o arquivo selecionado para cima'
+            ExplicitWidth = 234
+            ExplicitHeight = 17
+          end
+        end
+        object Panel10: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 215
+          Width = 568
+          Height = 22
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 9
+          object Label19: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 150
+            Height = 16
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'Ctrl+Del'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = -4
+          end
+          object Label20: TLabel
+            AlignWithMargins = True
+            Left = 159
+            Top = 3
+            Width = 406
+            Height = 16
+            Align = alClient
+            Caption = 'Remover o arquivo selecionado'
+            ExplicitWidth = 186
+            ExplicitHeight = 17
+          end
+        end
+        object Panel11: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 187
+          Width = 568
+          Height = 22
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 10
+          object Label21: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 150
+            Height = 16
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'Ctrl+L'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitTop = 6
+          end
+          object Label22: TLabel
+            AlignWithMargins = True
+            Left = 159
+            Top = 3
+            Width = 406
+            Height = 16
+            Align = alClient
+            Caption = 'Incluir ou alterar a legenda'
+            ExplicitWidth = 157
+            ExplicitHeight = 17
+          end
+        end
+        object Panel12: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 159
+          Width = 568
+          Height = 22
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 11
+          object Label23: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 150
+            Height = 16
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'Ctrl+E'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = -4
+          end
+          object Label24: TLabel
+            AlignWithMargins = True
+            Left = 159
+            Top = 3
+            Width = 406
+            Height = 16
+            Align = alClient
+            Caption = 'Localizar o arquivo usando o gerenciador de arquivos'
+            ExplicitWidth = 318
+            ExplicitHeight = 17
+          end
+        end
+        object Panel14: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 131
+          Width = 568
+          Height = 22
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 12
+          object Label27: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 150
+            Height = 16
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'Ctrl+C'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = -4
+          end
+          object Label28: TLabel
+            AlignWithMargins = True
+            Left = 159
+            Top = 3
+            Width = 406
+            Height = 16
+            Align = alClient
+            Caption = 'Copiar a localiza'#231#227'o para a '#225'rea de clipboard'
+            ExplicitWidth = 269
+            ExplicitHeight = 17
+          end
+        end
+        object Panel15: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 103
+          Width = 568
+          Height = 22
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 13
+          object Label29: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 150
+            Height = 16
+            Align = alLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'Ctrl+ins'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = -4
+          end
+          object Label30: TLabel
+            AlignWithMargins = True
+            Left = 159
+            Top = 3
+            Width = 406
+            Height = 16
+            Align = alClient
+            Caption = 'Adicionar um ou mais arquivos '#224' lista'
+            ExplicitWidth = 219
+            ExplicitHeight = 17
+          end
+        end
+      end
+    end
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 520
-    Width = 808
-    Height = 19
+    Top = 512
+    Width = 838
+    Height = 27
     Panels = <
       item
         Width = 50
@@ -858,7 +1438,7 @@ object fmPrincipal: TfmPrincipal
       OnExecute = actCopiarLocalizacaoParaClipboardExecute
     end
     object actAbrirLocalizacaoParaExplorer: TAction
-      Caption = 'Localizar o arquivo usando o explroer'
+      Caption = 'Localizar o arquivo usando o gerenciador de arquivos'
       ImageIndex = 2
       ShortCut = 16453
       OnExecute = actAbrirLocalizacaoParaExplorerExecute
@@ -871,22 +1451,22 @@ object fmPrincipal: TfmPrincipal
       OnExecute = actArquivos_Legenda_ImagemExecute
     end
     object actArquivos_Remover: TAction
-      Caption = 'Remover o elemento selecionado'
-      Hint = 'Remover o elemento selecionado'
+      Caption = 'Remover o arquivo selecionado'
+      Hint = 'Remover o arquivo selecionado'
       ImageIndex = 9
       ShortCut = 16430
       OnExecute = actArquivos_RemoverExecute
     end
     object actArquivos_MoverPCima: TAction
-      Caption = 'Mover para cima'
-      Hint = 'Mover para cima'
+      Caption = 'Mover o arquivo selecionado para cima'
+      Hint = 'Mover o arquivo selecionado para cima'
       ImageIndex = 6
       ShortCut = 16422
       OnExecute = actArquivos_MoverPCimaExecute
     end
     object actArquivos_MoverPBaixo: TAction
-      Caption = 'Mover para baixo'
-      Hint = 'Mover para baixo'
+      Caption = 'Mover o arquivo selecionado para baixo'
+      Hint = 'Mover o arquivo selecionado para baixo'
       ImageIndex = 7
       ShortCut = 16424
       OnExecute = actArquivos_MoverPBaixoExecute
@@ -908,24 +1488,31 @@ object fmPrincipal: TfmPrincipal
     object actParaMidiaAnterior: TAction
       Caption = 'Ir para a midia anterior'
       ImageIndex = 13
+      SecondaryShortCuts.Strings = (
+        'Ctrl+Q')
       ShortCut = 81
       OnExecute = actParaMidiaAnteriorExecute
     end
     object actParaMidiaPosterior: TAction
       Caption = 'Ir para a midia posterior'
       ImageIndex = 12
+      SecondaryShortCuts.Strings = (
+        'Ctrl+W')
       ShortCut = 87
       OnExecute = actParaMidiaPosteriorExecute
     end
     object actMostrarListaOuNao: TAction
-      Caption = 'Mostrar a lista de arquivos ou n'#227'o'
+      Caption = 'Mostrar ou n'#227'o o painel de arquivos'
       SecondaryShortCuts.Strings = (
         'Ctrl+H')
       ShortCut = 72
       OnExecute = actMostrarListaOuNaoExecute
     end
-    object Action1: TAction
-      Caption = 'Action1'
+    object actAjuda: TAction
+      Caption = 'Ajuda'
+      Hint = 'Ajuda'
+      ShortCut = 112
+      OnExecute = actAjudaExecute
     end
   end
   object Timer_TurnOFF_Status: TTimer
