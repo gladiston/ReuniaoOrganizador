@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{5911F857-70FD-46BD-8EE2-753F5C6C330B}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="ReuniaoOrganizador.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\ReuniaoOrganizador.v0\ReuniaoOrganizador_v0.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ReuniaoOrganizador">
+        <MSBuild Projects="ReuniaoOrganizador.dproj"/>
+    </Target>
+    <Target Name="ReuniaoOrganizador:Clean">
+        <MSBuild Projects="ReuniaoOrganizador.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ReuniaoOrganizador:Make">
+        <MSBuild Projects="ReuniaoOrganizador.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ReuniaoOrganizador_v0">
+        <MSBuild Projects="..\ReuniaoOrganizador.v0\ReuniaoOrganizador_v0.dproj"/>
+    </Target>
+    <Target Name="ReuniaoOrganizador_v0:Clean">
+        <MSBuild Projects="..\ReuniaoOrganizador.v0\ReuniaoOrganizador_v0.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ReuniaoOrganizador_v0:Make">
+        <MSBuild Projects="..\ReuniaoOrganizador.v0\ReuniaoOrganizador_v0.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ReuniaoOrganizador;ReuniaoOrganizador_v0"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ReuniaoOrganizador:Clean;ReuniaoOrganizador_v0:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ReuniaoOrganizador:Make;ReuniaoOrganizador_v0:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -21,18 +21,12 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ToolWin, Vcl.ComCtrls, Vcl.ExtCtrls,
   Vcl.OleCtrls, Vcl.StdCtrls, System.ImageList, Vcl.ImgList, System.Actions,
-  Vcl.ActnList, Vcl.Menus;
+  Vcl.ActnList, Vcl.Menus, Vcl.Buttons;
 
 type
   TfmPrincipal = class(TForm)
     OpenDialog1: TOpenDialog;
     Lista_Arquivos: TListView;
-    Paginas: TPageControl;
-    TabFigura: TTabSheet;
-    TabMedia: TTabSheet;
-    TabPDF: TTabSheet;
-    Figura: TImage;
-    WebBrowser1: TWebBrowser;
     ImageList1: TImageList;
     TrayIcon1: TTrayIcon;
     Menu_Arquivos: TPopupMenu;
@@ -46,8 +40,6 @@ type
     actArquivos_Legenda_Imagem: TAction;
     actCopiarLocalizacaoParaClipboard: TAction;
     actAbrirLocalizacaoParaExplorer: TAction;
-    StatusBar1: TStatusBar;
-    Timer_TurnOFF_Status: TTimer;
     Adicionarumoumaisarquivoslista1: TMenuItem;
     Copiaralocalizaoparaareadeclipboard1: TMenuItem;
     Localizaroarquivousandooexplroer1: TMenuItem;
@@ -64,10 +56,18 @@ type
     actParaMidiaPosterior: TAction;
     actMostrarListaOuNao: TAction;
     actAjuda: TAction;
+    BtnactFixar: TSpeedButton;
+    Paginas: TPageControl;
+    TabFigura: TTabSheet;
+    Figura: TImage;
+    TabMedia: TTabSheet;
+    WebBrowser1: TWebBrowser;
+    TabPDF: TTabSheet;
     TabAjuda: TTabSheet;
     ScrollBox1: TScrollBox;
     pnlExplica_Arquivos: TPanel;
     Label1: TLabel;
+    lblExplicacao: TLabel;
     Panel2: TPanel;
     Label3: TLabel;
     Label4: TLabel;
@@ -107,7 +107,9 @@ type
     Panel15: TPanel;
     Label29: TLabel;
     Label30: TLabel;
-    lblExplicacao: TLabel;
+    pnlLegenda: TPanel;
+    BalloonHint1: TBalloonHint;
+    BtnBorderStyle: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -122,7 +124,6 @@ type
     procedure actArquivos_Carregar_ListaExecute(Sender: TObject);
     procedure actCopiarLocalizacaoParaClipboardExecute(Sender: TObject);
     procedure actAbrirLocalizacaoParaExplorerExecute(Sender: TObject);
-    procedure Timer_TurnOFF_StatusTimer(Sender: TObject);
     procedure Lista_ArquivosSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
     procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
@@ -153,6 +154,11 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure FiguraDblClick(Sender: TObject);
     procedure actAjudaExecute(Sender: TObject);
+    procedure PermitirArrastarJanela(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure ScrollBox1MouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure BtnBorderStyleMouseEnter(Sender: TObject);
   private
     { Private declarations }
     FWebBrowserComplete: Boolean;
@@ -164,6 +170,7 @@ type
     FLegendas: TStringList;
     FMeuPDF: TAcroPDF;
     FStatusMsg: String;
+    FExibir_Legenda: String;
     procedure WMDropFiles(var Msg: TWMDropFiles); message WM_DROPFILES;
     function FilePathToURL(const FilePath: string): string;
     function HTML_View(AArquivo: String; AIE: Boolean = false): String;
@@ -176,12 +183,14 @@ type
     procedure SetMediaAtual(const Value: String);
     procedure SetMenuAberto(const Value: Boolean);
     procedure SetStatusMsg(const Value: String);
+    procedure SetExibir_Legenda(const Value: String);
   public
     { Public declarations }
   protected
     procedure CreateParams(var Params: TCreateParams); override;
   published
     property MenuAberto: Boolean read FMenuAberto write SetMenuAberto;
+    property Exibir_Legenda:String read FExibir_Legenda write SetExibir_Legenda;
     property Legendas: TStringList read FLegendas write SetLegendas;
     property ConfigFile: String read FConfigFile write SetConfigFile;
     property ListaAtual: String read FListaAtual write SetListaAtual;
@@ -191,11 +200,11 @@ type
       write FWebBrowserComplete default false;
     property Modificado: Boolean read FModificado;
     function IsImage(AArquivo: String): Boolean;
-    function IsVideo(AArquivo: String): Boolean;
+    function IsBrowser(AArquivo: String): Boolean;
     function IsPDF(AArquivo: String): Boolean;
     function IsFileAcceptable(AArquivo: String): Boolean;
     function Arquivo_Adicionar(AArquivo: String;
-      ACanDuplicate: Boolean = false): String;
+      ACanDuplicate: Boolean = true): String;
     function Arquivo_Lista_Salvar(AArquivo: String): String;
     function Arquivo_Lista_Carregar(AArquivo: String): String;
     function Arquivo_Lengenda_Set(AArquivo, ALegenda: String): String;
@@ -207,11 +216,12 @@ type
     procedure SendTrayMessage(ACaption, AText:String);
     //procedure MoverMousePara(Controle:TWinControl);
     procedure MoverMousePara(APosX, APosY:Integer);
+    procedure Browser_Stop;
   end;
 
 const
   _APP_EXT = '.reuniao';
-  _APP_EXT_VIDEO = '|.avi|.mp3|.mp4|';
+  _APP_EXT_VIDEO = '|.avi|.mp3|.mp4|.svg|';
   _APP_EXT_FIG = '|.bmp|.png|.jpeg|.jpg|';
   _APP_EXT_PDF = '|.pdf|';
   _FWidth_Min = 320;
@@ -370,16 +380,6 @@ begin
   Paginas.ActivePage:=TabAjuda;
   lblExplicacao.Caption:=_explicacao;
   MenuAberto:=false;
-  //SetCursorPos(lblExplicacao.Left+lblExplicacao.Width, lblExplicacao.Top);
-  //MoverMousePara(0, lblExplicacao.Top+lblExplicacao.Height);
-  {Button:=TButton.Create(Self);
-  Button.Parent:=Self;
-  Button.Align:=alLeft;
-  Button.Width:=10;
-  Button.Caption:=' ';
-  MoverMousePara(Button);
-  Button.Free;}
-
 end;
 
 procedure TfmPrincipal.actArquivos_AdicionarExecute(Sender: TObject);
@@ -659,7 +659,7 @@ begin
 end;
 
 function TfmPrincipal.Arquivo_Adicionar(AArquivo: String;
-  ACanDuplicate: Boolean): String;
+  ACanDuplicate: Boolean=true): String;
 var
   bSePDF: Boolean;
   bSeVideo: Boolean;
@@ -696,7 +696,7 @@ begin
         Arquivo_Lengenda_Set(Item.Caption, FLegendas.Values[Item.Caption]);
         // Item.Detail:=AArquivo;
         bSePDF := IsPDF(AArquivo);
-        bSeVideo := IsVideo(AArquivo);
+        bSeVideo := IsBrowser(AArquivo);
         bSeFigura := IsImage(AArquivo);
         if bSePDF then
           Item.ImageIndex := 17
@@ -757,7 +757,9 @@ begin
   end;
   FLegendas.Values[ExtractFileName(AArquivo)] := ALegenda;
   if SameText(ExtractFileName(MediaAtual),ExtractFileName(AArquivo)) then
-    Caption:=ALegenda;
+  begin
+    Exibir_Legenda:=ALegenda;
+  end;
 end;
 
 function TfmPrincipal.Arquivo_Lista_Carregar(AArquivo: String): String;
@@ -790,8 +792,16 @@ begin
     end;
     if Result = emptyStr then
     begin
+      if FileExists(AArquivo + '.legendas') then
+      begin
+        FLegendas.LoadFromFile(AArquivo + '.legendas');
+      end;
+    end;
+    if Result = emptyStr then
+    begin
       FModificado := false;
       Lista_ArquivosAutoWidth;
+      Lista_Arquivos.ItemIndex:=-1;
     end;
   end;
   if Assigned(L) then
@@ -852,6 +862,13 @@ begin
    actAjudaExecute(nil);
 end;
 
+procedure TfmPrincipal.Browser_Stop;
+begin
+  if WebBrowser1.Busy then
+    WebBrowser1.Stop;
+  WebBrowser1.Navigate('blank://');
+end;
+
 procedure TfmPrincipal.Adequar_Figura;
 var
   w, h:Integer;
@@ -875,7 +892,7 @@ begin
           h:=_FHeight_Max;
         end;
         Self.ClientWidth:=w;
-        Self.ClientHeight:=h+Trunc(StatusBar1.Height);
+        Self.ClientHeight:=h+Trunc(pnlLegenda.Height);
 
       finally
         pict.Free;
@@ -919,6 +936,16 @@ begin
     StatusMsg:=sTitulo+': '+_Mensagem;
     Figura.Tag:=Figura.Tag+1;
   end;
+end;
+
+procedure TfmPrincipal.PermitirArrastarJanela(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+const
+   sc_DragMove = $f012;
+begin
+  ReleaseCapture;
+  Perform(wm_SysCommand, sc_DragMove, 0);
+
 end;
 
 function TfmPrincipal.FilePathToURL(const FilePath: string): string;
@@ -1029,14 +1056,20 @@ begin
     end;
   end;
   //
-  Timer_TurnOFF_Status.Enabled := false;
+  BtnactFixar.Down:=false;
 end;
 
 procedure TfmPrincipal.FormShow(Sender: TObject);
 begin
+  BtnactFixar.Parent:=Lista_Arquivos;
+  BtnactFixar.Top:=2;
+  BtnactFixar.Left:=Lista_Arquivos.Width-BtnactFixar.Width;
+
   //
   PostMessage(Handle, wm_user, 0, 0);
   //actAjudaExecute(Sender);
+  Caption:=Application.Title;
+  pnlLegenda.Caption:='';
 end;
 
 procedure TfmPrincipal.FormDestroy(Sender: TObject);
@@ -1084,15 +1117,22 @@ begin
     Limite_X := Lista_Arquivos.Width;
   if (X < 10) then
   begin
-    if (Y > 0) and (Y < StatusBar1.Top) then
+    if (Y > 0) and (Y < pnlLegenda.Top) then
     begin
       bEstouDentro := true;
     end;
   end;
   if bEstouDentro then
-    MenuAberto := true
+  begin
+    MenuAberto := true;
+  end
   else
-    MenuAberto := false;
+  begin
+    if not BtnactFixar.Down then
+    begin
+      MenuAberto := false;
+    end;
+  end;
 end;
 
 procedure TfmPrincipal.FormMouseWheelDown(Sender: TObject; Shift: TShiftState;
@@ -1230,7 +1270,7 @@ begin
   if LeftStr(sMimeExt, 1) = '.' then
     sMimeExt := RightStr(sMimeExt, Length(sMimeExt) - 1);
 
-  if IsVideo(AArquivo) and (AIE) then
+  if IsBrowser(AArquivo) and (AIE) then
   begin
     RESULT := IE_Video;
   end
@@ -1260,7 +1300,7 @@ begin
   if (not RESULT) then
     RESULT := IsImage(AArquivo);
   if (not RESULT) then
-    RESULT := IsVideo(AArquivo);
+    RESULT := IsBrowser(AArquivo);
   if (not RESULT) then
     RESULT := IsPDF(AArquivo);
 end;
@@ -1283,7 +1323,7 @@ begin
 
 end;
 
-function TfmPrincipal.IsVideo(AArquivo: String): Boolean;
+function TfmPrincipal.IsBrowser(AArquivo: String): Boolean;
 var
   sExt: String;
 begin
@@ -1616,6 +1656,16 @@ end;
 
 
 
+procedure TfmPrincipal.ScrollBox1MouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+const
+   sc_DragMove = $f012;
+begin
+  ReleaseCapture;
+  Perform(wm_SysCommand, sc_DragMove, 0);
+
+end;
+
 procedure TfmPrincipal.SendTrayMessage(ACaption, AText: String);
 begin
   try
@@ -1633,6 +1683,30 @@ end;
 procedure TfmPrincipal.SetConfigFile(const Value: String);
 begin
   FConfigFile := Value;
+end;
+
+
+procedure TfmPrincipal.SetExibir_Legenda(const Value: String);
+var
+  S:String;
+begin
+  S:=Trim(Value);
+  if S<>FExibir_Legenda then
+  begin
+    FExibir_Legenda:=S;
+    if FExibir_Legenda=emptyStr then
+    begin
+      pnlLegenda.Caption:='';
+      pnlLegenda.Visible:=false;
+    end
+    else
+    begin
+      pnlLegenda.Caption:=FExibir_Legenda;
+      pnlLegenda.Visible:=true;
+    end;
+
+  end;
+
 end;
 
 procedure TfmPrincipal.SetLegendas(const Value: TStringList);
@@ -1680,19 +1754,10 @@ var
   end;
 
 begin
-  if FMediaAtual <> Value then
+  if (FMediaAtual <> Value) or (Paginas.ActivePage=TabAjuda) then
   begin
     bDone := false;
-    // Lista_Arquivos.OnSelectItem:=nil; //Lista_ArquivosSelectItem ou nil
-    try
-      if Paginas.ActivePage <> TabMedia then
-      begin
-        WebBrowser1.Stop;
-        WebBrowser1.Navigate('blank://');
-      end;
-    finally
-
-    end;
+    Browser_Stop;
     iFound := FoundCaption(Value);
     if iFound >= 0 then
     begin
@@ -1708,7 +1773,7 @@ begin
 
         end;
       end;
-      if IsVideo(Value) then
+      if IsBrowser(Value) then
       begin
         TabMedia.Caption := Value;
         Paginas.ActivePage := TabMedia;
@@ -1741,7 +1806,7 @@ begin
       begin
         FMediaAtual := Value;
         // Lista_Arquivos.ItemIndex:=iFound;
-        Self.Caption := FLegendas.Values[ExtractFileName(FMediaAtual)];
+        Exibir_Legenda:= FLegendas.Values[ExtractFileName(FMediaAtual)];
       end;
     end;
     // Lista_Arquivos.OnSelectItem:=Lista_ArquivosSelectItem; //Lista_ArquivosSelectItem ou nil
@@ -1755,12 +1820,12 @@ begin
   begin
     Lista_Arquivos.Visible := true;
     Lista_ArquivosAutoWidth;
+    Self.BorderStyle:=bsSizeable;
   end
   else
   begin
     Lista_Arquivos.Visible := false;
-    Timer_TurnOFF_Status.Enabled:=false;
-    StatusBar1.Visible:=false;
+    Self.BorderStyle:=bsNone;
   end;
 end;
 
@@ -1769,16 +1834,25 @@ begin
   if FStatusMsg <> Value then
   begin
     FStatusMsg := Value;
-    StatusBar1.Panels[0].Text := FStatusMsg;
-    StatusBar1.Visible := (FStatusMsg <> '');
-    Timer_TurnOFF_Status.Enabled := true;
+    BalloonHint1.HideAfter:=10000;
+    BalloonHint1.Title:='Dica:';
+    BalloonHint1.Description:=FStatusMsg;
+    BalloonHint1.ShowHint(Paginas);
   end;
 end;
 
-procedure TfmPrincipal.Timer_TurnOFF_StatusTimer(Sender: TObject);
+procedure TfmPrincipal.BtnBorderStyleMouseEnter(Sender: TObject);
 begin
-  Timer_TurnOFF_Status.Enabled := false;
-  StatusMsg := '';
+  if Self.BorderStyle<>bsSizeable then
+  begin
+    Self.BorderStyle:=bsSizeable;
+    BtnBorderStyle.caption:=#$e6; // simbolo de corner seta diagonal para baixo
+  end
+  else
+  begin
+    BtnBorderStyle.Caption:='';
+  end;
+
 end;
 
 end.
