@@ -23,7 +23,7 @@ object fmPrincipal: TfmPrincipal
   OnMouseMove = FormMouseMove
   OnMouseWheelDown = FormMouseWheelDown
   OnMouseWheelUp = FormMouseWheelUp
-  OnResize = FormResize
+  OnPaint = FormPaint
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 17
@@ -79,7 +79,7 @@ object fmPrincipal: TfmPrincipal
     Left = 0
     Top = 0
     Width = 250
-    Height = 512
+    Height = 538
     Align = alLeft
     BevelInner = bvNone
     BevelOuter = bvNone
@@ -99,28 +99,31 @@ object fmPrincipal: TfmPrincipal
     OnDragOver = Lista_ArquivosDragOver
     OnMouseDown = Lista_ArquivosMouseDown
     OnSelectItem = Lista_ArquivosSelectItem
-    ExplicitLeft = -2
-    ExplicitTop = -6
+    ExplicitHeight = 521
   end
   object Paginas: TPageControl
     Left = 250
     Top = 0
     Width = 588
-    Height = 512
+    Height = 538
     ActivePage = TabFigura
     Align = alClient
     TabOrder = 1
+    OnChange = PaginasChange
     OnMouseEnter = PaginasMouseEnter
-    ExplicitTop = 24
-    ExplicitHeight = 496
+    ExplicitTop = -6
+    ExplicitHeight = 521
     object TabFigura: TTabSheet
       Caption = 'TabFigura'
-      ExplicitHeight = 464
+      ExplicitHeight = 489
+      DesignSize = (
+        580
+        506)
       object Figura: TImage
         Left = 0
         Top = 0
         Width = 580
-        Height = 480
+        Height = 489
         Margins.Left = 0
         Margins.Top = 0
         Margins.Right = 0
@@ -130,25 +133,58 @@ object fmPrincipal: TfmPrincipal
         Transparent = True
         OnDblClick = FiguraDblClick
         OnMouseDown = PermitirArrastarJanela
-        ExplicitLeft = -1
+        ExplicitLeft = -37
+        ExplicitTop = 21
+        ExplicitHeight = 480
+      end
+      object pnlLegenda: TLabel
+        Left = 0
+        Top = 489
+        Width = 580
+        Height = 17
+        Align = alBottom
+        WordWrap = True
+        OnMouseDown = PermitirArrastarJanela
+        ExplicitWidth = 4
+      end
+      object BtnBorderStyle: TSpeedButton
+        Left = 554
+        Top = 488
+        Width = 23
+        Height = 22
+        Cursor = crHandPoint
+        Action = actShowBorder
+        AllowAllUp = True
+        Anchors = [akTop, akRight]
+        GroupIndex = 3
+        Flat = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Wingdings'
+        Font.Style = []
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
       end
     end
     object TabMedia: TTabSheet
       Caption = 'TabMedia'
       ImageIndex = 1
-      ExplicitHeight = 464
+      ExplicitHeight = 489
       object WebBrowser1: TWebBrowser
         Left = 0
         Top = 0
         Width = 580
-        Height = 480
+        Height = 506
         Align = alClient
         TabOrder = 0
         OnBeforeNavigate2 = WebBrowser1BeforeNavigate2
         OnNavigateComplete2 = WebBrowser1NavigateComplete2
         OnDocumentComplete = WebBrowser1DocumentComplete
+        ExplicitHeight = 480
         ControlData = {
-          4C000000F23B00009C3100000000000000000000000000000000000000000000
+          4C000000F23B00004C3400000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E12620B000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -158,25 +194,25 @@ object fmPrincipal: TfmPrincipal
     object TabPDF: TTabSheet
       Caption = 'TabPDF'
       ImageIndex = 2
-      ExplicitHeight = 464
+      ExplicitHeight = 489
     end
     object TabAjuda: TTabSheet
       Caption = 'TabAjuda'
       ImageIndex = 3
-      ExplicitHeight = 464
+      ExplicitHeight = 489
       object ScrollBox1: TScrollBox
         AlignWithMargins = True
         Left = 3
         Top = 3
         Width = 574
-        Height = 474
+        Height = 500
         Align = alClient
         BevelInner = bvNone
         BevelOuter = bvNone
         BorderStyle = bsNone
         TabOrder = 0
         OnMouseDown = ScrollBox1MouseDown
-        ExplicitHeight = 458
+        ExplicitHeight = 483
         object pnlExplica_Arquivos: TPanel
           AlignWithMargins = True
           Left = 3
@@ -186,7 +222,6 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 0
-          ExplicitWidth = 551
           object Label1: TLabel
             AlignWithMargins = True
             Left = 3
@@ -202,6 +237,7 @@ object fmPrincipal: TfmPrincipal
             Font.Name = 'Segoe UI'
             Font.Style = [fsBold]
             ParentFont = False
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 169
           end
           object lblExplicacao: TLabel
@@ -213,6 +249,7 @@ object fmPrincipal: TfmPrincipal
             Align = alClient
             Caption = '...'
             WordWrap = True
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 9
             ExplicitHeight = 17
           end
@@ -226,7 +263,6 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitWidth = 551
           object Label3: TLabel
             AlignWithMargins = True
             Left = 3
@@ -244,6 +280,7 @@ object fmPrincipal: TfmPrincipal
             Font.Style = [fsBold]
             ParentFont = False
             Layout = tlCenter
+            OnMouseDown = PermitirArrastarJanela
             ExplicitTop = 6
           end
           object Label4: TLabel
@@ -254,6 +291,7 @@ object fmPrincipal: TfmPrincipal
             Height = 16
             Align = alClient
             Caption = 'Mostra essa tela de ajuda'
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 152
             ExplicitHeight = 17
           end
@@ -267,7 +305,6 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 2
-          ExplicitWidth = 551
           object Label5: TLabel
             AlignWithMargins = True
             Left = 3
@@ -285,6 +322,7 @@ object fmPrincipal: TfmPrincipal
             Font.Style = [fsBold]
             ParentFont = False
             Layout = tlCenter
+            OnMouseDown = PermitirArrastarJanela
             ExplicitLeft = -4
           end
           object Label6: TLabel
@@ -295,6 +333,7 @@ object fmPrincipal: TfmPrincipal
             Height = 16
             Align = alClient
             Caption = 'Mostrar ou n'#227'o o painel de arquivos'
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 216
             ExplicitHeight = 17
           end
@@ -308,7 +347,6 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 3
-          ExplicitWidth = 551
           object Label7: TLabel
             AlignWithMargins = True
             Left = 3
@@ -326,6 +364,7 @@ object fmPrincipal: TfmPrincipal
             Font.Style = [fsBold]
             ParentFont = False
             Layout = tlCenter
+            OnMouseDown = PermitirArrastarJanela
             ExplicitLeft = -4
           end
           object Label8: TLabel
@@ -336,6 +375,7 @@ object fmPrincipal: TfmPrincipal
             Height = 16
             Align = alClient
             Caption = '(ou a rodinha do mouse) Ir para a midia posterior'
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 294
             ExplicitHeight = 17
           end
@@ -349,7 +389,6 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 4
-          ExplicitWidth = 551
           object Label9: TLabel
             AlignWithMargins = True
             Left = 3
@@ -367,6 +406,7 @@ object fmPrincipal: TfmPrincipal
             Font.Style = [fsBold]
             ParentFont = False
             Layout = tlCenter
+            OnMouseDown = PermitirArrastarJanela
             ExplicitLeft = -4
           end
           object Label10: TLabel
@@ -377,6 +417,7 @@ object fmPrincipal: TfmPrincipal
             Height = 16
             Align = alClient
             Caption = '(ou a rodinha do mouse) Ir para a midia anterior'
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 286
             ExplicitHeight = 17
           end
@@ -390,7 +431,6 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 5
-          ExplicitWidth = 551
           object Label11: TLabel
             AlignWithMargins = True
             Left = 3
@@ -408,6 +448,7 @@ object fmPrincipal: TfmPrincipal
             Font.Style = [fsBold]
             ParentFont = False
             Layout = tlCenter
+            OnMouseDown = PermitirArrastarJanela
             ExplicitLeft = -4
           end
           object Label12: TLabel
@@ -418,6 +459,7 @@ object fmPrincipal: TfmPrincipal
             Height = 16
             Align = alClient
             Caption = 'Abrir uma lista de arquivos'
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 158
             ExplicitHeight = 17
           end
@@ -431,7 +473,6 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 6
-          ExplicitWidth = 551
           object Label13: TLabel
             AlignWithMargins = True
             Left = 3
@@ -449,6 +490,7 @@ object fmPrincipal: TfmPrincipal
             Font.Style = [fsBold]
             ParentFont = False
             Layout = tlCenter
+            OnMouseDown = PermitirArrastarJanela
             ExplicitLeft = -4
             ExplicitTop = 6
           end
@@ -460,6 +502,7 @@ object fmPrincipal: TfmPrincipal
             Height = 16
             Align = alClient
             Caption = 'Salvar a lista atual'
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 105
             ExplicitHeight = 17
           end
@@ -473,7 +516,6 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 7
-          ExplicitWidth = 551
           object Label15: TLabel
             AlignWithMargins = True
             Left = 3
@@ -491,6 +533,7 @@ object fmPrincipal: TfmPrincipal
             Font.Style = [fsBold]
             ParentFont = False
             Layout = tlCenter
+            OnMouseDown = PermitirArrastarJanela
             ExplicitLeft = -4
           end
           object Label16: TLabel
@@ -501,6 +544,7 @@ object fmPrincipal: TfmPrincipal
             Height = 16
             Align = alClient
             Caption = 'Mover o arquivo selecionado para baixo'
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 239
             ExplicitHeight = 17
           end
@@ -514,7 +558,7 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 8
-          ExplicitWidth = 551
+          OnMouseDown = PermitirArrastarJanela
           object Label17: TLabel
             AlignWithMargins = True
             Left = 3
@@ -532,6 +576,7 @@ object fmPrincipal: TfmPrincipal
             Font.Style = [fsBold]
             ParentFont = False
             Layout = tlCenter
+            OnMouseDown = PermitirArrastarJanela
             ExplicitLeft = -4
           end
           object Label18: TLabel
@@ -555,7 +600,6 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 9
-          ExplicitWidth = 551
           object Label19: TLabel
             AlignWithMargins = True
             Left = 3
@@ -573,6 +617,7 @@ object fmPrincipal: TfmPrincipal
             Font.Style = [fsBold]
             ParentFont = False
             Layout = tlCenter
+            OnMouseDown = PermitirArrastarJanela
             ExplicitTop = 6
           end
           object Label20: TLabel
@@ -583,6 +628,7 @@ object fmPrincipal: TfmPrincipal
             Height = 16
             Align = alClient
             Caption = 'Remover o arquivo selecionado'
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 186
             ExplicitHeight = 17
           end
@@ -596,7 +642,6 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 10
-          ExplicitWidth = 551
           object Label21: TLabel
             AlignWithMargins = True
             Left = 3
@@ -614,6 +659,7 @@ object fmPrincipal: TfmPrincipal
             Font.Style = [fsBold]
             ParentFont = False
             Layout = tlCenter
+            OnMouseDown = PermitirArrastarJanela
             ExplicitTop = 6
           end
           object Label22: TLabel
@@ -624,6 +670,7 @@ object fmPrincipal: TfmPrincipal
             Height = 16
             Align = alClient
             Caption = 'Incluir ou alterar a legenda'
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 157
             ExplicitHeight = 17
           end
@@ -637,7 +684,6 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 11
-          ExplicitWidth = 551
           object Label23: TLabel
             AlignWithMargins = True
             Left = 3
@@ -655,6 +701,7 @@ object fmPrincipal: TfmPrincipal
             Font.Style = [fsBold]
             ParentFont = False
             Layout = tlCenter
+            OnMouseDown = PermitirArrastarJanela
             ExplicitLeft = -4
           end
           object Label24: TLabel
@@ -665,6 +712,7 @@ object fmPrincipal: TfmPrincipal
             Height = 16
             Align = alClient
             Caption = 'Localizar o arquivo usando o gerenciador de arquivos'
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 318
             ExplicitHeight = 17
           end
@@ -678,7 +726,6 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 12
-          ExplicitWidth = 551
           object Label27: TLabel
             AlignWithMargins = True
             Left = 3
@@ -696,6 +743,7 @@ object fmPrincipal: TfmPrincipal
             Font.Style = [fsBold]
             ParentFont = False
             Layout = tlCenter
+            OnMouseDown = PermitirArrastarJanela
             ExplicitLeft = -4
           end
           object Label28: TLabel
@@ -706,6 +754,7 @@ object fmPrincipal: TfmPrincipal
             Height = 16
             Align = alClient
             Caption = 'Copiar a localiza'#231#227'o para a '#225'rea de clipboard'
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 269
             ExplicitHeight = 17
           end
@@ -719,7 +768,6 @@ object fmPrincipal: TfmPrincipal
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 13
-          ExplicitWidth = 551
           object Label29: TLabel
             AlignWithMargins = True
             Left = 3
@@ -737,6 +785,7 @@ object fmPrincipal: TfmPrincipal
             Font.Style = [fsBold]
             ParentFont = False
             Layout = tlCenter
+            OnMouseDown = PermitirArrastarJanela
             ExplicitLeft = -4
           end
           object Label30: TLabel
@@ -747,41 +796,12 @@ object fmPrincipal: TfmPrincipal
             Height = 16
             Align = alClient
             Caption = 'Adicionar um ou mais arquivos '#224' lista'
+            OnMouseDown = PermitirArrastarJanela
             ExplicitWidth = 219
             ExplicitHeight = 17
           end
         end
       end
-    end
-  end
-  object pnlLegenda: TPanel
-    Left = 0
-    Top = 512
-    Width = 838
-    Height = 26
-    Align = alBottom
-    BevelOuter = bvNone
-    TabOrder = 2
-    OnMouseDown = PermitirArrastarJanela
-    object BtnBorderStyle: TSpeedButton
-      Left = 815
-      Top = 0
-      Width = 23
-      Height = 26
-      Cursor = crSizeNWSE
-      Align = alRight
-      Caption = #230
-      Flat = True
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Wingdings'
-      Font.Style = []
-      ParentFont = False
-      OnMouseEnter = BtnBorderStyleMouseEnter
-      ExplicitLeft = 800
-      ExplicitTop = 24
-      ExplicitHeight = 22
     end
   end
   object OpenDialog1: TOpenDialog
@@ -1603,6 +1623,12 @@ object fmPrincipal: TfmPrincipal
       ImageIndex = 18
       ShortCut = 112
       OnExecute = actAjudaExecute
+    end
+    object actShowBorder: TAction
+      GroupIndex = 3
+      Hint = 'Clique aqui para "pregar" as bordas e titulo de janela'
+      ImageIndex = 16
+      OnExecute = actShowBorderExecute
     end
   end
   object BalloonHint1: TBalloonHint

@@ -107,14 +107,14 @@ type
     Panel15: TPanel;
     Label29: TLabel;
     Label30: TLabel;
-    pnlLegenda: TPanel;
     BalloonHint1: TBalloonHint;
+    actShowBorder: TAction;
+    pnlLegenda: TLabel;
     BtnBorderStyle: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure FormResize(Sender: TObject);
     procedure actArquivos_Legenda_ImagemExecute(Sender: TObject);
     procedure actArquivos_Salvar_ListaExecute(Sender: TObject);
     procedure actArquivos_AdicionarExecute(Sender: TObject);
@@ -158,7 +158,9 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure ScrollBox1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure BtnBorderStyleMouseEnter(Sender: TObject);
+    procedure actShowBorderExecute(Sender: TObject);
+    procedure PaginasChange(Sender: TObject);
+    procedure FormPaint(Sender: TObject);
   private
     { Private declarations }
     FWebBrowserComplete: Boolean;
@@ -658,6 +660,11 @@ begin
   end;
 end;
 
+procedure TfmPrincipal.actShowBorderExecute(Sender: TObject);
+begin
+  Self.BorderStyle:=bsSizeable;
+end;
+
 function TfmPrincipal.Arquivo_Adicionar(AArquivo: String;
   ACanDuplicate: Boolean=true): String;
 var
@@ -898,7 +905,7 @@ begin
         pict.Free;
       end;
     end;
-    Self.Onresize:=FormResize;
+   // Self.Onresize:=FormResize;
   end;
 end;
 
@@ -1057,6 +1064,13 @@ begin
   end;
   //
   BtnactFixar.Down:=false;
+  //
+  //pnlLegenda.Caption:='';
+  //pnlLegenda.Parent:=TabFigura;
+  //BtnBorderStyle.Parent:=TabFigura;
+  //BtnBorderStyle.Top:=0;
+  //BtnBorderStyle.Left:=Self.ClientWidth-BtnBorderStyle.Width;
+  //BtnBorderStyle.BringToFront;
 end;
 
 procedure TfmPrincipal.FormShow(Sender: TObject);
@@ -1069,7 +1083,7 @@ begin
   PostMessage(Handle, wm_user, 0, 0);
   //actAjudaExecute(Sender);
   Caption:=Application.Title;
-  pnlLegenda.Caption:='';
+  PaginasChange(Sender);
 end;
 
 procedure TfmPrincipal.FormDestroy(Sender: TObject);
@@ -1157,52 +1171,10 @@ begin
   end;
 end;
 
-procedure TfmPrincipal.FormResize(Sender: TObject);
-var
-  bChanged: Boolean;
+procedure TfmPrincipal.FormPaint(Sender: TObject);
 begin
-  // if Paginas.ActivePage=TabFigura then
-  /// Adequar_Figura;
-
-  // if Paginas.ActivePage=TabMedia then
-  // Adequar_Video;
-
-  { bChanged:=false;
-    Self.Onresize:=nil;
-    if (Paginas.ActivePage=TabFigura) and (Figura.Picture<>nil) then
-    begin
-    if Self.Width>_FWidth_Max then
-    begin
-    //Self.Width:=_FWidth_Max;
-    bChanged:=true;
-    end;
-
-    if Self.Width<_FWidth_Min then
-    begin
-    Self.Width:=_FWidth_Min;
-    bChanged:=true;
-    end;
-
-
-    if Self.Height>_FHeight_Max then
-    begin
-    //Self.Height:=_FHeight_Max;
-    bChanged:=true;
-    end;
-
-    if Self.Height<_FHeight_Min then
-    begin
-    Self.Height:=_FHeight_Min;
-    bChanged:=true;
-    end;
-
-    if bChanged then
-    begin
-    Figura_Adequar;
-    end;
-    end;
-    Self.Onresize:=FormResize;
-  }
+  BtnBorderStyle.Top:=Paginas.ClientHeight-BtnBorderStyle.Height;
+  BtnBorderStyle.Left:=Paginas.ClientWidth-BtnBorderStyle.Width;
 end;
 
 function TfmPrincipal.HTML_View(AArquivo: String; AIE: Boolean): String;
@@ -1510,6 +1482,16 @@ begin
   end;
 end;
 }
+
+procedure TfmPrincipal.PaginasChange(Sender: TObject);
+begin
+  pnlLegenda.Caption:='';
+  pnlLegenda.Parent:=Paginas.ActivePage;
+  BtnBorderStyle.Parent:=Paginas.ActivePage;
+  BtnBorderStyle.Top:=Paginas.ClientHeight-BtnBorderStyle.Height;
+  BtnBorderStyle.Left:=Paginas.ClientWidth-BtnBorderStyle.Width;
+  BtnBorderStyle.BringToFront;
+end;
 
 procedure TfmPrincipal.PaginasMouseEnter(Sender: TObject);
 begin
@@ -1824,8 +1806,11 @@ begin
   end
   else
   begin
-    Lista_Arquivos.Visible := false;
-    Self.BorderStyle:=bsNone;
+    if not BtnBorderStyle.Down then
+    begin
+      Lista_Arquivos.Visible := false;
+      Self.BorderStyle:=bsNone;
+    end;
   end;
 end;
 
@@ -1839,20 +1824,6 @@ begin
     BalloonHint1.Description:=FStatusMsg;
     BalloonHint1.ShowHint(Paginas);
   end;
-end;
-
-procedure TfmPrincipal.BtnBorderStyleMouseEnter(Sender: TObject);
-begin
-  if Self.BorderStyle<>bsSizeable then
-  begin
-    Self.BorderStyle:=bsSizeable;
-    BtnBorderStyle.caption:=#$e6; // simbolo de corner seta diagonal para baixo
-  end
-  else
-  begin
-    BtnBorderStyle.Caption:='';
-  end;
-
 end;
 
 end.
