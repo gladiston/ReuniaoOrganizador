@@ -3,16 +3,15 @@ program ReuniaoOrganizador;
 uses
   Vcl.Forms,
   fprincipal in 'fprincipal.pas' {fmPrincipal},
-  Vcl.Themes,
-  Vcl.Styles;
+  fexibicao in 'fexibicao.pas' {fmExibicao},
+  fquero_resposta in 'fquero_resposta.pas' {fmQuero_Resposta};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  TStyleManager.TrySetStyle('Windows10 Dark');
-  Application.Title := 'Organizador de Reunião';
   Application.CreateForm(TfmPrincipal, fmPrincipal);
+  Application.CreateForm(TfmExibicao, fmExibicao);
   Application.Run;
 end.

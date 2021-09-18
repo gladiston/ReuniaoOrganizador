@@ -1,279 +1,181 @@
 unit fprincipal;
 
-{
-  AcroPDFLib_TLB é um ActiveX importado do AdobeReader instalado no Windows. Por isso,
-  só funciona se este programa tiver sido instalado, caso contrário, não abrirá PDFs.
-}
-
 interface
 
-uses
-  ShellAPI,
-  Jpeg, pngimage, GIFImg,
+{
   AcroPDFLib_TLB,
   SHDocVw,
-  WinInet,
-  ShLwApi,
   // MSHTML,
   ActiveX,
-  System.Win.ComObj,
+
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ToolWin, Vcl.ComCtrls, Vcl.ExtCtrls,
-  Vcl.OleCtrls, Vcl.StdCtrls, System.ImageList, Vcl.ImgList, System.Actions,
-  Vcl.ActnList, Vcl.Menus, Vcl.Buttons;
+}
+uses
+  Jpeg, pngimage, GIFImg,
+  System.Win.ComObj,
+  Winapi.ShellAPI,
+  WinInet,
+  Winapi.ShLwApi,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,
+  System.Actions, Vcl.ActnList, System.ImageList, Vcl.ImgList, Vcl.Buttons,
+  Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Menus, Vcl.BaseImageCollection,
+  Vcl.ImageCollection;
 
 type
   TfmPrincipal = class(TForm)
-    OpenDialog1: TOpenDialog;
-    Lista_Arquivos: TListView;
-    ImageList1: TImageList;
-    TrayIcon1: TTrayIcon;
-    Menu_Arquivos: TPopupMenu;
+    pnl_Area_Controles: TPanel;
     ActionList1: TActionList;
-    actArquivos_Adicionar: TAction;
-    actArquivos_Remover: TAction;
-    actArquivos_MoverPCima: TAction;
-    actArquivos_MoverPBaixo: TAction;
-    actArquivos_Salvar_Lista: TAction;
-    actArquivos_Carregar_Lista: TAction;
-    actArquivos_Legenda_Imagem: TAction;
-    actCopiarLocalizacaoParaClipboard: TAction;
-    actAbrirLocalizacaoParaExplorer: TAction;
-    Adicionarumoumaisarquivoslista1: TMenuItem;
-    Copiaralocalizaoparaareadeclipboard1: TMenuItem;
-    Localizaroarquivousandooexplroer1: TMenuItem;
+    pnl_Arquivos: TPanel;
+    BtnactArquivo_MoverPBaixo: TSpeedButton;
+    BtnactArquivo_Remover: TSpeedButton;
+    BtnactArquivo_Adicionar: TSpeedButton;
+    BtnactArquivo_MoverPCima: TSpeedButton;
+    BtnactArquivo_Caminho_Abrir: TSpeedButton;
+    BtnactArquivo_Caminho_Clipboard: TSpeedButton;
+    pnl_Lista: TPanel;
+    actLista_Carregar: TAction;
+    actlista_Salvar: TAction;
+    mnuLista: TPopupMenu;
+    Carregarlista1: TMenuItem;
     N1: TMenuItem;
-    actArquivosRemover1: TMenuItem;
-    actArquivosLegendaImagem1: TMenuItem;
-    N2: TMenuItem;
-    actArquivosMoverPCima1: TMenuItem;
-    actArquivosMoverPBaixo1: TMenuItem;
-    N3: TMenuItem;
-    actArquivosSalvarLista1: TMenuItem;
-    Abrirumalistadearquivos1: TMenuItem;
-    actParaMidiaAnterior: TAction;
-    actParaMidiaPosterior: TAction;
-    actMostrarListaOuNao: TAction;
-    actAjuda: TAction;
-    BtnactFixar: TSpeedButton;
-    Paginas: TPageControl;
-    TabFigura: TTabSheet;
-    Figura: TImage;
-    TabMedia: TTabSheet;
-    WebBrowser1: TWebBrowser;
-    TabPDF: TTabSheet;
-    TabAjuda: TTabSheet;
-    ScrollBox1: TScrollBox;
-    pnlExplica_Arquivos: TPanel;
-    Label1: TLabel;
-    lblExplicacao: TLabel;
-    Panel2: TPanel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Panel3: TPanel;
-    Label5: TLabel;
-    Label6: TLabel;
-    Panel4: TPanel;
-    Label7: TLabel;
-    Label8: TLabel;
-    Panel5: TPanel;
-    Label9: TLabel;
-    Label10: TLabel;
-    Panel6: TPanel;
-    Label11: TLabel;
-    Label12: TLabel;
-    Panel7: TPanel;
-    Label13: TLabel;
-    Label14: TLabel;
-    Panel8: TPanel;
-    Label15: TLabel;
-    Label16: TLabel;
-    Panel9: TPanel;
-    Label17: TLabel;
-    Label18: TLabel;
-    Panel10: TPanel;
-    Label19: TLabel;
-    Label20: TLabel;
-    Panel11: TPanel;
-    Label21: TLabel;
-    Label22: TLabel;
-    Panel12: TPanel;
-    Label23: TLabel;
-    Label24: TLabel;
-    Panel14: TPanel;
-    Label27: TLabel;
-    Label28: TLabel;
-    Panel15: TPanel;
-    Label29: TLabel;
-    Label30: TLabel;
+    Salvarlista1: TMenuItem;
+    BtnMenuLista: TSpeedButton;
+    actArquivo_Adicionar: TAction;
+    actArquivo_Remover: TAction;
+    actArquivo_MoverPCima: TAction;
+    actArquivo_MoverPBaixo: TAction;
+    actArquivo_Caminho_Abrir: TAction;
+    actArquivo_Caminho_Clipboard: TAction;
+    actMedia_Legenda: TAction;
+    actMedia_Ir_Anterior: TAction;
+    actMedia_Ir_Proximo: TAction;
+    actMedia_Proporcional: TAction;
+    actMedia_Bordas: TAction;
+    ImageList1: TImageList;
+    BtnactMedia_Bordas: TSpeedButton;
+    BtnactMedia_Legenda: TSpeedButton;
+    pnlMedias: TPanel;
+    BtnactMedia_Ir_Anterior: TSpeedButton;
+    BtnactMedia_Ir_Proximo: TSpeedButton;
+    actMedia_Stop: TAction;
+    BtnactMedia_Stop: TSpeedButton;
+    Bevel1: TBevel;
+    pnl_Area_Lista: TPanel;
+    Lista_Arquivos: TListView;
+    lblStatus: TLabel;
+    actMensagem_Descanso: TAction;
+    Mensagemdedescansoouboasvindas1: TMenuItem;
     BalloonHint1: TBalloonHint;
-    actShowBorder: TAction;
-    pnlLegenda: TLabel;
-    BtnBorderStyle: TSpeedButton;
+    Bevel2: TBevel;
+    Bevel3: TBevel;
+    BtnactMedia_Proporcional: TSpeedButton;
     procedure FormCreate(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure actArquivos_Legenda_ImagemExecute(Sender: TObject);
-    procedure actArquivos_Salvar_ListaExecute(Sender: TObject);
-    procedure actArquivos_AdicionarExecute(Sender: TObject);
-    procedure actArquivos_RemoverExecute(Sender: TObject);
-    procedure actArquivos_MoverPCimaExecute(Sender: TObject);
-    procedure actArquivos_MoverPBaixoExecute(Sender: TObject);
-    procedure actArquivos_Carregar_ListaExecute(Sender: TObject);
-    procedure actCopiarLocalizacaoParaClipboardExecute(Sender: TObject);
-    procedure actAbrirLocalizacaoParaExplorerExecute(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure actLista_CarregarExecute(Sender: TObject);
+    procedure actlista_SalvarExecute(Sender: TObject);
+    procedure actArquivo_AdicionarExecute(Sender: TObject);
     procedure Lista_ArquivosSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
-    procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure actMedia_BordasExecute(Sender: TObject);
+    procedure actMedia_ProporcionalExecute(Sender: TObject);
+    procedure actMedia_LegendaExecute(Sender: TObject);
+    procedure actMedia_Ir_AnteriorExecute(Sender: TObject);
+    procedure actMedia_Ir_ProximoExecute(Sender: TObject);
+    procedure actArquivo_Caminho_ClipboardExecute(Sender: TObject);
+    procedure actArquivo_Caminho_AbrirExecute(Sender: TObject);
+    procedure actArquivo_RemoverExecute(Sender: TObject);
+    procedure actArquivo_MoverPCimaExecute(Sender: TObject);
+    procedure actArquivo_MoverPBaixoExecute(Sender: TObject);
+    procedure BtnMenuListaClick(Sender: TObject);
     procedure Lista_ArquivosCustomDrawItem(Sender: TCustomListView;
       Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
-    procedure actParaMidiaPosteriorExecute(Sender: TObject);
-    procedure actParaMidiaAnteriorExecute(Sender: TObject);
-    procedure FormMouseWheelUp(Sender: TObject; Shift: TShiftState;
-      MousePos: TPoint; var Handled: Boolean);
-    procedure FormMouseWheelDown(Sender: TObject; Shift: TShiftState;
-      MousePos: TPoint; var Handled: Boolean);
-    procedure WebBrowser1BeforeNavigate2(ASender: TObject;
-      const pDisp: IDispatch; const URL, Flags, TargetFrameName, PostData,
-      Headers: OleVariant; var Cancel: WordBool);
-    procedure WebBrowser1DocumentComplete(ASender: TObject;
-      const pDisp: IDispatch; const URL: OleVariant);
-    procedure WebBrowser1NavigateComplete2(ASender: TObject;
-      const pDisp: IDispatch; const URL: OleVariant);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Lista_ArquivosDragDrop(Sender, Source: TObject; X, Y: Integer);
     procedure Lista_ArquivosDragOver(Sender, Source: TObject; X, Y: Integer;
       State: TDragState; var Accept: Boolean);
     procedure Lista_ArquivosMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure actMostrarListaOuNaoExecute(Sender: TObject);
-    procedure PaginasMouseEnter(Sender: TObject);
-    procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    procedure FiguraDblClick(Sender: TObject);
-    procedure actAjudaExecute(Sender: TObject);
-    procedure PermitirArrastarJanela(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    procedure ScrollBox1MouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    procedure actShowBorderExecute(Sender: TObject);
-    procedure PaginasChange(Sender: TObject);
-    procedure FormPaint(Sender: TObject);
-  private
-    { Private declarations }
-    FWebBrowserComplete: Boolean;
-    FMediaAtual: String;
-    FConfigFile: String;
-    FModificado: Boolean;
-    FMenuAberto: Boolean;
-    FListaAtual: String;
-    FLegendas: TStringList;
-    FMeuPDF: TAcroPDF;
-    FStatusMsg: String;
-    FExibir_Legenda: String;
-    procedure WMDropFiles(var Msg: TWMDropFiles); message WM_DROPFILES;
-    function FilePathToURL(const FilePath: string): string;
-    function HTML_View(AArquivo: String; AIE: Boolean = false): String;
-    procedure WMExitSizeMove(var Message: TMessage); message WM_EXITSIZEMOVE;
-    procedure AutoStart(var Message: TMessage); message wm_user;
-    //
-    procedure SetConfigFile(const Value: String);
-    procedure SetLegendas(const Value: TStringList);
-    procedure SetListaAtual(const Value: String);
-    procedure SetMediaAtual(const Value: String);
-    procedure SetMenuAberto(const Value: Boolean);
-    procedure SetStatusMsg(const Value: String);
-    procedure SetExibir_Legenda(const Value: String);
-  public
-    { Public declarations }
+    procedure actMedia_StopExecute(Sender: TObject);
+    procedure actMensagem_DescansoExecute(Sender: TObject);
   protected
     procedure CreateParams(var Params: TCreateParams); override;
+  private
+    { Private declarations }
+    FExibir_Legenda: String;
+    FConfigFile: String;
+    FModificado: Boolean;
+    FListaAtual: String;
+    FListaAtual_Legendas:String;
+    FMediaAtual: String;
+    FStatusMsg: String;
+    FMediaProporcional_Width: Boolean;
+    FMediaLegendasList: TStringList;
+    FHello_Message: String;
+    FHTML_TempFile: String;
+    FFMediaProporcional_Width: Boolean;
+    procedure WMDropFiles(var Msg: TWMDropFiles); message WM_DROPFILES;
+    function FilePathToURL(const FilePath: string): string;
+    procedure SetConfigFile(const Value: String);
+    procedure SetListaAtual(const Value: String);
+    procedure SetMediaAtual(const Value: String);
+    procedure SetStatusMsg(const Value: String);
+    procedure SetHello_Message(const Value: String);
+    procedure SetFMediaProporcional_Width(const Value: Boolean);
+  public
+    { Public declarations }
   published
-    property MenuAberto: Boolean read FMenuAberto write SetMenuAberto;
-    property Exibir_Legenda:String read FExibir_Legenda write SetExibir_Legenda;
-    property Legendas: TStringList read FLegendas write SetLegendas;
     property ConfigFile: String read FConfigFile write SetConfigFile;
     property ListaAtual: String read FListaAtual write SetListaAtual;
     property MediaAtual: String read FMediaAtual write SetMediaAtual;
+    property MediaProporcional_Width: Boolean read FFMediaProporcional_Width write SetFMediaProporcional_Width;
+    property MediaLegendasList: TStringList read FMediaLegendasList write FMediaLegendasList;
     property StatusMsg: String read FStatusMsg write SetStatusMsg;
-    property WebBrowserComplete: Boolean read FWebBrowserComplete
-      write FWebBrowserComplete default false;
+    property Hello_Message:String read FHello_Message write SetHello_Message;
     property Modificado: Boolean read FModificado;
-    function IsImage(AArquivo: String): Boolean;
-    function IsBrowser(AArquivo: String): Boolean;
-    function IsPDF(AArquivo: String): Boolean;
+    property HTML_TempFile:String read FHTML_TempFile;
+    procedure ReadConfig;
+    procedure WriteConfig;
     function IsFileAcceptable(AArquivo: String): Boolean;
+    function IsImage(AArquivo: String): Boolean;
+    function IsVideo(AArquivo: String): Boolean;
+    function IsPDF(AArquivo: String): Boolean;
     function Arquivo_Adicionar(AArquivo: String;
       ACanDuplicate: Boolean = true): String;
     function Arquivo_Lista_Salvar(AArquivo: String): String;
-    function Arquivo_Lista_Carregar(AArquivo: String): String;
-    function Arquivo_Lengenda_Set(AArquivo, ALegenda: String): String;
-    procedure ReadConfig;
-    procedure WriteConfig;
-    procedure Adequar_Figura;
-    procedure Adequar_Video;
-    procedure Lista_ArquivosAutoWidth;
-    procedure SendTrayMessage(ACaption, AText:String);
-    //procedure MoverMousePara(Controle:TWinControl);
-    procedure MoverMousePara(APosX, APosY:Integer);
-    procedure Browser_Stop;
+    //function Arquivo_Lengenda_Set(AArquivo, ALegenda: String): String;
+    //procedure SendTrayMessage(ACaption, AText:String);
+    function HTML_GetCode(AArquivo: String; var ASaveHTMLAs:String): String;
+    function HTML_GetHello(ATexto:String):String;
   end;
+
+var
+  fmPrincipal: TfmPrincipal;
 
 const
   _APP_EXT = '.reuniao';
   _APP_EXT_VIDEO = '|.avi|.mp3|.mp4|.svg|';
-  _APP_EXT_FIG = '|.bmp|.png|.jpeg|.jpg|';
+  _APP_EXT_FIG = '|.bmp|.png|.jpeg|.jpg|.jfif|';
   _APP_EXT_PDF = '|.pdf|';
+
   _FWidth_Min = 320;
   _FHeight_Min = 240;
   _FWidth_Max = 852; // 480p = 852×
   _FHeight_Max = 480;
 
-
-var
-  fmPrincipal: TfmPrincipal;
-
 implementation
 
 uses
-  IniFiles,
-  Math,
-  strUtils,
-  ClipBrd;
-
+  inifiles,
+  StrUtils,
+  ClipBrd,
+  fquero_resposta,
+  fexibicao;
 
 {$R *.dfm}
 
-procedure WBLoadHTML(WebBrowser: TWebBrowser; HTMLCode: string);
-var
-  sl: TStringList;
-  ms: TMemoryStream;
-begin
-  WebBrowser.Navigate('about:blank');
-  while WebBrowser.ReadyState < READYSTATE_INTERACTIVE do
-    Application.ProcessMessages;
-
-  if Assigned(WebBrowser.Document) then
-  begin
-    sl := TStringList.Create;
-    try
-      ms := TMemoryStream.Create;
-      try
-        sl.Text := HTMLCode;
-        sl.SaveToStream(ms);
-        ms.Seek(0, 0);
-        (WebBrowser.Document as IPersistStreamInit)
-          .Load(TStreamAdapter.Create(ms));
-      finally
-        ms.Free;
-      end;
-    finally
-      sl.Free;
-    end;
-  end;
-end;
+{ TfmPrincipal }
 
 function MsgDlg(AMsg: String; ATitle: String; ADlgType: TMsgDlgType;
   AButtons: TMsgDlgButtons; ACod_Ajuda: Integer = 0): TModalResult;
@@ -281,11 +183,13 @@ var
   i: Integer;
 begin
   With CreateMessageDialog(AMsg, ADlgType, AButtons) Do
+  begin
     Try
       Caption := ATitle;
       HelpContext := ACod_Ajuda;
 
-      for i := 0 To ComponentCount - 1 Do
+      for i := 0 To ComponentCount - 1 do
+      begin
         If Components[i] Is TButton Then
           Case (Components[i] As TButton).ModalResult Of
             mrNone:
@@ -310,666 +214,97 @@ begin
               (Components[i] As TButton).Caption := '&Sim';
             mrYesToAll:
               (Components[i] As TButton).Caption := 'Sim para todos';
-    End;
-
-  RESULT := ShowModal;
-Finally
-  Free;
-End;
-end;
-
-function VertScrollBarVisible(WindowHandle: THandle): Boolean;
-begin
-  RESULT := (GetWindowlong(WindowHandle, GWL_STYLE) AND WS_VSCROLL) <> 0
-end;
-
-procedure TfmPrincipal.CreateParams(var Params: TCreateParams);
-begin
-  inherited;
-  Params.Style := Params.Style or WS_THICKFRAME;
-end;
-
-procedure TfmPrincipal.actAbrirLocalizacaoParaExplorerExecute(Sender: TObject);
-var
-  sArquivo: String;
-  sArquivoCaption: String;
-  ItemAtual: TListItem;
-  sys_last_error: String;
-begin
-  sys_last_error := '';
-  if Lista_Arquivos.ItemIndex < 0 then
-    sys_last_error := 'Selecione um arquivo para executar esta operação.';
-  if sys_last_error = '' then
-  begin
-    ItemAtual := Lista_Arquivos.Items[Lista_Arquivos.ItemIndex];
-    sArquivoCaption := ItemAtual.Caption;
-    sArquivo := ItemAtual.SubItems[0];
-    if not FileExists(sArquivo) then
-    begin
-      sys_last_error := 'Arquivo não encontrado: ' + sArquivo;
+          end;
+      end;
+      Result := ShowModal;
+    finally
+      Free;
     end;
-  end;
-
-  if (sys_last_error = '') then
-  begin
-    // ShellExecute(0, nil, 'explorer.exe', '/select,C:\WINDOWS\explorer.exe', nil, SW_SHOWNORMAL)
-    ShellExecute(0, nil, 'explorer.exe', pWideChar('/select,' + sArquivo), nil,
-      SW_SHOWNORMAL);
-    StatusMsg := 'A pasta de ' + sArquivoCaption +
-      ' foi aberta e o arquivo selecionado.';
-  end;
-
-  if sys_last_error <> '' then
-  begin
-    StatusMsg := sys_last_error;
-  end;
-
+  end; // With
 end;
 
-procedure TfmPrincipal.actAjudaExecute(Sender: TObject);
-const
-  _explicacao=
-    'Arraste ou use o mouse para adicionar arquivos a lista. '+
-    'São permitidos arquivos de imagem, vídeos ou PDFs. '+
-    'O painel de arquivos é ocultado automaticamente quando alguma mídia é '+
-    'exibida, para exibir o painel novamente apenas aponte o mouse '+
-    'para o extremo esquerdo desta janela. '+
-    'Para maior produtividade use as teclas de atalho:';
-
+procedure TfmPrincipal.FormCreate(Sender: TObject);
 var
-  Button:TButton;
-begin
-  Paginas.ActivePage:=TabAjuda;
-  lblExplicacao.Caption:=_explicacao;
-  MenuAberto:=false;
-end;
-
-procedure TfmPrincipal.actArquivos_AdicionarExecute(Sender: TObject);
-var
-  sArquivo: String;
   i: Integer;
-  sListaParaAbrir: String;
+  cmdFileName: String;
+  Col: TListColumn;
 begin
-  // adicionando arquivos
-  sListaParaAbrir := StringReplace(_APP_EXT_VIDEO + _APP_EXT_FIG + _APP_EXT_PDF,
-    '|', ';*', [rfReplaceAll]);
-  if LeftStr(sListaParaAbrir, 1) = ';' then
-    while LeftStr(sListaParaAbrir, 1) = ';' do
-      sListaParaAbrir := RightStr(sListaParaAbrir, Length(sListaParaAbrir) - 1);
-  if RightStr(sListaParaAbrir, 1) = '*' then
-    while RightStr(sListaParaAbrir, 1) = '*' do
-      sListaParaAbrir := LeftStr(sListaParaAbrir, Length(sListaParaAbrir) - 1);
-  if RightStr(sListaParaAbrir, 1) = ';' then
-    while RightStr(sListaParaAbrir, 1) = ';' do
-      sListaParaAbrir := LeftStr(sListaParaAbrir, Length(sListaParaAbrir) - 1);
+  Caption := 'Organizador de reunião';
+  FListaAtual := '';
+  FListaAtual_Legendas:='';
+  FMediaAtual := '';
+  FModificado := false;
+  FConfigFile := ChangeFileExt(ParamStr(0), '.ini');
+  FMediaLegendasList:=TStringList.Create;
+  FHello_Message:='<h1>"Sua força está em permanecerem calmos e terem confiança - Isaías 30:50"</h1>';
+  FHTML_TempFile:=GetEnvironmentVariable('TEMP')+'\'+ExtractFileName(ParamStr(0))+'.html';
+  MediaProporcional_Width:=true;
+  //BtnactMedia_Proporcional.Down:= FFMediaProporcional_Width;
+  cmdFileName := ParamStr(1);
+  //
   try
-    OpenDialog1.Filter := 'Arquivos suportados|' + sListaParaAbrir;
-    OpenDialog1.FileName := FMediaAtual;
-    OpenDialog1.Options := [TOpenOption.ofHideReadOnly,
-      TOpenOption.ofAllowMultiSelect, TOpenOption.ofEnableSizing];
-    if OpenDialog1.Execute() then
-    begin
-      for i := 0 to OpenDialog1.Files.Count - 1 do
-      begin
-        sArquivo := OpenDialog1.FileName[i];
-        if IsFileAcceptable(sArquivo) then
-          Arquivo_Adicionar(sArquivo);
-      end;
-    end;
+    Lista_Arquivos.ColumnClick := false;
+    Lista_Arquivos.DragMode := dmManual;
+    Lista_Arquivos.FlatScrollBars := true;
+    Lista_Arquivos.FullDrag := false;
+    Lista_Arquivos.GridLines := false;
+    Lista_Arquivos.HideSelection := false;
+    Lista_Arquivos.HoverTime := -1;
+    Lista_Arquivos.ReadOnly := true;
+    Lista_Arquivos.ViewStyle := vsReport;
+    Lista_Arquivos.ShowColumnHeaders := false;
 
+    Col := Lista_Arquivos.Columns.Add;
+    Col.Caption := 'Media';
+    Col.Alignment := taLeftJustify;
+    Col.Width := 140;
+    Col.AutoSize := true;
+
+    Col := Lista_Arquivos.Columns.Add;
+    Col.Caption := 'Arquivo';
+    Col.Alignment := taLeftJustify;
+    Col.Width := 0;
+    //StatusMsg := 'Arraste arquivos para cá';
   finally
+
   end;
 
-end;
+  //
+  DragAcceptFiles(Self.Handle, true);
+  //
 
-procedure TfmPrincipal.actArquivos_Carregar_ListaExecute(Sender: TObject);
-begin
-  // Carregar lista
-  OpenDialog1.Filter := 'Lista de reuniões|*' + _APP_EXT;
-  OpenDialog1.FileName := ListaAtual;
-  if OpenDialog1.Execute() then
+
+  //
+  ReadConfig;
+  //
+  if cmdFileName <> emptyStr then
   begin
-    if FileExists(OpenDialog1.FileName) then
+    if FileExists(cmdFileName) then
     begin
-      ListaAtual := OpenDialog1.FileName;
+      ListaAtual := cmdFileName;
     end;
   end;
 end;
 
-procedure TfmPrincipal.actArquivos_Legenda_ImagemExecute(Sender: TObject);
-var
-  sArquivoCaption: String;
-  sArquivo: String;
-  sLegenda: String;
-  ItemAtual: TListItem;
+procedure TfmPrincipal.FormShow(Sender: TObject);
 begin
-  if Lista_Arquivos.ItemIndex >= 0 then
-  begin
-    ItemAtual := Lista_Arquivos.Items[Lista_Arquivos.ItemIndex];
-    sArquivoCaption := ItemAtual.Caption;
-    sArquivo := ItemAtual.SubItems[0];
-    sLegenda := FLegendas.Values[sArquivo];
-    if InputQuery('Qual a legenda para a imagem "' + sArquivo + '"?',
-      'Legenda:', sLegenda) then
-    begin
-      sLegenda := Trim(sLegenda);
-      if sLegenda <> '' then
-      begin
-        if not SameText(FLegendas.Values[sArquivo], sLegenda) then
-        begin
-          Arquivo_Lengenda_Set(sArquivo, sLegenda);
-          FModificado := true;
-        end;
-      end;
-    end;
-  end;
-
-end;
-
-procedure TfmPrincipal.actArquivos_MoverPBaixoExecute(Sender: TObject);
-var
-  i: Integer;
-  ItemPosterior: String;
-  ItemAtual: String;
-begin
-  // mover para baixo
-  i := Lista_Arquivos.ItemIndex;
-  if i < Pred(Lista_Arquivos.Items.Count) then
-  begin
-    try
-      ItemPosterior := Lista_Arquivos.Items[i + 1].SubItems[0];
-      ItemAtual := Lista_Arquivos.Items[i].SubItems[0];
-      Lista_Arquivos.Items[i + 1].Caption := ExtractFileName(ItemAtual);
-      Lista_Arquivos.Items[i + 1].SubItems[0] := ItemAtual;
-      Lista_Arquivos.Items[i].Caption := ExtractFileName(ItemPosterior);
-      Lista_Arquivos.Items[i].SubItems[0] := ItemPosterior;
-      Lista_Arquivos.ItemIndex := i + 1;
-      FModificado := true;
-      StatusMsg :=
-        'Dica: Você pode usar as teclas Ctrl+ins para incluir ou Ctrl+DEL para remover arquivos da lista.';
-    finally
-
-    end;
-  end;
-end;
-
-procedure TfmPrincipal.actArquivos_MoverPCimaExecute(Sender: TObject);
-var
-  i: Integer;
-  ItemAnterior: String;
-  ItemAtual: String;
-begin
-  // mover para cima
-  i := Lista_Arquivos.ItemIndex;
-  if i > 0 then
-  begin
-    try
-      ItemAnterior := Lista_Arquivos.Items[i - 1].SubItems[0];
-      ItemAtual := Lista_Arquivos.Items[i].SubItems[0];
-      Lista_Arquivos.Items[i - 1].Caption := ExtractFileName(ItemAtual);
-      Lista_Arquivos.Items[i - 1].SubItems[0] := ItemAtual;
-      Lista_Arquivos.Items[i].Caption := ExtractFileName(ItemAnterior);
-      Lista_Arquivos.Items[i].SubItems[0] := ItemAnterior;
-      Lista_Arquivos.ItemIndex := i - 1;
-      FModificado := true;
-      StatusMsg :=
-        'Dica: Você pode usar as teclas Ctrl+ins para incluir ou Ctrl+DEL para remover arquivos da lista.';
-    finally
-
-    end;
-  end;
-
-end;
-
-procedure TfmPrincipal.actArquivos_RemoverExecute(Sender: TObject);
-var
-  i: Integer;
-  sArquivoCaption: String;
-  ItemAtual: TListItem;
-begin
-  // Remover
-  i := Lista_Arquivos.ItemIndex;
-  if i >= 0 then
-  begin
-    ItemAtual := Lista_Arquivos.Items[i];
-    sArquivoCaption := ItemAtual.Caption;
-    if SameText(MediaAtual, sArquivoCaption) then
-    begin
-      Figura.Picture := nil;
-    end;
-    try
-      Lista_Arquivos.DeleteSelected;
-      StatusMsg := 'Media excluída: ' + sArquivoCaption;
-      FModificado := true;
-      if i <= Pred(Lista_Arquivos.Items.Count) then
-      begin
-        Lista_Arquivos.ItemIndex := i;
-      end
-      else
-      begin
-        if i - 1 <= Pred(Lista_Arquivos.Items.Count) then
-          Lista_Arquivos.ItemIndex := i - 1;
-      end;
-    finally
-
-    end;
-
-  end;
-end;
-
-procedure TfmPrincipal.actArquivos_Salvar_ListaExecute(Sender: TObject);
-begin
-  // salvar lista atual
-  Arquivo_Lista_Salvar(ListaAtual);
-end;
-
-procedure TfmPrincipal.actCopiarLocalizacaoParaClipboardExecute
-  (Sender: TObject);
-var
-  sArquivo: String;
-  sExt: String;
-  bSeVideo: Boolean;
-  sys_last_error: String;
-  sMsg: String;
-begin
-  sys_last_error := '';
-  bSeVideo := false;
-  if Lista_Arquivos.ItemIndex < 0 then
-    sys_last_error := 'Nenhum arquivo selecionado!';
-
-  if sys_last_error = '' then
-  begin
-    sArquivo := Lista_Arquivos.Items[Lista_Arquivos.ItemIndex].SubItems[0];
-    sExt := ExtractFileExt(sArquivo);
-    bSeVideo := ContainsText(_APP_EXT_VIDEO, sExt);
-    sMsg := '';
-    if not FileExists(sArquivo) then
-    begin
-      sys_last_error := 'Arquivo não encontrado: ' + sLineBreak + sArquivo;
-    end;
-  end;
-
-  if (sys_last_error = '') then
-  begin
-    try
-      Clipboard.AsText := sArquivo;
-    except
-      on e: exception do
-        sys_last_error := e.Message;
-    end;
-  end;
-
-  if (sys_last_error = '') then
-  begin
-    try
-      sMsg := ExtractFileName(sArquivo) +
-        ' foi copiado para clipboard, agora dê ctrl+v ' +
-        'na jenela de seleção de arquivo.';
-      StatusMsg := sMsg;
-      if (actCopiarLocalizacaoParaClipboard.Tag <= 0) then
-        SendTrayMessage(ExtractFileName(sArquivo), sMsg);
-      actCopiarLocalizacaoParaClipboard.Tag := 1;
-    finally
-
-    end;
-  end
-  else
-  begin
-    StatusMsg := sys_last_error;
-  end;
-
-end;
-
-procedure TfmPrincipal.actMostrarListaOuNaoExecute(Sender: TObject);
-begin
-  MenuAberto:=(not MenuAberto);
-end;
-
-procedure TfmPrincipal.actParaMidiaAnteriorExecute(Sender: TObject);
-var
-  sArquivoCaption: String;
-  sArquivo: String;
-  ItemAtual: TListItem;
-begin
-  if Lista_Arquivos.ItemIndex >= 0 then
-  begin
-    Lista_Arquivos.ItemIndex := Lista_Arquivos.ItemIndex - 1;
-    ItemAtual := Lista_Arquivos.Selected;
-    sArquivoCaption := ItemAtual.Caption;
-    sArquivo := ItemAtual.SubItems[0];
-    MediaAtual := sArquivo;
-  end;
-end;
-
-procedure TfmPrincipal.actParaMidiaPosteriorExecute(Sender: TObject);
-var
-  sArquivoCaption: String;
-  sArquivo: String;
-  ItemAtual: TListItem;
-begin
-  if Lista_Arquivos.ItemIndex >= 0 then
-  begin
-    if Lista_Arquivos.ItemIndex < Pred(Lista_Arquivos.Items.Count) then
-    begin
-      Lista_Arquivos.ItemIndex := Lista_Arquivos.ItemIndex + 1;
-      ItemAtual := Lista_Arquivos.Selected;
-      sArquivoCaption := ItemAtual.Caption;
-      sArquivo := ItemAtual.SubItems[0];
-      MediaAtual := sArquivo;
-    end;
-  end;
-end;
-
-procedure TfmPrincipal.actShowBorderExecute(Sender: TObject);
-begin
-  Self.BorderStyle:=bsSizeable;
-end;
-
-function TfmPrincipal.Arquivo_Adicionar(AArquivo: String;
-  ACanDuplicate: Boolean=true): String;
-var
-  bSePDF: Boolean;
-  bSeVideo: Boolean;
-  bSeFigura: Boolean;
-  bElegivel: Boolean;
-  i: Integer;
-  sCurArquivo: String;
-  Item: TListItem;
-begin
-  RESULT := '';
-  if FileExists(AArquivo) then
-  begin
-    bElegivel := true;
-    //Lista_Arquivos.Items.BeginUpdate;
-    if not ACanDuplicate then
-    begin
-      i := 0;
-      while (i <= Pred(Lista_Arquivos.Items.Count)) and (bElegivel) do
-      begin
-        // sCurArquivo:=Lista_Arquivos.Items[i].Data['ARQUIVO'].AsString;
-        sCurArquivo := Lista_Arquivos.Items[i].SubItems[0];
-        if (SameText(sCurArquivo, AArquivo)) then
-          bElegivel := false;
-        Inc(i);
-      end;
-    end;
-    if bElegivel then
-    begin
-      try
-        Item := Lista_Arquivos.Items.Add;
-        Item.Caption := ExtractFileName(AArquivo);
-        // Item.Data['ARQUIVO'] := AArquivo;
-        Item.SubItems.Add(AArquivo);
-        Arquivo_Lengenda_Set(Item.Caption, FLegendas.Values[Item.Caption]);
-        // Item.Detail:=AArquivo;
-        bSePDF := IsPDF(AArquivo);
-        bSeVideo := IsBrowser(AArquivo);
-        bSeFigura := IsImage(AArquivo);
-        if bSePDF then
-          Item.ImageIndex := 17
-        else if bSeVideo then
-          Item.ImageIndex := 18
-        else
-          Item.ImageIndex := -1; // 19;
-        FModificado := true;
-      except
-        on e: exception do
-          RESULT := e.Message;
-
-      end;
-    end;
-    //Lista_Arquivos.Items.EndUpdate;
-  end;
-
-end;
-
-function TfmPrincipal.Arquivo_Lengenda_Set(AArquivo, ALegenda: String): String;
-var
-  sLegendaAutoName: String;
-  i: Integer;
-  function RemoverPadroesDeFinalDeArquivo(AValue: String): String;
-  var
-    ii: Integer;
-    iiPos: Integer;
-    ssPadrao: String;
-    arrayEndOfWords: array of string;
-  begin
-    RESULT := AValue;
-    arrayEndOfWords := ['r1080', '1080', 'r720', '720', 'r480', '480', 'r540',
-      '540', 'r234', '234', 'r360', '360', 'r240', '240'];
-    for ii := Low(arrayEndOfWords) to High(arrayEndOfWords) do
-    begin
-      ssPadrao := arrayEndOfWords[ii];
-      iiPos := Pos(ssPadrao, RESULT);
-      if iiPos > 0 then
-        RESULT := LeftStr(RESULT, iiPos - 1);
-    end;
-  end;
-
-begin
-  ALegenda := Trim(ALegenda);
-  if (ALegenda = '') then
-    ALegenda := ChangeFileExt(ExtractFileName(AArquivo), '');
-
-  sLegendaAutoName := ChangeFileExt(ExtractFileName(AArquivo), '');
-
-  if SameText(ALegenda, sLegendaAutoName) then
-  begin
-    // a legenda foi automatica e não definida pelo usuario
-    // então posso mudar. as vezes deixam a qualidade da resolução ao final
-    // do nome do arquivo então retiramos
-    ALegenda := RemoverPadroesDeFinalDeArquivo(ALegenda);
-    ALegenda := StringReplace(ALegenda, '_', ' ', [rfReplaceAll]);
-    ALegenda := Trim(ALegenda);
-  end;
-  FLegendas.Values[ExtractFileName(AArquivo)] := ALegenda;
-  if SameText(ExtractFileName(MediaAtual),ExtractFileName(AArquivo)) then
-  begin
-    Exibir_Legenda:=ALegenda;
-  end;
-end;
-
-function TfmPrincipal.Arquivo_Lista_Carregar(AArquivo: String): String;
-var
-  sArquivoNew: String;
-  i: Integer;
-  L: TStringList;
-begin
-  RESULT := '';
-  L := TStringList.Create;
-  if FileExists(AArquivo) then
-  begin
-    L.LoadFromFile(AArquivo);
-    i := 0;
-    while (i <= Pred(L.Count)) do
-    begin
-      sArquivoNew := L[i];
-      if (sArquivoNew <> emptyStr) and (FileExists(sArquivoNew)) then
-      begin
-        try
-          Arquivo_Adicionar(sArquivoNew);
-        except
-          on e: exception do
-            RESULT := e.Message;
-
-        end;
-
-      end;
-      Inc(i);
-    end;
-    if Result = emptyStr then
-    begin
-      if FileExists(AArquivo + '.legendas') then
-      begin
-        FLegendas.LoadFromFile(AArquivo + '.legendas');
-      end;
-    end;
-    if Result = emptyStr then
-    begin
-      FModificado := false;
-      Lista_ArquivosAutoWidth;
-      Lista_Arquivos.ItemIndex:=-1;
-    end;
-  end;
-  if Assigned(L) then
-    FreeAndNil(L);
-
-end;
-
-function TfmPrincipal.Arquivo_Lista_Salvar(AArquivo: String): String;
-var
-  i: Integer;
-  sArqLegendas: String;
-  sCurArquivo: String;
-  L: TStringList;
-  SaveDialog1: TSaveDialog;
-begin
-  RESULT := '';
-  L := TStringList.Create;
-  SaveDialog1 := TSaveDialog.Create(Self);
-  if AArquivo = '' then
-    AArquivo := ListaAtual;
-  SaveDialog1.Filter := 'Lista de tópicos|*' + _APP_EXT;
-  SaveDialog1.FileName := AArquivo;
-  if SaveDialog1.Execute() then
-  begin
-    FListaAtual := SaveDialog1.FileName;
-    if ExtractFileExt(FListaAtual) = '' then
-      FListaAtual := FListaAtual + _APP_EXT;
-    if Pos('..' + _APP_EXT, FListaAtual) > 0 then
-      FListaAtual := StringReplace(FListaAtual, '..' + _APP_EXT, '.' + _APP_EXT,
-        [rfIgnoreCase]);
-    for i := 0 to Pred(Lista_Arquivos.Items.Count) do
-    begin
-      sCurArquivo := Lista_Arquivos.Items[i].SubItems[0];
-      L.Add(sCurArquivo);
-    end;
-    try
-      L.SaveToFile(FListaAtual);
-      FModificado := false;
-      // salvamos as legendas tambem
-      sArqLegendas := FListaAtual + '.legendas';
-      if FLegendas.Count > 0 then
-        FLegendas.SaveToFile(sArqLegendas);
-    except
-      on e: exception do
-        RESULT := e.Message;
-    end;
-  end;
-  if RESULT = emptyStr then
-    FModificado := false;
-  if Assigned(L) then
-    FreeAndNil(L);
-  SaveDialog1.Free;
-
-end;
-
-procedure TfmPrincipal.AutoStart(var Message: TMessage);
-begin
-   actAjudaExecute(nil);
-end;
-
-procedure TfmPrincipal.Browser_Stop;
-begin
-  if WebBrowser1.Busy then
-    WebBrowser1.Stop;
-  WebBrowser1.Navigate('blank://');
-end;
-
-procedure TfmPrincipal.Adequar_Figura;
-var
-  w, h:Integer;
-  pict:TPicture;
-begin
-  // todo: ajustar o tamanho da janela ao tamanho da figura
-  // desde que respeito o limite maximo da janela
-  if Assigned(Figura.Picture) then
-  begin
-    Self.Onresize:=nil;
-    if Figura.Picture<>nil then
-    begin
-      pict:=TPicture.Create;
-      try
-        pict.LoadFromFile(MediaAtual);
-        w:=pict.Width;
-        h:=pict.Height;
-        if (w>_FWidth_Max) or (h>_FHeight_Max) then
-        begin
-          w:=_FWidth_Max;
-          h:=_FHeight_Max;
-        end;
-        Self.ClientWidth:=w;
-        Self.ClientHeight:=h+Trunc(pnlLegenda.Height);
-
-      finally
-        pict.Free;
-      end;
-    end;
-   // Self.Onresize:=FormResize;
-  end;
-end;
-
-procedure TfmPrincipal.Adequar_Video;
-var
-  bIsVerScroll: Boolean;
-begin
-  if (Visible) and (Active) then
-  begin
-    repeat
-      fmPrincipal.Height := Self.Height + 1;
-      bIsVerScroll := VertScrollBarVisible(WebBrowser1.Handle);
-      // Self.ClientHandle
-      Application.ProcessMessages;
-    until (not bIsVerScroll) and (Self.Height < Screen.Height);
-  end;
-end;
-
-procedure TfmPrincipal.FiguraDblClick(Sender: TObject);
-const
-  _Mensagem =
-   'Quando você dá um duplo clique na imagem ela será exibida proporcional '+
-   'ou esticada';
-var
-  sTitulo:String;
-begin
-  Figura.Proportional:=(not Figura.Proportional);
-  if Figura.Tag<30 then
-  begin
-    // este aviso é mostrado no maximo 30 vezes
-    sTitulo:='A imagem está proporcional';
-    if not Figura.Proportional then
-      sTitulo:='A imagem foi esticada';
-    //SendTrayMessage(sTitulo, _Mensagem);
-    StatusMsg:=sTitulo+': '+_Mensagem;
-    Figura.Tag:=Figura.Tag+1;
-  end;
-end;
-
-procedure TfmPrincipal.PermitirArrastarJanela(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-const
-   sc_DragMove = $f012;
-begin
-  ReleaseCapture;
-  Perform(wm_SysCommand, sc_DragMove, 0);
-
-end;
-
-function TfmPrincipal.FilePathToURL(const FilePath: string): string;
-var
-  BufferLen: DWORD;
-begin
-  BufferLen := INTERNET_MAX_URL_LENGTH;
-  SetLength(RESULT, BufferLen);
-  OleCheck(UrlCreateFromPath(PChar(FilePath), PChar(RESULT), @BufferLen, 0));
-  SetLength(RESULT, BufferLen);
-
-end;
-
-procedure TfmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  WebBrowser1.ControlInterface._AddRef;
-  FMeuPDF.ControlInterface._AddRef;
+  Caption:=Application.Title;
+  //
+  BtnactArquivo_Adicionar.Caption:='';
+  BtnactArquivo_Remover.Caption:='';
+  BtnactArquivo_MoverPCima.Caption:='';
+  BtnactArquivo_MoverPBaixo.Caption:='';
+  BtnactArquivo_Caminho_Abrir.Caption:='';
+  BtnactArquivo_Caminho_Clipboard.Caption:='';
+  BtnactMedia_Bordas.Caption:='';
+  BtnactMedia_Legenda.Caption:='';
+  BtnactMedia_Ir_Anterior.Caption:='';
+  BtnactMedia_Ir_Proximo.Caption:='';
+  BtnactMedia_Stop.Caption:='';
+  BtnactMedia_Proporcional.Caption:='';
+  //
+  //PostMessage(Handle, wm_user, 0, 0);
+  StatusMsg:='Arraste um arquivo para começar a criar uma lista ou carregue uma pré-existente.';
 end;
 
 procedure TfmPrincipal.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -995,275 +330,146 @@ begin
   end;
 end;
 
-procedure TfmPrincipal.FormCreate(Sender: TObject);
-var
-  i: Integer;
-  cmdFileName: String;
-  Col: TListColumn;
-begin
-  Caption := 'Organizador de reunião';
-  FLegendas := TStringList.Create;
-  FListaAtual := '';
-  FMediaAtual := '';
-  FModificado := false;
-  FConfigFile := ChangeFileExt(ParamStr(0), '.ini');
-  FWebBrowserComplete := false;
-
-  cmdFileName := ParamStr(1);
-  MenuAberto := true;
-  //
-  try
-    Lista_Arquivos.ColumnClick := false;
-    Lista_Arquivos.DragMode := dmManual;
-    Lista_Arquivos.FlatScrollBars := true;
-    Lista_Arquivos.FullDrag := false;
-    Lista_Arquivos.GridLines := false;
-    Lista_Arquivos.HideSelection := false;
-    Lista_Arquivos.HoverTime := -1;
-    Lista_Arquivos.ReadOnly := true;
-    Lista_Arquivos.ViewStyle := vsReport;
-    Lista_Arquivos.ShowColumnHeaders := false;
-
-    Col := Lista_Arquivos.Columns.Add;
-    Col.Caption := 'Media';
-    Col.Alignment := taLeftJustify;
-    Col.Width := 140;
-    Col.AutoSize := true;
-
-    Col := Lista_Arquivos.Columns.Add;
-    Col.Caption := 'Arquivo';
-    Col.Alignment := taLeftJustify;
-    Col.Width := 0;
-    StatusMsg := 'Arraste arquivos para cá';
-  finally
-
-  end;
-  //
-  for i := 0 to Pred(Paginas.PageCount) do
-  begin
-    Paginas.Pages[i].TabVisible := false;
-  end;
-  Paginas.ActivePageIndex := 0;
-  //
-  DragAcceptFiles(Self.Handle, true);
-  //
-  FMeuPDF := TAcroPDF.Create(TabPDF);
-  FMeuPDF.Parent := TabPDF;
-  FMeuPDF.Align := alClient;
-  FMeuPDF.setShowToolbar(false);
-
-  //
-  ReadConfig;
-  //
-  if cmdFileName <> emptyStr then
-  begin
-    if FileExists(cmdFileName) then
-    begin
-      ListaAtual := cmdFileName;
-    end;
-  end;
-  //
-  BtnactFixar.Down:=false;
-  //
-  //pnlLegenda.Caption:='';
-  //pnlLegenda.Parent:=TabFigura;
-  //BtnBorderStyle.Parent:=TabFigura;
-  //BtnBorderStyle.Top:=0;
-  //BtnBorderStyle.Left:=Self.ClientWidth-BtnBorderStyle.Width;
-  //BtnBorderStyle.BringToFront;
-end;
-
-procedure TfmPrincipal.FormShow(Sender: TObject);
-begin
-  BtnactFixar.Parent:=Lista_Arquivos;
-  BtnactFixar.Top:=2;
-  BtnactFixar.Left:=Lista_Arquivos.Width-BtnactFixar.Width;
-
-  //
-  PostMessage(Handle, wm_user, 0, 0);
-  //actAjudaExecute(Sender);
-  Caption:=Application.Title;
-  PaginasChange(Sender);
-end;
-
 procedure TfmPrincipal.FormDestroy(Sender: TObject);
 begin
-  try
-    if Assigned(Figura.Picture) then
-      Figura.Picture := nil;
-    if Assigned(WebBrowser1) then
-      WebBrowser1.Free;
-    if Assigned(FMeuPDF) then
-      FMeuPDF := nil;
-
-    FLegendas.Free;
-
-    DragAcceptFiles(Self.Handle, false);
-  finally
-
-  end;
-
+  if Assigned(FMediaLegendasList) then
+    FreeAndNil(FMediaLegendasList);
 end;
 
-procedure TfmPrincipal.FormMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
+
+function TfmPrincipal.HTML_GetCode(AArquivo: String; var ASaveHTMLAs:String): String;
 const
-  SC_DRAGMOVE = $F012;
-begin
-  // Permite arrastar a janela sem necessariamente tocar no caption
-  if Button = mbLeft then
-  begin
-    ReleaseCapture;
-    Perform(WM_SYSCOMMAND, SC_DRAGMOVE, 0);
-  end;
-
-end;
-
-procedure TfmPrincipal.FormMouseMove(Sender: TObject; Shift: TShiftState;
-  X, Y: Integer);
-var
-  bEstouDentro: Boolean;
-  Limite_X: Integer;
-begin
-  bEstouDentro := false;
-  Limite_X := 10;
-  if Lista_Arquivos.Visible then
-    Limite_X := Lista_Arquivos.Width;
-  if (X < 10) then
-  begin
-    if (Y > 0) and (Y < pnlLegenda.Top) then
-    begin
-      bEstouDentro := true;
-    end;
-  end;
-  if bEstouDentro then
-  begin
-    MenuAberto := true;
-  end
-  else
-  begin
-    if not BtnactFixar.Down then
-    begin
-      MenuAberto := false;
-    end;
-  end;
-end;
-
-procedure TfmPrincipal.FormMouseWheelDown(Sender: TObject; Shift: TShiftState;
-  MousePos: TPoint; var Handled: Boolean);
-begin
-  try
-    Handled := true;
-    actParaMidiaPosteriorExecute(Sender);
-  finally
-
-  end;
-end;
-
-procedure TfmPrincipal.FormMouseWheelUp(Sender: TObject; Shift: TShiftState;
-  MousePos: TPoint; var Handled: Boolean);
-begin
-  try
-    Handled := true;
-    actParaMidiaAnteriorExecute(Sender);
-  finally
-
-  end;
-end;
-
-procedure TfmPrincipal.FormPaint(Sender: TObject);
-begin
-  BtnBorderStyle.Top:=Paginas.ClientHeight-BtnBorderStyle.Height;
-  BtnBorderStyle.Left:=Paginas.ClientWidth-BtnBorderStyle.Width;
-end;
-
-function TfmPrincipal.HTML_View(AArquivo: String; AIE: Boolean): String;
+  _IE_Compativel=false;
 var
   sUrlPathToMedia: String;
   sMimeExt: String;
-  function IE_Video: String;
-  begin
-    RESULT := RESULT + '<html>' + sLineBreak;
-    RESULT := RESULT + '<head>' + sLineBreak;
-    RESULT := RESULT + '<meta http-equiv="X-UA-Compatible" content="IE=9" />' +
-      sLineBreak;
-    RESULT := RESULT + '</head>' + sLineBreak;
-    Result:=Result+'<style>'+sLineBreak;
-    Result:=Result+'html'+sLineBreak;
-    Result:=Result+'{'+sLineBreak;
-    Result:=Result+' position:fixed;'+sLineBreak;
-    Result:=Result+' overflow:hidden;'+sLineBreak;
-    Result:=Result+' -ms-overflow-style: none;'+sLineBreak;
-    Result:=Result+'    border:0px;'+sLineBreak;
-    Result:=Result+' }</style>'+sLineBreak;
-
-    RESULT := RESULT +
-      '  <body style="background-color:black;margin=0px;padding=0px;">' +
-      sLineBreak;
-    if AArquivo = '' then
-    begin
-      RESULT := RESULT +
-        '<p><h3>Copie o endereço da localização do arquivo para a área de ' +
-        'clipboard e depois cole (ctrl+v) na janela de seleção de arquivo desejada.</h3></p>'
-        + sLineBreak;
-    end
-    else
-    begin
-      if FileExists(AArquivo) then
-      begin
-        RESULT := RESULT +
-          '  <video id=video width=100% autobuffer controls fullscreen="true">'
-          + sLineBreak; // controls
-        RESULT := RESULT + '  <source src="' + sUrlPathToMedia +
-          '" type="video/' + sMimeExt + '">' + sLineBreak;
-        RESULT := RESULT +
-          '  <object type="video/mp4" data="media_v/video.mp4"  min-width: 100% min-height: 100%">'
-          + sLineBreak;
-        RESULT := RESULT + '  </object>' + sLineBreak;
-        RESULT := RESULT + '  Seu navegador padrão não suporta a tag video.' +
-          sLineBreak;
-        RESULT := RESULT + '  </video>' + sLineBreak;
-      end
-      else
-      begin
-        RESULT := RESULT + '<p><h3>Arquivo não encontrado:</h3></p> ' +
-          sLineBreak;
-        RESULT := RESULT + '<p>' + AArquivo + '</p> ' + sLineBreak;
-        RESULT := RESULT + '<p>' + sUrlPathToMedia + '</p> ' + sLineBreak;
-      end;
-    end;
-    RESULT := RESULT + '  </body>' + sLineBreak;
-    RESULT := RESULT + '</html>' + sLineBreak;
-  end;
-
+  L:TStringList;
 begin
+  L:=TStringList.Create;
   sUrlPathToMedia := FilePathToURL(AArquivo);
   sMimeExt := ExtractFileExt(AArquivo);
   if LeftStr(sMimeExt, 1) = '.' then
     sMimeExt := RightStr(sMimeExt, Length(sMimeExt) - 1);
 
-  if IsBrowser(AArquivo) and (AIE) then
+  //if IsVideo(AArquivo) and (AIE) then
+  //begin
+  //  RESULT := IE_Video;
+  //end
+  //else
+  if IsVideo(AArquivo) then
   begin
-    RESULT := IE_Video;
-  end
-  else
+    if _IE_Compativel then
+    begin
+      L.Add('<html>');
+      L.Add('<head>');
+      L.Add('<meta http-equiv="X-UA-Compatible" content="IE=9" />' );
+      L.Add('</head>');
+      L.Add('<style>');
+      L.Add('html');
+      L.Add('{');
+      L.Add(' position:fixed;');
+      L.Add(' overflow:hidden;');
+      L.Add(' -ms-overflow-style: none;');
+      L.Add('    border:0px;');
+      L.Add(' }</style>');
+      L.Add('  <body style="background-color:black;margin=0px;padding=0px;">');
+      L.Add('  <video id=video width=100% autobuffer controls fullscreen="true">'); // controls
+      L.Add('  <source src="' + sUrlPathToMedia +'" type="video/' + sMimeExt + '">');
+      L.Add('  <object type="video/mp4" data="media_v/video.mp4"  min-width: 100% min-height: 100%">');
+      L.Add('  </object>');
+      L.Add('  Seu navegador padrão não suporta a tag video.');
+      L.Add('  </video>');
+    end
+    else
+    begin
+      L.Add('<head>');
+      L.Add('</head>');
+      L.Add('<body style="background-color:black;margin=0px;padding=0px;">');
+      L.Add('  <video id=video ');
+      //if MediaProporcional_Width then
+      //  L.Add('     width="100%" ')
+      //else
+        L.Add('     width="100%"; height="100%" ');
+      L.Add('     autoplay="true" ');
+      L.Add('     controls="false" ');
+      L.Add('     fullscreen="true">'); // controls
+      L.Add('  <source src="' + sUrlPathToMedia + '" type="video/'+sMimeExt + '">');
+      L.Add('  Seu navegador padrão não suporta a tag video.' );
+      L.Add('  </video>');
+      L.Add('</body>');
+    end
+  end;
+  if IsImage(AArquivo) then
   begin
-    RESULT := RESULT + '<head>' + sLineBreak;
-    RESULT := RESULT + '</head>' + sLineBreak;
-    RESULT := RESULT +
-      '<body style="background-color:black;margin=0px;padding=0px;">' +
-      sLineBreak;
-    RESULT := RESULT +
-      '  <video id=video width="100%" autoplay="true" controls="false" fullscreen="true">'
-      + sLineBreak; // controls
-    RESULT := RESULT + '  <source src="' + sUrlPathToMedia + '" type="video/' +
-      sMimeExt + '">' + sLineBreak;
-    RESULT := RESULT + '  Seu navegador padrão não suporta a tag video.' +
-      sLineBreak;
-    RESULT := RESULT + '  </video>' + sLineBreak;
-    RESULT := RESULT + '</body>' + sLineBreak;
+    L.Add('<head>');
+    L.Add('</head>');
+    L.Add('<body style="background-color:black;margin=0px;padding=0px;">');
+    L.Add('<html>');
+    if MediaProporcional_Width then
+      L.Add('<img style="width:100%;" id="image" src="'+sUrlPathToMedia+'">')
+    else
+      L.Add('<img style="width:100%; height: 100%;" id="image" src="'+sUrlPathToMedia+'">');
+    //L.Add('<img style="width:100%;height:100%;" id="image" src="'+sUrlPathToMedia+'">');
+    L.Add('</html>');
+    L.Add('</body>');
+  end;
+  if IsPDF(AArquivo) then
+  begin
+    L.Add('<head>');
+    L.Add('</head>');
+    L.Add('<body style="background-color:black;margin=0px;padding=0px;">');
+    L.Add('<html>');
+    L.Add('<object data="'+sUrlPathToMedia+'" type="application/pdf" ');
+    if MediaProporcional_Width then
+      L.Add('    width="100%">')
+    else
+      L.Add('    width="100%" height="100%">');
+    L.Add('</object>');
+    L.Add('</html>');
+    L.Add('</body>');
   end;
 
+  if (L.Count>0) and (ASaveHTMLAs<>'') then
+  begin
+    if DirectoryExists(ExtractFilePath(ASaveHTMLAs)) then
+    begin
+      L.SaveToFile(ASaveHTMLAs);
+    end
+    else
+    begin
+      ASaveHTMLAs:='';
+    end;
+  end;
+
+end;
+
+function TfmPrincipal.HTML_GetHello(ATexto: String): String;
+begin
+  Result:=
+    '<style>'+sLineBreak+
+    '.container {'+sLineBreak+
+    '  text-align: center;'+sLineBreak+
+    '  height: 200px;'+sLineBreak+
+    '  position: relative;'+sLineBreak+
+//    '  border: 3px solid green;'+sLineBreak+
+    '}'+sLineBreak+
+    ''+sLineBreak+
+    '.vertical-center {'+sLineBreak+
+    '  margin: 0;'+sLineBreak+
+    '  position: absolute;'+sLineBreak+
+    '  top: 50%;'+sLineBreak+
+    '  -ms-transform: translateY(-50%);'+sLineBreak+
+    '  transform: translateY(-50%);'+sLineBreak+
+    '}'+sLineBreak+
+    '</style>'+sLineBreak+
+    '<html>'+sLineBreak+
+    '<body style="background-color:black; color: white;">'+sLineBreak+
+    '<div class="container">'+sLineBreak+
+    '  <div class="vertical-center">'+sLineBreak+
+    '    <p>'+ATexto+'</p>'+sLineBreak+
+    '  </div>'+sLineBreak+
+    '</div>'+sLineBreak+
+    '</body></html>';
 end;
 
 function TfmPrincipal.IsFileAcceptable(AArquivo: String): Boolean;
@@ -1272,9 +478,10 @@ begin
   if (not RESULT) then
     RESULT := IsImage(AArquivo);
   if (not RESULT) then
-    RESULT := IsBrowser(AArquivo);
+    RESULT := IsVideo(AArquivo);
   if (not RESULT) then
     RESULT := IsPDF(AArquivo);
+
 end;
 
 function TfmPrincipal.IsImage(AArquivo: String): Boolean;
@@ -1295,38 +502,12 @@ begin
 
 end;
 
-function TfmPrincipal.IsBrowser(AArquivo: String): Boolean;
+function TfmPrincipal.IsVideo(AArquivo: String): Boolean;
 var
   sExt: String;
 begin
   sExt := ExtractFileExt(AArquivo);
   RESULT := ContainsText(_APP_EXT_VIDEO, sExt);
-
-end;
-
-procedure TfmPrincipal.Lista_ArquivosAutoWidth;
-const
-  _offset=22;
-var
-  i:Integer;
-  w:Integer;
-  sCaption:String;
-begin
-    // todo: A largura do painel deve ser automatica em conformidade com
-    //   o tamanho dos nomes dos arquivos e não tem um valor fixo
-    // o calculo abaixo está errado, estou compensando acrescentando mais
-    // caracteres ao sCaption, mas preciso descobrir uma maneira melhor
-    try
-      for i:=0 to Pred(Lista_Arquivos.Items.Count) do begin
-        sCaption:=Lista_Arquivos.Items[i].Caption;
-        w := Lista_Arquivos.Canvas.TextWidth(sCaption)+_offset;
-        if w>Lista_Arquivos.Width then begin
-          Lista_Arquivos.Width:=w;
-        end;
-      end;
-    finally
-
-    end;
 
 end;
 
@@ -1347,7 +528,7 @@ procedure TfmPrincipal.Lista_ArquivosDragDrop(Sender, Source: TObject; X,
 var
   DragItem, DropItem, CurrentItem, NextItem: TListItem;
 begin
-  {if Sender = Source then
+  if Sender = Source then
     with TListView(Sender) do
     begin
       DropItem    := GetItemAt(X, Y);
@@ -1362,141 +543,136 @@ begin
         CurrentItem.Free;
         CurrentItem := NextItem;
       end;
-    end;}
+    end;
+
 
 end;
 
 procedure TfmPrincipal.Lista_ArquivosDragOver(Sender, Source: TObject; X,
   Y: Integer; State: TDragState; var Accept: Boolean);
 begin
-//  Accept := (Source = Lista_Arquivos);
+  Accept := (Source = Lista_Arquivos);
 end;
 
 procedure TfmPrincipal.Lista_ArquivosMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  //if (Sender = Lista_Arquivos) and (Button = mbLeft) then
-  //   Lista_Arquivos.BeginDrag(False); // inicia a operacao
+  if (Sender = Lista_Arquivos) and (Button = mbLeft) then
+     Lista_Arquivos.BeginDrag(False); // inicia a operacao
 end;
 
 procedure TfmPrincipal.Lista_ArquivosSelectItem(Sender: TObject;
   Item: TListItem; Selected: Boolean);
 var
-  sArquivoCaption: String;
   sArquivo: String;
 begin
   if (Selected) and (Lista_Arquivos.Focused) then
   begin
-    sArquivoCaption := Item.Caption;
+    //FMediaAtual_Titulo := Item.Caption;
     sArquivo := Item.SubItems[0];
+    if FileExists(sArquivo) then
+      MediaAtual := sArquivo;
+  end;
+
+end;
+
+procedure TfmPrincipal.actMedia_BordasExecute(Sender: TObject);
+begin
+  if fmExibicao.BorderStyle=bsNone then
+  begin
+    fmExibicao.BorderStyle:=bsSizeable;
+    fmExibicao.AutoSize:=false;
+  end
+  else
+  begin
+    fmExibicao.BorderStyle:=bsNone;
+    fmExibicao.AutoSize:=true;
+  end;
+end;
+
+procedure TfmPrincipal.actMedia_Ir_AnteriorExecute(Sender: TObject);
+var
+  sArquivoCaption: String;
+  sArquivo: String;
+  ItemAtual: TListItem;
+begin
+  if Lista_Arquivos.ItemIndex > 0 then
+  begin
+    Lista_Arquivos.ItemIndex := Lista_Arquivos.ItemIndex - 1;
+    ItemAtual := Lista_Arquivos.Selected;
+    sArquivoCaption := ItemAtual.Caption;
+    sArquivo := ItemAtual.SubItems[0];
     MediaAtual := sArquivo;
   end;
+  //if Lista_Arquivos.ItemIndex>0 then
+  //  Lista_Arquivos.ItemIndex:=Lista_Arquivos.ItemIndex-1;
 end;
 
-procedure TfmPrincipal.MoverMousePara(APosX, APosY:Integer);
+procedure TfmPrincipal.actMedia_Ir_ProximoExecute(Sender: TObject);
 var
-  psmouse:Tpoint;
-  pscontrole:Tpoint;
-  largura:integer;
-  altura:Integer;
-  sair:Boolean;
+  sArquivoCaption: String;
+  sArquivo: String;
+  ItemAtual: TListItem;
 begin
-  sair:=false;
-  psmouse:=mouse.CursorPos;
-  while not sair do
+  if Lista_Arquivos.ItemIndex < Pred(Lista_Arquivos.Items.Count) then
   begin
-    sair:=true;
-    if psmouse.X> (APosX) then
+    Lista_Arquivos.ItemIndex := Lista_Arquivos.ItemIndex + 1;
+    ItemAtual := Lista_Arquivos.Selected;
+    sArquivoCaption := ItemAtual.Caption;
+    sArquivo := ItemAtual.SubItems[0];
+    MediaAtual := sArquivo;
+  end;
+  //if Lista_Arquivos.ItemIndex<Pred(Lista_Arquivos.Items.Count) then
+  //  Lista_Arquivos.ItemIndex:=Lista_Arquivos.ItemIndex+1;
+end;
+
+procedure TfmPrincipal.actMedia_LegendaExecute(Sender: TObject);
+var
+  sArquivoCaption: String;
+  sArquivo: String;
+  sLegenda: String;
+  ItemAtual: TListItem;
+begin
+  if Lista_Arquivos.ItemIndex >= 0 then
+  begin
+    ItemAtual := Lista_Arquivos.Items[Lista_Arquivos.ItemIndex];
+    sArquivoCaption := ItemAtual.Caption;
+    sArquivo := ItemAtual.SubItems[0];
+    sLegenda := FMediaLegendasList.Values[sArquivo];
+    if Quero_Resposta('Legenda para "'+sArquivoCaption+'":', sLegenda, sLegenda) then
     begin
-      psmouse.X:=psmouse.X-1;
-      mouse.CursorPos:=psmouse;
-      sair:=false;
+      sLegenda := Trim(sLegenda);
+      FMediaLegendasList.Values[ExtractFileName(sArquivo)]:= sLegenda;
+      FModificado := true;
     end;
-    if psmouse.X<(APosX) then
-    begin
-      psmouse.X:=psmouse.X+1;
-      mouse.CursorPos:=psmouse;
-      sair:=false;
-    end;
-    //
-    if psmouse.Y> (APosY) then
-    begin
-      psmouse.Y:=psmouse.Y-1;
-      mouse.CursorPos:=psmouse;
-      sair:=false;
-    end;
-    if psmouse.Y<(APosY) then
-    begin
-      psmouse.Y:=psmouse.Y+1;
-      mouse.CursorPos:=psmouse;
-      sair:=false;
-    end;
-    sleep(10);
-    Application.ProcessMessages;
   end;
 end;
-{
-procedure TfmPrincipal.MoverMousePara(Controle: TWinControl);
-var
-  psmouse:Tpoint;
-  pscontrole:Tpoint;
-  largura:integer;
-  altura:Integer;
-  sair:Boolean;
+
+procedure TfmPrincipal.actMedia_ProporcionalExecute(Sender: TObject);
 begin
-  sair:=false;
-  psmouse:=mouse.CursorPos;
-  pscontrole:=controle.ClientOrigin;
-  largura:=controle.Width div 2;
-  altura:=controle.Height div 2;
-  while not sair do
+  MediaProporcional_Width:=(not MediaProporcional_Width);
+end;
+
+procedure TfmPrincipal.actMedia_StopExecute(Sender: TObject);
+begin
+  if Assigned(fmExibicao) then
   begin
-    sair:=true;
-    if psmouse.X> (pscontrole.x + largura) then
+    if fmExibicao.Showing then
     begin
-      psmouse.X:=psmouse.X-1;
-      mouse.CursorPos:=psmouse;
-      sair:=false;
+      fmExibicao.Navegador.NavigateToString(HTML_GetHello(Hello_Message));
     end;
-    if psmouse.X<(pscontrole.X+largura) then
-    begin
-      psmouse.X:=psmouse.X+1;
-      mouse.CursorPos:=psmouse;
-      sair:=false;
-    end;
-    //
-    if psmouse.Y> (pscontrole.Y + altura) then
-    begin
-      psmouse.Y:=psmouse.Y-1;
-      mouse.CursorPos:=psmouse;
-      sair:=false;
-    end;
-    if psmouse.Y<(pscontrole.Y+altura) then
-    begin
-      psmouse.Y:=psmouse.Y+1;
-      mouse.CursorPos:=psmouse;
-      sair:=false;
-    end;
-    sleep(10);
-    Application.ProcessMessages;
   end;
 end;
-}
 
-procedure TfmPrincipal.PaginasChange(Sender: TObject);
+procedure TfmPrincipal.actMensagem_DescansoExecute(Sender: TObject);
+var
+  S:String;
 begin
-  pnlLegenda.Caption:='';
-  pnlLegenda.Parent:=Paginas.ActivePage;
-  BtnBorderStyle.Parent:=Paginas.ActivePage;
-  BtnBorderStyle.Top:=Paginas.ClientHeight-BtnBorderStyle.Height;
-  BtnBorderStyle.Left:=Paginas.ClientWidth-BtnBorderStyle.Width;
-  BtnBorderStyle.BringToFront;
-end;
-
-procedure TfmPrincipal.PaginasMouseEnter(Sender: TObject);
-begin
-  if MenuAberto then
-    MenuAberto:=false;
+  S:=FHello_Message;
+  if Quero_Resposta('Mensagem de descanso ou boas vindas:', S, S) then
+  begin
+    Hello_Message:=S;
+  end;
 end;
 
 procedure TfmPrincipal.ReadConfig;
@@ -1507,14 +683,14 @@ var
 begin
   try
     MyIni := TIniFile.Create(FConfigFile);
-
     sListaAtual := MyIni.ReadString('Config', 'ListaAtual', FListaAtual);
     sMediaAtual := MyIni.ReadString('Config', 'MediaAtual', FMediaAtual);
+    Hello_Message := MyIni.ReadString('Config', 'Hello_Message', FHello_Message);
     Top := MyIni.ReadInteger('Config', 'Top', Self.Top);
     Left := MyIni.ReadInteger('Config', 'Left', Self.Left);
     Width := MyIni.ReadInteger('Config', 'Width', Self.Width);
     Height := MyIni.ReadInteger('Config', 'Height', Self.Height);
-    Figura.Proportional:=MyIni.ReadBool('Config','Figura.Proportional', Figura.Proportional);
+    MediaProporcional_Width:=MyIni.ReadBool('Config','MediaProporcional_Width', MediaProporcional_Width);
     if FileExists(sListaAtual) then
     begin
       ListaAtual := sListaAtual;
@@ -1539,35 +715,16 @@ begin
     MyIni := TIniFile.Create(FConfigFile);
     MyIni.WriteString('Config', 'ListaAtual', FListaAtual);
     MyIni.WriteString('Config', 'MediaAtual', FMediaAtual);
+    MyIni.WriteString('Config', 'Hello_Message', FHello_Message);
     MyIni.WriteInteger('Config', 'Top', Self.Top);
     MyIni.WriteInteger('Config', 'Left', Self.Left);
     MyIni.WriteInteger('Config', 'Width', Self.Width);
     MyIni.WriteInteger('Config', 'Height', Self.Height);
-    MyIni.WriteBool('Config','Figura.Proportional', Figura.Proportional);
+    MyIni.WriteBool('Config','MediaProporcional_Width', MediaProporcional_Width);
   finally
     if Assigned(MyIni) then
       FreeAndNil(MyIni);
   end;
-
-end;
-
-procedure TfmPrincipal.WebBrowser1BeforeNavigate2(ASender: TObject;
-  const pDisp: IDispatch; const URL, Flags, TargetFrameName, PostData,
-  Headers: OleVariant; var Cancel: WordBool);
-begin
-  FWebBrowserComplete := false;
-end;
-
-procedure TfmPrincipal.WebBrowser1DocumentComplete(ASender: TObject;
-  const pDisp: IDispatch; const URL: OleVariant);
-begin
-  FWebBrowserComplete := true;
-end;
-
-procedure TfmPrincipal.WebBrowser1NavigateComplete2(ASender: TObject;
-  const pDisp: IDispatch; const URL: OleVariant);
-begin
-  FWebBrowserComplete := true;
 end;
 
 procedure TfmPrincipal.WMDropFiles(var Msg: TWMDropFiles);
@@ -1628,202 +785,549 @@ begin
 
 end;
 
-procedure TfmPrincipal.WMExitSizeMove(var Message: TMessage);
+
+
+procedure TfmPrincipal.actArquivo_AdicionarExecute(Sender: TObject);
+var
+  sArquivo: String;
+  i: Integer;
+  sListaParaAbrir: String;
+  OpenDialog1:TOpenDialog;
 begin
-  if Paginas.ActivePage = TabMedia then
-    Adequar_Video;
-
-end;
-
-
-
-
-procedure TfmPrincipal.ScrollBox1MouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-const
-   sc_DragMove = $f012;
-begin
-  ReleaseCapture;
-  Perform(wm_SysCommand, sc_DragMove, 0);
-
-end;
-
-procedure TfmPrincipal.SendTrayMessage(ACaption, AText: String);
-begin
+  // adicionando arquivos
+  sListaParaAbrir := StringReplace(_APP_EXT_VIDEO + _APP_EXT_FIG + _APP_EXT_PDF,
+    '|', ';*', [rfReplaceAll]);
+  if LeftStr(sListaParaAbrir, 1) = ';' then
+    while LeftStr(sListaParaAbrir, 1) = ';' do
+      sListaParaAbrir := RightStr(sListaParaAbrir, Length(sListaParaAbrir) - 1);
+  if RightStr(sListaParaAbrir, 1) = '*' then
+    while RightStr(sListaParaAbrir, 1) = '*' do
+      sListaParaAbrir := LeftStr(sListaParaAbrir, Length(sListaParaAbrir) - 1);
+  if RightStr(sListaParaAbrir, 1) = ';' then
+    while RightStr(sListaParaAbrir, 1) = ';' do
+      sListaParaAbrir := LeftStr(sListaParaAbrir, Length(sListaParaAbrir) - 1);
   try
-    TrayIcon1.BalloonTitle := ACaption;
-    TrayIcon1.BalloonHint := AText;
-    TrayIcon1.BalloonFlags := bfInfo;
-    TrayIcon1.Visible := true;
-    TrayIcon1.Animate := true;
-    TrayIcon1.ShowBalloonHint;
+    OpenDialog1:=TOpenDialog.Create(nil);
+    OpenDialog1.Filter := 'Arquivos suportados|' + sListaParaAbrir;
+    OpenDialog1.FileName := FMediaAtual;
+    OpenDialog1.Options := [TOpenOption.ofHideReadOnly,
+      TOpenOption.ofAllowMultiSelect, TOpenOption.ofEnableSizing];
+    if OpenDialog1.Execute() then
+    begin
+      if OpenDialog1.Files.Count=1 then
+      begin
+        sArquivo := OpenDialog1.FileName;
+        if IsFileAcceptable(sArquivo) then
+          Arquivo_Adicionar(sArquivo);
+      end
+      else
+      for i := 0 to Pred(OpenDialog1.Files.Count) do
+      begin
+        sArquivo := OpenDialog1.FileName[i];
+        if IsFileAcceptable(sArquivo) then
+          Arquivo_Adicionar(sArquivo);
+      end;
+    end;
+
+  finally
+    OpenDialog1.Free;
+  end;
+
+end;
+
+procedure TfmPrincipal.actArquivo_Caminho_AbrirExecute(Sender: TObject);
+var
+  sArquivo: String;
+  sArquivoCaption: String;
+  ItemAtual: TListItem;
+  sys_last_error: String;
+begin
+  sys_last_error := '';
+  if Lista_Arquivos.ItemIndex < 0 then
+    sys_last_error := 'Selecione um arquivo para executar esta operação.';
+  if sys_last_error = '' then
+  begin
+    ItemAtual := Lista_Arquivos.Items[Lista_Arquivos.ItemIndex];
+    sArquivoCaption := ItemAtual.Caption;
+    sArquivo := ItemAtual.SubItems[0];
+    if not FileExists(sArquivo) then
+    begin
+      sys_last_error := 'Arquivo não encontrado: ' + sArquivo;
+    end;
+  end;
+
+  if (sys_last_error = '') then
+  begin
+    // ShellExecute(0, nil, 'explorer.exe', '/select,C:\WINDOWS\explorer.exe', nil, SW_SHOWNORMAL)
+    ShellExecute(0, nil, 'explorer.exe', pWideChar('/select,' + sArquivo), nil,
+      SW_SHOWNORMAL);
+    StatusMsg := 'A pasta de ' + sArquivoCaption +
+      ' foi aberta e o arquivo selecionado.';
+  end;
+
+  if sys_last_error <> '' then
+  begin
+    StatusMsg := sys_last_error;
+  end;
+
+end;
+
+procedure TfmPrincipal.actArquivo_Caminho_ClipboardExecute(Sender: TObject);
+var
+  sArquivo: String;
+  sExt: String;
+  sys_last_error: String;
+  sMsg: String;
+begin
+  sys_last_error := '';
+  if Lista_Arquivos.ItemIndex < 0 then
+    sys_last_error := 'Nenhum arquivo selecionado!';
+
+  if sys_last_error = '' then
+  begin
+    sArquivo := Lista_Arquivos.Items[Lista_Arquivos.ItemIndex].SubItems[0];
+    sExt := ExtractFileExt(sArquivo);
+    sMsg := '';
+    if not FileExists(sArquivo) then
+    begin
+      sys_last_error := 'Arquivo não encontrado: ' + sLineBreak + sArquivo;
+    end;
+  end;
+
+  if (sys_last_error = '') then
+  begin
+    try
+      Clipboard.AsText := sArquivo;
+    except
+      on e: exception do
+        sys_last_error := e.Message;
+    end;
+  end;
+
+  if (sys_last_error = '') then
+  begin
+    try
+      sMsg := ExtractFileName(sArquivo) +
+        ' foi copiado para clipboard, agora dê CTRL+V ' +
+        'na jenela de sua preferência.';
+      StatusMsg := sMsg;
+    finally
+
+    end;
+  end;
+
+  if (sys_last_error <> '') then
+  begin
+    StatusMsg := sys_last_error;
+  end;
+
+
+end;
+
+procedure TfmPrincipal.actArquivo_MoverPBaixoExecute(Sender: TObject);
+var
+  i: Integer;
+  ItemPosterior: String;
+  ItemAtual: String;
+begin
+  // mover para baixo
+  i := Lista_Arquivos.ItemIndex;
+  if i < Pred(Lista_Arquivos.Items.Count) then
+  begin
+    try
+      ItemPosterior := Lista_Arquivos.Items[i + 1].SubItems[0];
+      ItemAtual := Lista_Arquivos.Items[i].SubItems[0];
+      Lista_Arquivos.Items[i + 1].Caption := ExtractFileName(ItemAtual);
+      Lista_Arquivos.Items[i + 1].SubItems[0] := ItemAtual;
+      Lista_Arquivos.Items[i].Caption := ExtractFileName(ItemPosterior);
+      Lista_Arquivos.Items[i].SubItems[0] := ItemPosterior;
+      Lista_Arquivos.ItemIndex := i + 1;
+      FModificado := true;
+      StatusMsg :=
+        'Dica: Você pode usar as teclas Ctrl+ins para incluir ou Ctrl+DEL para remover arquivos da lista.';
+    finally
+
+    end;
+  end;
+
+end;
+
+procedure TfmPrincipal.actArquivo_MoverPCimaExecute(Sender: TObject);
+var
+  i: Integer;
+  ItemAnterior: String;
+  ItemAtual: String;
+begin
+  // mover para cima
+  i := Lista_Arquivos.ItemIndex;
+  if i > 0 then
+  begin
+    try
+      ItemAnterior := Lista_Arquivos.Items[i - 1].SubItems[0];
+      ItemAtual := Lista_Arquivos.Items[i].SubItems[0];
+      Lista_Arquivos.Items[i - 1].Caption := ExtractFileName(ItemAtual);
+      Lista_Arquivos.Items[i - 1].SubItems[0] := ItemAtual;
+      Lista_Arquivos.Items[i].Caption := ExtractFileName(ItemAnterior);
+      Lista_Arquivos.Items[i].SubItems[0] := ItemAnterior;
+      Lista_Arquivos.ItemIndex := i - 1;
+      FModificado := true;
+      StatusMsg :=
+        'Dica: Você pode usar as teclas Ctrl+ins para incluir ou Ctrl+DEL para remover arquivos da lista.';
+    finally
+
+    end;
+  end;
+
+end;
+
+procedure TfmPrincipal.actArquivo_RemoverExecute(Sender: TObject);
+var
+  i: Integer;
+  sArquivoCaption: String;
+  sCurArquivo:String;
+  ItemAtual: TListItem;
+begin
+  // Remover
+  i := Lista_Arquivos.ItemIndex;
+  if i >= 0 then
+  begin
+    //ItemAtual := Lista_Arquivos.Items[i];
+    sCurArquivo := Lista_Arquivos.Items[i].SubItems[0];
+    sArquivoCaption := ItemAtual.Caption;
+    if SameText(MediaAtual, sCurArquivo) then
+    begin
+      //Figura.Picture := nil;
+      fmExibicao.Navegador.Navigate('blank://');
+    end;
+    try
+      Lista_Arquivos.DeleteSelected;
+      StatusMsg := 'Media excluída: ' + sArquivoCaption;
+      if i <= Pred(Lista_Arquivos.Items.Count) then
+      begin
+        Lista_Arquivos.ItemIndex := i;
+      end
+      else
+      begin
+        if i - 1 <= Pred(Lista_Arquivos.Items.Count) then
+          Lista_Arquivos.ItemIndex := i - 1;
+      end;
+      FModificado := true;
+    finally
+
+    end;
+
+  end;
+
+end;
+
+procedure TfmPrincipal.actLista_CarregarExecute(Sender: TObject);
+var
+  sFileName:String;
+  OpenDialog1:TOpenDialog;
+begin
+  // Carregar lista
+  OpenDialog1:=TOpenDialog.Create(nil);
+  try
+    sFileName:='';
+    OpenDialog1.Filter := 'Lista de reuniões|*' + _APP_EXT;
+    OpenDialog1.FileName := ListaAtual;
+    if OpenDialog1.Execute() then
+      sFileName:=OpenDialog1.FileName;
+    if FileExists(sFileName) then
+    begin
+      ListaAtual := sFileName;
+    end;
   finally
 
   end;
+  OpenDialog1.Free;
 end;
+
+procedure TfmPrincipal.actlista_SalvarExecute(Sender: TObject);
+begin
+  // salvar lista atual
+  Arquivo_Lista_Salvar(ListaAtual);
+end;
+
+function TfmPrincipal.Arquivo_Adicionar(AArquivo: String;
+  ACanDuplicate: Boolean): String;
+var
+  bElegivel: Boolean;
+  i: Integer;
+  sCurArquivo: String;
+  Item: TListItem;
+begin
+  RESULT := '';
+  if FileExists(AArquivo) then
+  begin
+    bElegivel := IsFileAcceptable(AArquivo);
+    if bElegivel then
+    begin
+      //Lista_Arquivos.Items.BeginUpdate;
+      if (not ACanDuplicate) then
+      begin
+        i := 0;
+        while (i <= Pred(Lista_Arquivos.Items.Count)) and (bElegivel) do
+        begin
+          // sCurArquivo:=Lista_Arquivos.Items[i].Data['ARQUIVO'].AsString;
+          sCurArquivo := Lista_Arquivos.Items[i].SubItems[0];
+          if (SameText(sCurArquivo, AArquivo)) then
+            bElegivel := false;
+          Inc(i);
+        end;
+      end;
+      if bElegivel then
+      begin
+        try
+          Item := Lista_Arquivos.Items.Add;
+          Item.Caption := ExtractFileName(AArquivo);
+          // Item.Data['ARQUIVO'] := AArquivo;
+          Item.SubItems.Add(AArquivo);
+          // Item.Detail:=AArquivo;
+          FModificado := true;
+        except
+          on e: exception do
+            RESULT := e.Message;
+
+        end;
+      end;
+      //Lista_Arquivos.Items.EndUpdate;
+    end;
+  end;
+
+end;
+
+function TfmPrincipal.Arquivo_Lista_Salvar(AArquivo: String): String;
+var
+  i: Integer;
+  sCurArquivo: String;
+  L: TStringList;
+  SaveDialog1: TSaveDialog;
+begin
+  RESULT := '';
+  L := TStringList.Create;
+  SaveDialog1 := TSaveDialog.Create(Self);
+  if AArquivo = '' then
+    AArquivo := ListaAtual;
+  SaveDialog1.Filter := 'Lista de tópicos|*' + _APP_EXT;
+  SaveDialog1.FileName := AArquivo;
+  if SaveDialog1.Execute() then
+  begin
+    FListaAtual := SaveDialog1.FileName;
+    if ExtractFileExt(FListaAtual) = '' then
+      FListaAtual := FListaAtual + _APP_EXT;
+    if Pos('..' + _APP_EXT, FListaAtual) > 0 then
+      FListaAtual := StringReplace(FListaAtual, '..' + _APP_EXT, '.' + _APP_EXT,
+        [rfIgnoreCase]);
+    for i := 0 to Pred(Lista_Arquivos.Items.Count) do
+    begin
+      sCurArquivo := Lista_Arquivos.Items[i].SubItems[0];
+      L.Add(sCurArquivo);
+    end;
+    try
+      L.SaveToFile(FListaAtual);
+      FModificado := false;
+      // salvamos as legendas tambem
+      if FMediaLegendasList.Count > 0 then
+        FMediaLegendasList.SaveToFile(FListaAtual_Legendas);
+      pnl_Lista.Align:=alRight;
+    except
+      on e: exception do
+        RESULT := e.Message;
+    end;
+  end;
+  if RESULT = emptyStr then
+    FModificado := false;
+  if Assigned(L) then
+    FreeAndNil(L);
+  SaveDialog1.Free;
+
+end;
+
+procedure TfmPrincipal.BtnMenuListaClick(Sender: TObject);
+begin
+  //pnl_Lista.Align:=alRight;
+  mnuLista.Popup(Mouse.CursorPos.X, Mouse.CursorPos.Y);
+end;
+
+procedure TfmPrincipal.CreateParams(var Params: TCreateParams);
+begin
+  inherited;
+    Params.Style := Params.Style or WS_THICKFRAME;
+end;
+
+function TfmPrincipal.FilePathToURL(const FilePath: string): string;
+var
+  BufferLen: DWORD;
+begin
+  BufferLen := INTERNET_MAX_URL_LENGTH;
+  SetLength(RESULT, BufferLen);
+  OleCheck(UrlCreateFromPath(PChar(FilePath), PChar(RESULT), @BufferLen, 0));
+  SetLength(RESULT, BufferLen);
+end;
+
+
 
 procedure TfmPrincipal.SetConfigFile(const Value: String);
 begin
   FConfigFile := Value;
 end;
 
-
-procedure TfmPrincipal.SetExibir_Legenda(const Value: String);
-var
-  S:String;
+procedure TfmPrincipal.SetFMediaProporcional_Width(const Value: Boolean);
 begin
-  S:=Trim(Value);
-  if S<>FExibir_Legenda then
+  FFMediaProporcional_Width := Value;
+  BtnactMedia_Proporcional.Down:= FFMediaProporcional_Width;
+  BtnactMedia_Proporcional.Transparent:= FFMediaProporcional_Width;
+  BtnactMedia_Proporcional.Hint:='Proporção por largura ou altura (atualmente='+
+    IfThen(MediaProporcional_Width,'largura','altura')+')';
+  if Assigned(fmExibicao) then
   begin
-    FExibir_Legenda:=S;
-    if FExibir_Legenda=emptyStr then
+    if fmExibicao.Showing then
     begin
-      pnlLegenda.Caption:='';
-      pnlLegenda.Visible:=false;
-    end
-    else
-    begin
-      pnlLegenda.Caption:=FExibir_Legenda;
-      pnlLegenda.Visible:=true;
+      MediaAtual:=FMediaAtual;
     end;
-
   end;
-
 end;
 
-procedure TfmPrincipal.SetLegendas(const Value: TStringList);
+procedure TfmPrincipal.SetHello_Message(const Value: String);
 begin
-  FLegendas := Value;
+  FHello_Message := Value;
+
 end;
 
 procedure TfmPrincipal.SetListaAtual(const Value: String);
 var
-  S: String;
+  sArquivoNew: String;
+  i: Integer;
+  sDefMedia:String;
+  L: TStringList;
+  sError: String;
 begin
   if FListaAtual <> Value then
   begin
     if FileExists(Value) then
     begin
-      S := Arquivo_Lista_Carregar(Value);
-      if S = emptyStr then
+      sError := '';
+      L := TStringList.Create;
+      //
+      Lista_Arquivos.Clear;
+      //
+      L.LoadFromFile(Value);
+      sDefMedia:='';
+      i := 0;
+      while (i <= Pred(L.Count)) do
       begin
-        FListaAtual := Value;
+        sArquivoNew := L[i];
+        if (sArquivoNew <> emptyStr) and (FileExists(sArquivoNew)) then
+        begin
+          try
+            Arquivo_Adicionar(sArquivoNew);
+            if SameText(FMediaAtual, sArquivoNew) then
+              sDefMedia:=sArquivoNew;
+          except
+            on e: exception do
+              sError := e.Message;
+
+          end;
+        end;
+        Inc(i);
       end;
+      if sError<>'' then
+      begin
+        Lista_Arquivos.Clear;
+        StatusMsg:=sError;
+      end
+      else
+      begin
+        FModificado := false;
+        FListaAtual := Value;
+        FListaAtual_Legendas:=FListaAtual+'.legendas';
+        pnl_Lista.Align:=alRight;
+        if FileExists(FListaAtual_Legendas) then
+        begin
+          MediaLegendasList.LoadFromFile(FListaAtual_Legendas);
+        end;
+        if sDefMedia<>emptyStr then
+        begin
+          MediaAtual:=sDefMedia;
+        end;
+      end;
+
+      if Assigned(L) then
+        FreeAndNil(L);
     end;
   end;
 end;
 
 procedure TfmPrincipal.SetMediaAtual(const Value: String);
 var
-  bDone: Boolean;
-  iFound: Integer;
-  sHTMLCode: String;
-  function FoundCaption(ACaption: String): Integer;
-  var
-    ii: Integer;
-  begin
-    RESULT := -1;
-    ii := 0;
-    while (ii <= Pred(Lista_Arquivos.Items.Count)) and (RESULT < 0) do
-    begin
-      if SameText(ACaption, Lista_Arquivos.Items[ii].Caption) or
-        SameText(ACaption, Lista_Arquivos.Items[ii].SubItems[0]) then
-        RESULT := ii;
-      Inc(ii);
-      Application.ProcessMessages;
-    end;
-
-  end;
-
+  bArquivo_Valido:Boolean;
+  sHTMLCode:String;
+  sUriFile:String;
+  sLegenda:String;
 begin
-  if (FMediaAtual <> Value) or (Paginas.ActivePage=TabAjuda) then
+  bArquivo_Valido := IsFileAcceptable(Value);
+  if bArquivo_Valido then
   begin
-    bDone := false;
-    Browser_Stop;
-    iFound := FoundCaption(Value);
-    if iFound >= 0 then
-    begin
-      if IsImage(Value) then
+    FMediaAtual := Value;
+    if FileExists(FHTML_TempFile) then
+      deleteFile(FHTML_TempFile);
+    try
+      sHTMLCode := HTML_GetCode(Value, FHTML_TempFile);
+      if Assigned(fmExibicao) then
       begin
-        TabFigura.Caption := Value;
-        Paginas.ActivePage := TabFigura;
-        try
-          Figura.Picture.LoadFromFile(Value);
-          // Adequar_Figura;
-          bDone := true;
-        finally
+        //if fmExibicao.Showing then
+        //begin
+          fmExibicao.Legenda:='';
+          fmExibicao.Navegador.NavigateToString(HTML_GetHello(Hello_Message));
+          if FileExists(FHTML_TempFile) then
+          begin
+            //fmExibicao.Navegador.NavigateToString('<html><body><h1>Aguardando seleção de mídia</h1></body></html>');
+            //fmExibicao.Navegador.NavigateToString(sHTMLCode);
+            sUriFile:=FilePathToURL(FHTML_TempFile);
+            fmExibicao.Navegador.Navigate(sUriFile);
+            //fmExibicao.CarregamentoCompleto:=false;
+            //fmExibicao.Navegador.OnContentLoading .NavigateToString(sHTMLCode);
+            {repeat
+              Application.ProcessMessages
+            until
+              (fmExibicao.CarregamentoCompleto)
+              and (fmExibicao.Showing)
+              and (fmExibicao.ModalResult <> mrClose);}
+            try
+              sLegenda:=FMediaLegendasList.Values[ExtractFileName(Value)];
+            finally
 
-        end;
+            end;
+            fmExibicao.Legenda:=sLegenda;
+            if IsVideo(FMediaAtual) then
+               fmExibicao.Legenda:='';
+            if IsPDF(FMediaAtual) then
+               fmExibicao.Legenda:='';
+          end;
+        //end;
+        fmExibicao.Show;
       end;
-      if IsBrowser(Value) then
-      begin
-        TabMedia.Caption := Value;
-        Paginas.ActivePage := TabMedia;
-        try
-          sHTMLCode := HTML_View(Value, true);
-          WebBrowser1.Navigate('blank://');
-          WBLoadHTML(WebBrowser1, sHTMLCode);
-          // WebBrowser1.LoadFromStrings(sHTMLCode, '');
-          FWebBrowserComplete := false;
-          repeat
-            Application.ProcessMessages
-          until FWebBrowserComplete;
-          Adequar_Video;
-          bDone := true;
-        finally
+    finally
 
-        end;
-      end;
-      if IsPDF(Value) then
-      begin
-        TabPDF.Caption := Value;
-        Paginas.ActivePage := TabPDF;
-        // sHTMLCode:=HTML_View(Value, false);
-        // WebBrowser1.LoadFromStrings(sHTMLCode, '');
-        FMeuPDF.LoadFile(Value);
-        FMeuPDF.Show;
-        bDone := true;
-      end;
-      if bDone then
-      begin
-        FMediaAtual := Value;
-        // Lista_Arquivos.ItemIndex:=iFound;
-        Exibir_Legenda:= FLegendas.Values[ExtractFileName(FMediaAtual)];
-      end;
-    end;
-    // Lista_Arquivos.OnSelectItem:=Lista_ArquivosSelectItem; //Lista_ArquivosSelectItem ou nil
-  end;
-end;
-
-procedure TfmPrincipal.SetMenuAberto(const Value: Boolean);
-begin
-  FMenuAberto := Value;
-  if FMenuAberto then
-  begin
-    Lista_Arquivos.Visible := true;
-    Lista_ArquivosAutoWidth;
-    Self.BorderStyle:=bsSizeable;
-  end
-  else
-  begin
-    if not BtnBorderStyle.Down then
-    begin
-      Lista_Arquivos.Visible := false;
-      Self.BorderStyle:=bsNone;
     end;
   end;
 end;
 
 procedure TfmPrincipal.SetStatusMsg(const Value: String);
 begin
-  if FStatusMsg <> Value then
+  FStatusMsg := Value;
+  if FStatusMsg=emptyStr then
   begin
-    FStatusMsg := Value;
-    BalloonHint1.HideAfter:=10000;
-    BalloonHint1.Title:='Dica:';
-    BalloonHint1.Description:=FStatusMsg;
-    BalloonHint1.ShowHint(Paginas);
+    lblStatus.Visible:=false;
+  end
+  else
+  begin
+    lblStatus.Visible:=false;
+    lblStatus.Caption:=FStatusMsg;
+    lblStatus.Visible:=true;
   end;
+
 end;
 
 end.
