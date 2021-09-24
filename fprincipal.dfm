@@ -41,7 +41,6 @@ object fmPrincipal: TfmPrincipal
       Padding.Bottom = 4
       ShowCaption = False
       TabOrder = 0
-      ExplicitLeft = 140
       object BtnactArquivo_MoverPBaixo: TSpeedButton
         Left = 148
         Top = 4
@@ -144,7 +143,7 @@ object fmPrincipal: TfmPrincipal
         Flat = True
         ParentShowHint = False
         ShowHint = True
-        ExplicitLeft = -2
+        ExplicitLeft = 6
         ExplicitTop = 6
       end
       object BtnactMedia_Legenda: TSpeedButton
@@ -339,7 +338,7 @@ object fmPrincipal: TfmPrincipal
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitTop = 357
+      ExplicitWidth = 22
     end
     object Lista_Arquivos: TListView
       Left = 0

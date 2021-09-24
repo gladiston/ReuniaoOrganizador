@@ -30,10 +30,12 @@ object fmExibicao: TfmExibicao
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
+  OnActivate = FormActivate
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnMouseDown = PermitirArrastarjanela
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Navegador: TEdgeBrowser
@@ -47,7 +49,6 @@ object fmExibicao: TfmExibicao
     TabOrder = 0
     OnNavigationStarting = NavegadorNavigationStarting
     OnNavigationCompleted = NavegadorNavigationCompleted
-    ExplicitHeight = 359
   end
   object pnlLegenda: TPanel
     Left = 0
@@ -58,9 +59,6 @@ object fmExibicao: TfmExibicao
     BevelOuter = bvNone
     Caption = 'pnlLegenda'
     TabOrder = 1
-    ExplicitLeft = 224
-    ExplicitTop = 200
-    ExplicitWidth = 185
     object BtnActPrincipal_Hide: TSpeedButton
       Left = 585
       Top = 0

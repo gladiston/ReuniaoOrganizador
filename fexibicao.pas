@@ -23,6 +23,8 @@ type
       Args: TNavigationStartingEventArgs);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure lblLegendaDblClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   protected
     procedure CreateParams(var Params: TCreateParams); override;
   private
@@ -38,6 +40,8 @@ type
   published
     property CarregamentoCompleto:Boolean read FCarregamentoCompleto write SetCarregamentoCompleto;
     property Legenda:String read FLegenda write SetLegenda;
+    procedure Titlebar_Hide;
+    procedure Titlebar_Show;
   end;
 
 var
@@ -57,6 +61,11 @@ procedure TfmExibicao.CreateParams(var Params: TCreateParams);
 begin
   inherited;
     Params.Style := Params.Style or WS_THICKFRAME;
+end;
+
+procedure TfmExibicao.FormActivate(Sender: TObject);
+begin
+  Titlebar_Hide;
 end;
 
 procedure TfmExibicao.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -84,6 +93,12 @@ begin
   //Navegador.StatusBarEnabled := false;
   ActiveControl:=Navegador;
   BtnActPrincipal_Hide.Caption:='';
+
+end;
+
+procedure TfmExibicao.FormShow(Sender: TObject);
+begin
+  //
 end;
 
 procedure TfmExibicao.FormKeyDown(Sender: TObject; var Key: Word;
@@ -186,6 +201,50 @@ begin
   end;}
   lblLegenda.Caption:=FLegenda;
   pnlLegenda.Visible:=(lblLegenda.Caption<>'');
+end;
+
+procedure TfmExibicao.Titlebar_Hide;
+var
+  Style: Longint;
+begin
+  //if Self.BorderStyle = bsNone
+  //  then Exit;
+  Style := GetWindowLong(Self.Handle, GWL_STYLE);
+  if (Style and WS_CAPTION) = WS_CAPTION then
+  begin
+    case Self.BorderStyle of
+      bsSingle,
+      bsSizeable: SetWindowLong(Self.Handle, GWL_STYLE, Style and
+          (not (WS_CAPTION)) or WS_BORDER);
+      bsDialog: SetWindowLong(Self.Handle, GWL_STYLE, Style and
+          (not (WS_CAPTION)) or DS_MODALFRAME or WS_DLGFRAME);
+    end;
+    Self.Height := Self.Height - GetSystemMetrics(SM_CYCAPTION);
+    Self.Refresh;
+  end;
+
+end;
+
+procedure TfmExibicao.Titlebar_Show;
+var
+  Style: Longint;
+begin
+  //if Self.BorderStyle = bsNone
+  //  then Exit;
+  Style := GetWindowLong(Self.Handle, GWL_STYLE);
+  if (Style and WS_CAPTION) <> WS_CAPTION then
+  begin
+    case Self.BorderStyle of
+      bsSingle,
+      bsSizeable: SetWindowLong(Self.Handle, GWL_STYLE, Style or WS_CAPTION or
+          WS_BORDER);
+      bsDialog: SetWindowLong(Self.Handle, GWL_STYLE,
+          Style or WS_CAPTION or DS_MODALFRAME or WS_DLGFRAME);
+    end;
+    Self.Height := Self.Height + GetSystemMetrics(SM_CYCAPTION);
+    Self.Refresh;
+  end;
+
 end;
 
 end.

@@ -585,12 +585,17 @@ begin
   if fmExibicao.BorderStyle=bsNone then
   begin
     fmExibicao.BorderStyle:=bsSizeable;
-    fmExibicao.AutoSize:=false;
+    //fmExibicao.Titlebar_Hide;
+    //fmExibicao.pnlLegenda.Visible:=false;
+    //fmExibicao.AutoSize:=false;
   end
   else
   begin
+    //fmExibicao.Titlebar_Show;
     fmExibicao.BorderStyle:=bsNone;
-    fmExibicao.AutoSize:=true;
+    //fmExibicao.pnlLegenda.Visible:=true;
+    //fmExibicao.AutoSize:=true;
+    //fmExibicao.AutoSize:=false;
   end;
 end;
 
