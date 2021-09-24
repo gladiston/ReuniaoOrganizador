@@ -70,6 +70,8 @@ type
     Bevel2: TBevel;
     Bevel3: TBevel;
     BtnactMedia_Proporcional: TSpeedButton;
+    ActPrincipal_Hide: TAction;
+    BtnActPrincipal_Hide: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormDestroy(Sender: TObject);
@@ -99,6 +101,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure actMedia_StopExecute(Sender: TObject);
     procedure actMensagem_DescansoExecute(Sender: TObject);
+    procedure ActPrincipal_HideExecute(Sender: TObject);
   protected
     procedure CreateParams(var Params: TCreateParams); override;
   private
@@ -302,6 +305,7 @@ begin
   BtnactMedia_Ir_Proximo.Caption:='';
   BtnactMedia_Stop.Caption:='';
   BtnactMedia_Proporcional.Caption:='';
+  BtnActPrincipal_Hide.Caption:='';
   //
   //PostMessage(Handle, wm_user, 0, 0);
   StatusMsg:='Arraste um arquivo para começar a criar uma lista ou carregue uma pré-existente.';
@@ -638,11 +642,12 @@ begin
     ItemAtual := Lista_Arquivos.Items[Lista_Arquivos.ItemIndex];
     sArquivoCaption := ItemAtual.Caption;
     sArquivo := ItemAtual.SubItems[0];
-    sLegenda := FMediaLegendasList.Values[sArquivo];
+    sLegenda := FMediaLegendasList.Values[ExtractFileName(sArquivo)];
     if Quero_Resposta('Legenda para "'+sArquivoCaption+'":', sLegenda, sLegenda) then
     begin
       sLegenda := Trim(sLegenda);
       FMediaLegendasList.Values[ExtractFileName(sArquivo)]:= sLegenda;
+      fmExibicao.Legenda:=sLegenda;
       FModificado := true;
     end;
   end;
@@ -660,6 +665,7 @@ begin
     if fmExibicao.Showing then
     begin
       fmExibicao.Navegador.NavigateToString(HTML_GetHello(Hello_Message));
+      fmExibicao.pnlLegenda.Visible:=false;
     end;
   end;
 end;
@@ -1047,6 +1053,21 @@ procedure TfmPrincipal.actlista_SalvarExecute(Sender: TObject);
 begin
   // salvar lista atual
   Arquivo_Lista_Salvar(ListaAtual);
+end;
+
+procedure TfmPrincipal.ActPrincipal_HideExecute(Sender: TObject);
+begin
+  if fmPrincipal.Showing then
+  begin
+    if fmExibicao.Showing then
+    begin
+      fmPrincipal.Hide;
+    end;
+  end
+  else
+  begin
+    fmPrincipal.Show;
+  end;
 end;
 
 function TfmPrincipal.Arquivo_Adicionar(AArquivo: String;

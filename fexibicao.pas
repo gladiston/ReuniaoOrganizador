@@ -5,20 +5,24 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.OleCtrls, SHDocVw,
-  WebView2, Winapi.ActiveX, Vcl.Edge;
+  WebView2, Winapi.ActiveX, Vcl.Edge, Vcl.Buttons, Vcl.ExtCtrls;
 
 type
   TfmExibicao = class(TForm)
-    lblLegenda: TLabel;
     Navegador: TEdgeBrowser;
+    pnlLegenda: TPanel;
+    BtnActPrincipal_Hide: TSpeedButton;
+    lblLegenda: TLabel;
     procedure FormCreate(Sender: TObject);
-    procedure NavegadorFrameNavigationStarting(Sender: TCustomEdgeBrowser;
-      Args: TNavigationStartingEventArgs);
-    procedure NavegadorFrameNavigationCompleted(Sender: TCustomEdgeBrowser;
-      IsSuccess: Boolean; WebErrorStatus: TOleEnum);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure PermitirArrastarjanela(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure NavegadorNavigationCompleted(Sender: TCustomEdgeBrowser;
+      IsSuccess: Boolean; WebErrorStatus: TOleEnum);
+    procedure NavegadorNavigationStarting(Sender: TCustomEdgeBrowser;
+      Args: TNavigationStartingEventArgs);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure lblLegendaDblClick(Sender: TObject);
   protected
     procedure CreateParams(var Params: TCreateParams); override;
   private
@@ -58,7 +62,9 @@ end;
 procedure TfmExibicao.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   try
-    CanClose := true;
+    if not fmPrincipal.Showing then
+      fmPrincipal.Show;
+    CanClose := (fmPrincipal.Showing);
     WriteConfig;
     ModalResult := mrClose;
     Navegador.Navigate('blank://');
@@ -77,6 +83,21 @@ begin
   ReadConfig;
   //Navegador.StatusBarEnabled := false;
   ActiveControl:=Navegador;
+  BtnActPrincipal_Hide.Caption:='';
+end;
+
+procedure TfmExibicao.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key=VK_F9 then
+  begin
+    fmPrincipal.ActPrincipal_HideExecute(nil);
+  end;
+end;
+
+procedure TfmExibicao.lblLegendaDblClick(Sender: TObject);
+begin
+  fmPrincipal.actMedia_LegendaExecute(nil);
 end;
 
 procedure TfmExibicao.PermitirArrastarjanela(Sender: TObject; Button: TMouseButton;
@@ -88,14 +109,14 @@ begin
   Perform(wm_SysCommand, sc_DragMove, 0);
 end;
 
-procedure TfmExibicao.NavegadorFrameNavigationCompleted(
-  Sender: TCustomEdgeBrowser; IsSuccess: Boolean; WebErrorStatus: TOleEnum);
+procedure TfmExibicao.NavegadorNavigationCompleted(Sender: TCustomEdgeBrowser;
+  IsSuccess: Boolean; WebErrorStatus: TOleEnum);
 begin
-  FCarregamentoCompleto:=true;
+ FCarregamentoCompleto:=true;
 end;
 
-procedure TfmExibicao.NavegadorFrameNavigationStarting(
-  Sender: TCustomEdgeBrowser; Args: TNavigationStartingEventArgs);
+procedure TfmExibicao.NavegadorNavigationStarting(Sender: TCustomEdgeBrowser;
+  Args: TNavigationStartingEventArgs);
 begin
   FCarregamentoCompleto:=false;
 end;
@@ -164,7 +185,7 @@ begin
     lblLegenda.AutoSize:=true;
   end;}
   lblLegenda.Caption:=FLegenda;
-  lblLegenda.Visible:=(FLegenda<>'');
+  pnlLegenda.Visible:=(lblLegenda.Caption<>'');
 end;
 
 end.

@@ -29,7 +29,7 @@ object fmPrincipal: TfmPrincipal
     ShowCaption = False
     TabOrder = 0
     object pnl_Arquivos: TPanel
-      Left = 140
+      Left = 164
       Top = 0
       Width = 293
       Height = 35
@@ -41,7 +41,7 @@ object fmPrincipal: TfmPrincipal
       Padding.Bottom = 4
       ShowCaption = False
       TabOrder = 0
-      ExplicitLeft = 116
+      ExplicitLeft = 140
       object BtnactArquivo_MoverPBaixo: TSpeedButton
         Left = 148
         Top = 4
@@ -229,7 +229,7 @@ object fmPrincipal: TfmPrincipal
     object pnlMedias: TPanel
       Left = 44
       Top = 0
-      Width = 96
+      Width = 120
       Height = 35
       Align = alLeft
       AutoSize = True
@@ -291,12 +291,26 @@ object fmPrincipal: TfmPrincipal
         Action = actMedia_Proporcional
         Align = alLeft
         AllowAllUp = True
-        GroupIndex = 1
         Images = ImageList1
         Flat = True
         ParentShowHint = False
         ShowHint = True
         ExplicitLeft = 70
+        ExplicitTop = 6
+      end
+      object BtnActPrincipal_Hide: TSpeedButton
+        Left = 96
+        Top = 0
+        Width = 24
+        Height = 35
+        Cursor = crHandPoint
+        CustomHint = BalloonHint1
+        Action = ActPrincipal_Hide
+        Align = alLeft
+        Flat = True
+        ParentShowHint = False
+        ShowHint = True
+        ExplicitLeft = 102
         ExplicitTop = 6
       end
     end
@@ -325,7 +339,7 @@ object fmPrincipal: TfmPrincipal
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitWidth = 22
+      ExplicitTop = 357
     end
     object Lista_Arquivos: TListView
       Left = 0
@@ -349,7 +363,6 @@ object fmPrincipal: TfmPrincipal
       OnDragOver = Lista_ArquivosDragOver
       OnMouseDown = Lista_ArquivosMouseDown
       OnSelectItem = Lista_ArquivosSelectItem
-      ExplicitTop = -6
     end
   end
   object ActionList1: TActionList
@@ -462,6 +475,16 @@ object fmPrincipal: TfmPrincipal
       Hint = 'Mensagem de descanso ou boas vindas'
       ImageIndex = 14
       OnExecute = actMensagem_DescansoExecute
+    end
+    object ActPrincipal_Hide: TAction
+      Category = 'Media'
+      Caption = 'Esconder/Mostrar'
+      Hint = 'Esconder ou mostrar a janela principal'
+      ImageIndex = 8
+      SecondaryShortCuts.Strings = (
+        'Ctrl+F9')
+      ShortCut = 120
+      OnExecute = ActPrincipal_HideExecute
     end
   end
   object mnuLista: TPopupMenu

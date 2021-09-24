@@ -28,47 +28,77 @@ object fmExibicao: TfmExibicao
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnMouseDown = PermitirArrastarjanela
   PixelsPerInch = 96
   TextHeight = 13
-  object lblLegenda: TLabel
-    Left = 0
-    Top = 359
-    Width = 608
-    Height = 44
-    Cursor = crSizeAll
-    Align = alBottom
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 
-      'Sua for'#231'a est'#225' em permanecerem calmos e terem confian'#231'a - Isa'#237'as' +
-      ' 30:50'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
-    Font.Height = -13
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-    Layout = tlCenter
-    WordWrap = True
-    OnMouseDown = PermitirArrastarjanela
-    ExplicitTop = 368
-    ExplicitWidth = 852
-  end
   object Navegador: TEdgeBrowser
     Left = 0
     Top = 0
     Width = 608
-    Height = 359
+    Height = 362
     Cursor = crHandPoint
     ParentCustomHint = False
     Align = alClient
     TabOrder = 0
-    OnFrameNavigationStarting = NavegadorFrameNavigationStarting
-    OnFrameNavigationCompleted = NavegadorFrameNavigationCompleted
-    ExplicitTop = -6
+    OnNavigationStarting = NavegadorNavigationStarting
+    OnNavigationCompleted = NavegadorNavigationCompleted
+    ExplicitHeight = 359
+  end
+  object pnlLegenda: TPanel
+    Left = 0
+    Top = 362
+    Width = 608
+    Height = 41
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = 'pnlLegenda'
+    TabOrder = 1
+    ExplicitLeft = 224
+    ExplicitTop = 200
+    ExplicitWidth = 185
+    object BtnActPrincipal_Hide: TSpeedButton
+      Left = 585
+      Top = 0
+      Width = 23
+      Height = 41
+      Cursor = crHandPoint
+      Action = fmPrincipal.ActPrincipal_Hide
+      Align = alRight
+      Images = fmPrincipal.ImageList1
+      Flat = True
+      ParentShowHint = False
+      ShowHint = True
+      ExplicitTop = 6
+    end
+    object lblLegenda: TLabel
+      Left = 0
+      Top = 0
+      Width = 585
+      Height = 41
+      Cursor = crHandPoint
+      Align = alClient
+      Alignment = taCenter
+      AutoSize = False
+      Caption = 
+        'Sua for'#231'a est'#225' em permanecerem calmos e terem confian'#231'a - Isa'#237'as' +
+        ' 30:50'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      Layout = tlCenter
+      WordWrap = True
+      OnDblClick = lblLegendaDblClick
+      OnMouseDown = PermitirArrastarjanela
+      ExplicitLeft = -6
+      ExplicitTop = 6
+    end
   end
 end

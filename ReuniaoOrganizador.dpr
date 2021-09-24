@@ -11,6 +11,7 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  Application.Title := 'Organizador de reunião';
   Application.CreateForm(TfmPrincipal, fmPrincipal);
   Application.CreateForm(TfmExibicao, fmExibicao);
   Application.Run;
