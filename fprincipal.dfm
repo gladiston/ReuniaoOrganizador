@@ -2,9 +2,9 @@ object fmPrincipal: TfmPrincipal
   Left = 0
   Top = 0
   Caption = 'Sala de comando'
-  ClientHeight = 411
-  ClientWidth = 852
-  Color = clWhite
+  ClientHeight = 837
+  ClientWidth = 856
+  Color = clBlack
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -13
@@ -17,351 +17,468 @@ object fmPrincipal: TfmPrincipal
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 17
+  object pnl_Area_media: TPanel
+    Left = 0
+    Top = 0
+    Width = 856
+    Height = 480
+    Align = alClient
+    BevelOuter = bvNone
+    Constraints.MinHeight = 480
+    Constraints.MinWidth = 480
+    Ctl3D = False
+    ParentColor = True
+    ParentCtl3D = False
+    ShowCaption = False
+    TabOrder = 0
+    ExplicitWidth = 480
+    object Splitter1: TSplitter
+      Left = 0
+      Top = 431
+      Width = 856
+      Height = 5
+      Cursor = crVSplit
+      Hint = 
+        'Arraste essa linha para cima ou para baixo para aumentar ou dimi' +
+        'nuir a base'
+      Align = alBottom
+      Beveled = True
+      ResizeStyle = rsLine
+      ExplicitTop = 422
+    end
+    object pnlLegenda: TPanel
+      Left = 0
+      Top = 436
+      Width = 856
+      Height = 44
+      Align = alBottom
+      BevelOuter = bvNone
+      Ctl3D = False
+      ParentColor = True
+      ParentCtl3D = False
+      ShowCaption = False
+      TabOrder = 0
+      ExplicitTop = 390
+      ExplicitWidth = 983
+      object BtnActPrincipal_Hide2: TSpeedButton
+        Left = 833
+        Top = 0
+        Width = 23
+        Height = 44
+        Cursor = crHandPoint
+        Action = ActPrincipal_Hide
+        Align = alRight
+        Images = ImageList1
+        Flat = True
+        ParentShowHint = False
+        ShowHint = True
+        ExplicitLeft = 839
+        ExplicitTop = -6
+      end
+      object lblLegenda: TLabel
+        Left = 0
+        Top = 0
+        Width = 833
+        Height = 44
+        Cursor = crSizeAll
+        Align = alClient
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 
+          'Sua for'#231'a est'#225' em permanecerem calmos e terem confian'#231'a - Isa'#237'as' +
+          ' 30:50'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        Layout = tlCenter
+        WordWrap = True
+        OnDblClick = lblLegendaDblClick
+        OnMouseDown = PermitirArrastarJanela
+        ExplicitLeft = -6
+        ExplicitTop = -5
+        ExplicitWidth = 960
+      end
+    end
+    object Navegador: TEdgeBrowser
+      Left = 0
+      Top = 0
+      Width = 856
+      Height = 431
+      Cursor = crHandPoint
+      ParentCustomHint = False
+      Align = alClient
+      TabOrder = 1
+      ExplicitTop = 8
+      ExplicitWidth = 983
+      ExplicitHeight = 262
+    end
+  end
   object pnl_Area_Controles: TPanel
     Left = 0
-    Top = 376
-    Width = 852
-    Height = 35
+    Top = 480
+    Width = 856
+    Height = 357
     Align = alBottom
+    Anchors = [akBottom]
     BevelOuter = bvNone
     Color = clWhite
     ParentBackground = False
     ShowCaption = False
-    TabOrder = 0
-    object pnl_Arquivos: TPanel
-      Left = 164
-      Top = 0
-      Width = 293
-      Height = 35
-      Align = alLeft
-      BevelOuter = bvNone
-      Padding.Left = 4
-      Padding.Top = 4
-      Padding.Right = 4
-      Padding.Bottom = 4
-      ShowCaption = False
-      TabOrder = 0
-      object BtnactArquivo_MoverPBaixo: TSpeedButton
-        Left = 148
-        Top = 4
-        Width = 24
-        Height = 27
-        Cursor = crHandPoint
-        CustomHint = BalloonHint1
-        Action = actArquivo_MoverPBaixo
-        Align = alLeft
-        Flat = True
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 94
-        ExplicitTop = 6
-      end
-      object BtnactArquivo_Remover: TSpeedButton
-        Left = 76
-        Top = 4
-        Width = 24
-        Height = 27
-        Cursor = crHandPoint
-        CustomHint = BalloonHint1
-        Action = actArquivo_Remover
-        Align = alLeft
-        Flat = True
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 22
-        ExplicitTop = 6
-      end
-      object BtnactArquivo_Adicionar: TSpeedButton
-        Left = 52
-        Top = 4
-        Width = 24
-        Height = 27
-        Cursor = crHandPoint
-        CustomHint = BalloonHint1
-        Action = actArquivo_Adicionar
-        Align = alLeft
-        Flat = True
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 34
-        ExplicitTop = 6
-      end
-      object BtnactArquivo_MoverPCima: TSpeedButton
-        Left = 172
-        Top = 4
-        Width = 24
-        Height = 27
-        Cursor = crHandPoint
-        CustomHint = BalloonHint1
-        Action = actArquivo_MoverPCima
-        Align = alLeft
-        Flat = True
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 130
-        ExplicitTop = 6
-      end
-      object BtnactArquivo_Caminho_Abrir: TSpeedButton
-        Left = 244
-        Top = 4
-        Width = 24
-        Height = 27
-        Cursor = crHandPoint
-        CustomHint = BalloonHint1
-        Action = actArquivo_Caminho_Abrir
-        Align = alLeft
-        Flat = True
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 250
-        ExplicitTop = 6
-      end
-      object BtnactArquivo_Caminho_Clipboard: TSpeedButton
-        Left = 220
-        Top = 4
-        Width = 24
-        Height = 27
-        Cursor = crHandPoint
-        CustomHint = BalloonHint1
-        Action = actArquivo_Caminho_Clipboard
-        Align = alLeft
-        Flat = True
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 166
-        ExplicitTop = 6
-      end
-      object BtnactMedia_Bordas: TSpeedButton
-        Left = 4
-        Top = 4
-        Width = 24
-        Height = 27
-        Cursor = crHandPoint
-        CustomHint = BalloonHint1
-        Action = actMedia_Bordas
-        Align = alLeft
-        Flat = True
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 6
-        ExplicitTop = 6
-      end
-      object BtnactMedia_Legenda: TSpeedButton
-        Left = 100
-        Top = 4
-        Width = 24
-        Height = 27
-        Cursor = crHandPoint
-        CustomHint = BalloonHint1
-        Action = actMedia_Legenda
-        Align = alLeft
-        Flat = True
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 46
-        ExplicitTop = 6
-      end
-      object Bevel1: TBevel
-        Left = 196
-        Top = 4
-        Width = 24
-        Height = 27
-        Align = alLeft
-        Shape = bsSpacer
-        ExplicitLeft = 166
-        ExplicitTop = 6
-      end
-      object Bevel2: TBevel
-        Left = 124
-        Top = 4
-        Width = 24
-        Height = 27
-        Align = alLeft
-        Shape = bsSpacer
-        ExplicitLeft = 70
-        ExplicitTop = 6
-      end
-      object Bevel3: TBevel
-        Left = 28
-        Top = 4
-        Width = 24
-        Height = 27
-        Align = alLeft
-        Shape = bsSpacer
-        ExplicitLeft = 6
-        ExplicitTop = 6
-      end
-    end
-    object pnl_Lista: TPanel
+    TabOrder = 1
+    ExplicitTop = 326
+    ExplicitWidth = 983
+    object pnl_Area_Lista: TPanel
       Left = 0
       Top = 0
-      Width = 44
-      Height = 35
-      Align = alLeft
+      Width = 856
+      Height = 357
+      Align = alClient
       BevelOuter = bvNone
-      Padding.Left = 4
-      Padding.Top = 4
-      Padding.Right = 4
-      Padding.Bottom = 4
+      ParentColor = True
       ShowCaption = False
-      TabOrder = 1
-      object BtnMenuLista: TSpeedButton
-        Left = 4
-        Top = 4
-        Width = 36
-        Height = 27
-        Cursor = crHandPoint
-        Hint = 'Clique aqui para exibir o menu de listas'
-        CustomHint = BalloonHint1
-        Align = alClient
-        ImageIndex = 0
-        Images = ImageList1
-        Flat = True
-        ParentShowHint = False
-        PopupMenu = mnuLista
-        ShowHint = True
-        OnClick = BtnMenuListaClick
-        ExplicitLeft = 2
-        ExplicitTop = -4
+      TabOrder = 0
+      ExplicitLeft = -27
+      ExplicitTop = -97
+      ExplicitWidth = 981
+      ExplicitHeight = 208
+      object lblStatus: TLabel
+        Left = 0
+        Top = 305
+        Width = 856
+        Height = 17
+        Align = alBottom
+        Caption = '(...)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitTop = 189
+        ExplicitWidth = 981
       end
-    end
-    object pnlMedias: TPanel
-      Left = 44
-      Top = 0
-      Width = 120
-      Height = 35
-      Align = alLeft
-      AutoSize = True
-      BevelOuter = bvNone
-      ShowCaption = False
-      TabOrder = 2
-      object BtnactMedia_Ir_Anterior: TSpeedButton
+      object Lista_Arquivos: TListView
         Left = 0
         Top = 0
-        Width = 24
-        Height = 35
-        Cursor = crHandPoint
-        CustomHint = BalloonHint1
-        Action = actMedia_Ir_Anterior
-        Align = alLeft
-        Flat = True
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 2
-        ExplicitTop = 6
+        Width = 856
+        Height = 305
+        Align = alClient
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BorderStyle = bsNone
+        Columns = <>
+        ColumnClick = False
+        FlatScrollBars = True
+        ReadOnly = True
+        RowSelect = True
+        ParentColor = True
+        ShowColumnHeaders = False
+        TabOrder = 0
+        ViewStyle = vsReport
+        OnCustomDrawItem = Lista_ArquivosCustomDrawItem
+        OnDragDrop = Lista_ArquivosDragDrop
+        OnDragOver = Lista_ArquivosDragOver
+        OnMouseDown = Lista_ArquivosMouseDown
+        OnSelectItem = Lista_ArquivosSelectItem
+        ExplicitLeft = -1
+        ExplicitTop = -6
+        ExplicitWidth = 981
+        ExplicitHeight = 303
       end
-      object BtnactMedia_Ir_Proximo: TSpeedButton
-        Left = 48
-        Top = 0
-        Width = 24
+      object pnl_Area_Botoes: TPanel
+        Left = 0
+        Top = 322
+        Width = 856
         Height = 35
-        Cursor = crHandPoint
-        CustomHint = BalloonHint1
-        Action = actMedia_Ir_Proximo
-        Align = alLeft
-        Flat = True
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 46
-        ExplicitTop = 6
+        Align = alBottom
+        BevelOuter = bvNone
+        ParentColor = True
+        ShowCaption = False
+        TabOrder = 1
+        ExplicitLeft = 1
+        ExplicitTop = 321
+        ExplicitWidth = 981
+        object pnl_Arquivos: TPanel
+          Left = 164
+          Top = 0
+          Width = 293
+          Height = 35
+          Align = alLeft
+          BevelOuter = bvNone
+          Ctl3D = False
+          Padding.Left = 4
+          Padding.Top = 4
+          Padding.Right = 4
+          Padding.Bottom = 4
+          ParentCtl3D = False
+          ShowCaption = False
+          TabOrder = 0
+          object BtnactArquivo_MoverPBaixo: TSpeedButton
+            Left = 148
+            Top = 4
+            Width = 24
+            Height = 27
+            Cursor = crHandPoint
+            Action = actArquivo_MoverPBaixo
+            Align = alLeft
+            Flat = True
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 94
+            ExplicitTop = 6
+          end
+          object BtnactArquivo_Remover: TSpeedButton
+            Left = 76
+            Top = 4
+            Width = 24
+            Height = 27
+            Cursor = crHandPoint
+            Action = actArquivo_Remover
+            Align = alLeft
+            Flat = True
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 22
+            ExplicitTop = 6
+          end
+          object BtnactArquivo_Adicionar: TSpeedButton
+            Left = 52
+            Top = 4
+            Width = 24
+            Height = 27
+            Cursor = crHandPoint
+            Action = actArquivo_Adicionar
+            Align = alLeft
+            Flat = True
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 34
+            ExplicitTop = 6
+          end
+          object BtnactArquivo_MoverPCima: TSpeedButton
+            Left = 172
+            Top = 4
+            Width = 24
+            Height = 27
+            Cursor = crHandPoint
+            Action = actArquivo_MoverPCima
+            Align = alLeft
+            Flat = True
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 130
+            ExplicitTop = 6
+          end
+          object BtnactArquivo_Caminho_Abrir: TSpeedButton
+            Left = 244
+            Top = 4
+            Width = 24
+            Height = 27
+            Cursor = crHandPoint
+            Action = actArquivo_Caminho_Abrir
+            Align = alLeft
+            Flat = True
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 250
+            ExplicitTop = 6
+          end
+          object BtnactArquivo_Caminho_Clipboard: TSpeedButton
+            Left = 220
+            Top = 4
+            Width = 24
+            Height = 27
+            Cursor = crHandPoint
+            Action = actArquivo_Caminho_Clipboard
+            Align = alLeft
+            Flat = True
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 214
+            ExplicitTop = 6
+          end
+          object BtnactMedia_Bordas: TSpeedButton
+            Left = 4
+            Top = 4
+            Width = 24
+            Height = 27
+            Cursor = crHandPoint
+            Action = actMedia_Bordas
+            Align = alLeft
+            Flat = True
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 6
+            ExplicitTop = 6
+          end
+          object BtnactMedia_Legenda: TSpeedButton
+            Left = 100
+            Top = 4
+            Width = 24
+            Height = 27
+            Cursor = crHandPoint
+            Action = actMedia_Legenda
+            Align = alLeft
+            Flat = True
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 106
+            ExplicitTop = 6
+          end
+          object Bevel1: TBevel
+            Left = 196
+            Top = 4
+            Width = 24
+            Height = 27
+            Align = alLeft
+            Shape = bsSpacer
+            ExplicitLeft = 166
+            ExplicitTop = 6
+          end
+          object Bevel2: TBevel
+            Left = 124
+            Top = 4
+            Width = 24
+            Height = 27
+            Align = alLeft
+            Shape = bsSpacer
+            ExplicitLeft = 118
+            ExplicitTop = 2
+          end
+          object Bevel3: TBevel
+            Left = 28
+            Top = 4
+            Width = 24
+            Height = 27
+            Align = alLeft
+            Shape = bsSpacer
+            ExplicitLeft = 6
+            ExplicitTop = 6
+          end
+        end
+        object pnl_Lista: TPanel
+          Left = 0
+          Top = 0
+          Width = 44
+          Height = 35
+          Align = alLeft
+          BevelOuter = bvNone
+          Ctl3D = False
+          Padding.Left = 4
+          Padding.Top = 4
+          Padding.Right = 4
+          Padding.Bottom = 4
+          ParentCtl3D = False
+          ShowCaption = False
+          TabOrder = 1
+          object BtnMenuLista: TSpeedButton
+            Left = 4
+            Top = 4
+            Width = 36
+            Height = 27
+            Cursor = crHandPoint
+            Hint = 'Clique aqui para exibir o menu de listas'
+            Align = alClient
+            ImageIndex = 0
+            Images = ImageList1
+            Flat = True
+            ParentShowHint = False
+            PopupMenu = mnuLista
+            ShowHint = True
+            OnClick = BtnMenuListaClick
+            ExplicitLeft = 2
+            ExplicitTop = -4
+          end
+        end
+        object pnlMedias: TPanel
+          Left = 44
+          Top = 0
+          Width = 120
+          Height = 35
+          Align = alLeft
+          AutoSize = True
+          BevelOuter = bvNone
+          Ctl3D = False
+          ParentCtl3D = False
+          ShowCaption = False
+          TabOrder = 2
+          object BtnactMedia_Ir_Anterior: TSpeedButton
+            Left = 0
+            Top = 0
+            Width = 24
+            Height = 35
+            Cursor = crHandPoint
+            Action = actMedia_Ir_Anterior
+            Align = alLeft
+            Flat = True
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 2
+            ExplicitTop = 6
+          end
+          object BtnactMedia_Ir_Proximo: TSpeedButton
+            Left = 48
+            Top = 0
+            Width = 24
+            Height = 35
+            Cursor = crHandPoint
+            Action = actMedia_Ir_Proximo
+            Align = alLeft
+            Flat = True
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 46
+            ExplicitTop = 6
+          end
+          object BtnactMedia_Stop: TSpeedButton
+            Left = 24
+            Top = 0
+            Width = 24
+            Height = 35
+            Cursor = crHandPoint
+            Action = actMedia_Stop
+            Align = alLeft
+            Flat = True
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 18
+            ExplicitTop = 6
+          end
+          object BtnactMedia_Proporcional: TSpeedButton
+            Left = 72
+            Top = 0
+            Width = 24
+            Height = 35
+            Cursor = crHandPoint
+            Action = actMedia_Proporcional
+            Align = alLeft
+            AllowAllUp = True
+            Images = ImageList1
+            Flat = True
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 70
+            ExplicitTop = 6
+          end
+          object BtnActPrincipal_Hide: TSpeedButton
+            Left = 96
+            Top = 0
+            Width = 24
+            Height = 35
+            Cursor = crHandPoint
+            Action = ActPrincipal_Hide
+            Align = alLeft
+            Flat = True
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 102
+            ExplicitTop = 6
+          end
+        end
       end
-      object BtnactMedia_Stop: TSpeedButton
-        Left = 24
-        Top = 0
-        Width = 24
-        Height = 35
-        Cursor = crHandPoint
-        CustomHint = BalloonHint1
-        Action = actMedia_Stop
-        Align = alLeft
-        Flat = True
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 18
-        ExplicitTop = 6
-      end
-      object BtnactMedia_Proporcional: TSpeedButton
-        Left = 72
-        Top = 0
-        Width = 24
-        Height = 35
-        Cursor = crHandPoint
-        CustomHint = BalloonHint1
-        Action = actMedia_Proporcional
-        Align = alLeft
-        AllowAllUp = True
-        Images = ImageList1
-        Flat = True
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 70
-        ExplicitTop = 6
-      end
-      object BtnActPrincipal_Hide: TSpeedButton
-        Left = 96
-        Top = 0
-        Width = 24
-        Height = 35
-        Cursor = crHandPoint
-        CustomHint = BalloonHint1
-        Action = ActPrincipal_Hide
-        Align = alLeft
-        Flat = True
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 102
-        ExplicitTop = 6
-      end
-    end
-  end
-  object pnl_Area_Lista: TPanel
-    Left = 0
-    Top = 0
-    Width = 852
-    Height = 376
-    Align = alClient
-    BevelOuter = bvNone
-    Caption = 'pnl_Area_Lista'
-    Color = clWhite
-    ParentBackground = False
-    TabOrder = 1
-    object lblStatus: TLabel
-      Left = 0
-      Top = 359
-      Width = 852
-      Height = 17
-      Align = alBottom
-      Caption = '(...)'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      ExplicitWidth = 22
-    end
-    object Lista_Arquivos: TListView
-      Left = 0
-      Top = 0
-      Width = 852
-      Height = 359
-      Align = alClient
-      BevelInner = bvNone
-      BevelOuter = bvNone
-      BorderStyle = bsNone
-      Columns = <>
-      ColumnClick = False
-      FlatScrollBars = True
-      ReadOnly = True
-      RowSelect = True
-      ShowColumnHeaders = False
-      TabOrder = 0
-      ViewStyle = vsReport
-      OnCustomDrawItem = Lista_ArquivosCustomDrawItem
-      OnDragDrop = Lista_ArquivosDragDrop
-      OnDragOver = Lista_ArquivosDragOver
-      OnMouseDown = Lista_ArquivosMouseDown
-      OnSelectItem = Lista_ArquivosSelectItem
     end
   end
   object ActionList1: TActionList
@@ -387,6 +504,7 @@ object fmPrincipal: TfmPrincipal
       Caption = 'actArquivo_Adicionar'
       Hint = 'Adicionar mais arquivos '#224' lista'
       ImageIndex = 5
+      ShortCut = 16429
       OnExecute = actArquivo_AdicionarExecute
     end
     object actArquivo_Remover: TAction
@@ -394,6 +512,9 @@ object fmPrincipal: TfmPrincipal
       Caption = 'actArquivo_Remover'
       Hint = 'Remover o arquivo selecionado da lista'
       ImageIndex = 6
+      SecondaryShortCuts.Strings = (
+        'Ctrl+Del')
+      ShortCut = 16430
       OnExecute = actArquivo_RemoverExecute
     end
     object actArquivo_MoverPCima: TAction
@@ -401,6 +522,7 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Mover para cima'
       Hint = 'Mover para cima'
       ImageIndex = 3
+      ShortCut = 16422
       OnExecute = actArquivo_MoverPCimaExecute
     end
     object actArquivo_MoverPBaixo: TAction
@@ -408,6 +530,7 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Mover para baixo'
       Hint = 'Mover para baixo'
       ImageIndex = 4
+      ShortCut = 16424
       OnExecute = actArquivo_MoverPBaixoExecute
     end
     object actArquivo_Caminho_Abrir: TAction
@@ -415,6 +538,7 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Explorar'
       Hint = 'Abrir a pasta que cont'#234'm o arquivo'
       ImageIndex = 1
+      ShortCut = 16463
       OnExecute = actArquivo_Caminho_AbrirExecute
     end
     object actArquivo_Caminho_Clipboard: TAction
@@ -422,6 +546,7 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Clipboard'
       Hint = 'Copiar a localiza'#231#227'o do arquivo para a '#225'rea de clipboard'
       ImageIndex = 2
+      ShortCut = 16451
       OnExecute = actArquivo_Caminho_ClipboardExecute
     end
     object actMedia_Legenda: TAction
@@ -429,6 +554,7 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Legenda'
       Hint = 'Incluir ou remover a legenda para a m'#237'dia selecionada'
       ImageIndex = 9
+      ShortCut = 16468
       OnExecute = actMedia_LegendaExecute
     end
     object actMedia_Ir_Anterior: TAction
@@ -436,6 +562,9 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Anterior'
       Hint = 'Ir para a m'#237'dia anterior'
       ImageIndex = 10
+      SecondaryShortCuts.Strings = (
+        'Ctrl+Q')
+      ShortCut = 16421
       OnExecute = actMedia_Ir_AnteriorExecute
     end
     object actMedia_Ir_Proximo: TAction
@@ -443,6 +572,9 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Pr'#243'ximo'
       Hint = 'Ir para a pr'#243'xima m'#237'dia'
       ImageIndex = 11
+      SecondaryShortCuts.Strings = (
+        'Ctrl+W')
+      ShortCut = 16423
       OnExecute = actMedia_Ir_ProximoExecute
     end
     object actMedia_Proporcional: TAction
@@ -450,6 +582,7 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Propor'#231#227'o'
       Hint = 'Propor'#231#227'o vertial ou horizontal'
       ImageIndex = 7
+      ShortCut = 119
       OnExecute = actMedia_ProporcionalExecute
     end
     object actMedia_Bordas: TAction
@@ -459,6 +592,7 @@ object fmPrincipal: TfmPrincipal
         'Exibe ou oculta as bordas para permitir redimensionar a janela d' +
         'e visualiza'#231#227'o'
       ImageIndex = 16
+      ShortCut = 16450
       OnExecute = actMedia_BordasExecute
     end
     object actMedia_Stop: TAction
@@ -466,6 +600,7 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Parar'
       Hint = 'Parar qualquer exibi'#231#227'o em andamento'
       ImageIndex = 12
+      ShortCut = 16467
       OnExecute = actMedia_StopExecute
     end
     object actMensagem_Descanso: TAction
@@ -481,8 +616,8 @@ object fmPrincipal: TfmPrincipal
       Hint = 'Esconder ou mostrar a janela principal'
       ImageIndex = 8
       SecondaryShortCuts.Strings = (
-        'Ctrl+F9')
-      ShortCut = 120
+        'F9')
+      ShortCut = 16456
       OnExecute = ActPrincipal_HideExecute
     end
   end
@@ -2000,9 +2135,5 @@ object fmPrincipal: TfmPrincipal
       FE000FE001FFC00003FE007FFF000FE001FFFF00FFFF81FFFF810FE001FFFF00
       FFFF81FFFFC31FFFFFFFFF81FFFFC3FF00000000000000000000000000000000
       000000000000}
-  end
-  object BalloonHint1: TBalloonHint
-    Left = 488
-    Top = 104
   end
 end

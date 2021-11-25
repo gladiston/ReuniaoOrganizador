@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.OleCtrls, SHDocVw,
-  WebView2, Winapi.ActiveX, Vcl.Edge, Vcl.Buttons, Vcl.ExtCtrls;
+  WebView2, Winapi.ActiveX, Vcl.Edge, Vcl.Buttons, Vcl.ExtCtrls, System.Actions,
+  Vcl.ActnList;
 
 type
   TfmExibicao = class(TForm)
@@ -13,6 +14,15 @@ type
     pnlLegenda: TPanel;
     BtnActPrincipal_Hide: TSpeedButton;
     lblLegenda: TLabel;
+    ActionList1: TActionList;
+    actMedia_Legenda: TAction;
+    actMedia_Ir_Anterior: TAction;
+    actMedia_Ir_Proximo: TAction;
+    actMedia_Proporcional: TAction;
+    actMedia_Bordas: TAction;
+    actMedia_Stop: TAction;
+    ActPrincipal_Hide: TAction;
+    Splitter1: TSplitter;
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure PermitirArrastarjanela(Sender: TObject; Button: TMouseButton;
@@ -25,6 +35,14 @@ type
     procedure lblLegendaDblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure actMedia_LegendaExecute(Sender: TObject);
+    procedure actMedia_Ir_AnteriorExecute(Sender: TObject);
+    procedure actMedia_Ir_ProximoExecute(Sender: TObject);
+    procedure actMedia_ProporcionalExecute(Sender: TObject);
+    procedure actMedia_BordasExecute(Sender: TObject);
+    procedure actMedia_StopExecute(Sender: TObject);
+    procedure ActPrincipal_HideExecute(Sender: TObject);
+    procedure lblLegendaClick(Sender: TObject);
   protected
     procedure CreateParams(var Params: TCreateParams); override;
   private
@@ -56,6 +74,41 @@ uses
 {$R *.dfm}
 
 { TfmExibicao }
+
+procedure TfmExibicao.actMedia_BordasExecute(Sender: TObject);
+begin
+  fmPrincipal.actMedia_BordasExecute(Sender);
+end;
+
+procedure TfmExibicao.actMedia_Ir_AnteriorExecute(Sender: TObject);
+begin
+  fmPrincipal.actMedia_Ir_AnteriorExecute(Sender);
+end;
+
+procedure TfmExibicao.actMedia_Ir_ProximoExecute(Sender: TObject);
+begin
+  fmPrincipal.actMedia_Ir_ProximoExecute(Sender);
+end;
+
+procedure TfmExibicao.actMedia_LegendaExecute(Sender: TObject);
+begin
+  fmPrincipal.actMedia_LegendaExecute(Sender);
+end;
+
+procedure TfmExibicao.actMedia_ProporcionalExecute(Sender: TObject);
+begin
+  fmPrincipal.actMedia_ProporcionalExecute(Sender);
+end;
+
+procedure TfmExibicao.actMedia_StopExecute(Sender: TObject);
+begin
+  fmPrincipal.actMedia_StopExecute(Sender);
+end;
+
+procedure TfmExibicao.ActPrincipal_HideExecute(Sender: TObject);
+begin
+  fmPrincipal.ActPrincipal_HideExecute(Sender);
+end;
 
 procedure TfmExibicao.CreateParams(var Params: TCreateParams);
 begin
@@ -104,9 +157,30 @@ end;
 procedure TfmExibicao.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if Key=VK_F9 then
+  {if (Key=VK_F9) or (Key=Ord('H')) or (Key=Ord('h'))  then
   begin
     fmPrincipal.ActPrincipal_HideExecute(nil);
+  end;
+  if (Key=Ord('Q')) or (Key=Ord('q')) then
+  begin
+    fmPrincipal.actMedia_Ir_AnteriorExecute(Sender);
+  end;
+  if (Key=Ord('W')) or (Key=Ord('w'))  then
+  begin
+    fmPrincipal.actMedia_Ir_ProximoExecute(Sender);
+  end;
+  if (Key=Ord('S'))or (Key=Ord('s'))  then
+  begin
+    fmPrincipal.actMedia_StopExecute(Sender);
+  end;}
+end;
+
+procedure TfmExibicao.lblLegendaClick(Sender: TObject);
+begin
+  try
+    ActiveControl:=Self;
+  finally
+
   end;
 end;
 
@@ -200,7 +274,7 @@ begin
     lblLegenda.AutoSize:=true;
   end;}
   lblLegenda.Caption:=FLegenda;
-  pnlLegenda.Visible:=(lblLegenda.Caption<>'');
+  //pnlLegenda.Visible:=(lblLegenda.Caption<>'');
 end;
 
 procedure TfmExibicao.Titlebar_Hide;

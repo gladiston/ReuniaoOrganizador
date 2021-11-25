@@ -110,10 +110,6 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <Form>fmPrincipal</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="fexibicao.pas">
-            <Form>fmExibicao</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="fquero_resposta.pas">
             <Form>fmQuero_Resposta</Form>
             <FormType>dfm</FormType>
@@ -144,7 +140,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="Win32\Debug\ReuniaoOrganizador.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="D:\JW\_Central\Reuniao_Zoom\ReuniaoOrganizador.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>ReuniaoOrganizador.exe</RemoteName>
                         <Overwrite>true</Overwrite>

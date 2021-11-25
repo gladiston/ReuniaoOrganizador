@@ -20,11 +20,11 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,
   System.Actions, Vcl.ActnList, System.ImageList, Vcl.ImgList, Vcl.Buttons,
   Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Menus, Vcl.BaseImageCollection,
-  Vcl.ImageCollection;
+  Vcl.ImageCollection, WebView2, Winapi.ActiveX, Vcl.Edge;
 
 type
   TfmPrincipal = class(TForm)
-    pnl_Area_Controles: TPanel;
+    pnl_Area_Botoes: TPanel;
     ActionList1: TActionList;
     pnl_Arquivos: TPanel;
     BtnactArquivo_MoverPBaixo: TSpeedButton;
@@ -66,12 +66,18 @@ type
     lblStatus: TLabel;
     actMensagem_Descanso: TAction;
     Mensagemdedescansoouboasvindas1: TMenuItem;
-    BalloonHint1: TBalloonHint;
     Bevel2: TBevel;
     Bevel3: TBevel;
     BtnactMedia_Proporcional: TSpeedButton;
     ActPrincipal_Hide: TAction;
     BtnActPrincipal_Hide: TSpeedButton;
+    pnl_Area_media: TPanel;
+    pnlLegenda: TPanel;
+    BtnActPrincipal_Hide2: TSpeedButton;
+    lblLegenda: TLabel;
+    Splitter1: TSplitter;
+    Navegador: TEdgeBrowser;
+    pnl_Area_Controles: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormDestroy(Sender: TObject);
@@ -102,6 +108,9 @@ type
     procedure actMedia_StopExecute(Sender: TObject);
     procedure actMensagem_DescansoExecute(Sender: TObject);
     procedure ActPrincipal_HideExecute(Sender: TObject);
+    procedure PermitirArrastarJanela(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure lblLegendaDblClick(Sender: TObject);
   protected
     procedure CreateParams(var Params: TCreateParams); override;
   private
@@ -118,6 +127,16 @@ type
     FHello_Message: String;
     FHTML_TempFile: String;
     FFMediaProporcional_Width: Boolean;
+    //FMain_Top:Integer;
+    //FMain_Left:Integer;
+    //FMain_Width:Integer;
+    //FMain_Height:Integer;
+    //
+    FArea_Media_Height:Integer;
+    FArea_Controles_Height:Integer;
+    //
+    FLegenda: String;
+    FCarregamentoCompleto: Boolean;
     procedure WMDropFiles(var Msg: TWMDropFiles); message WM_DROPFILES;
     function FilePathToURL(const FilePath: string): string;
     procedure SetConfigFile(const Value: String);
@@ -126,8 +145,11 @@ type
     procedure SetStatusMsg(const Value: String);
     procedure SetHello_Message(const Value: String);
     procedure SetFMediaProporcional_Width(const Value: Boolean);
+    procedure SetLegenda(const Value: String);
+    procedure SetCarregamentoCompleto(const Value: Boolean);
   public
     { Public declarations }
+    procedure DisplayHint(Sender: TObject);
   published
     property ConfigFile: String read FConfigFile write SetConfigFile;
     property ListaAtual: String read FListaAtual write SetListaAtual;
@@ -138,6 +160,8 @@ type
     property Hello_Message:String read FHello_Message write SetHello_Message;
     property Modificado: Boolean read FModificado;
     property HTML_TempFile:String read FHTML_TempFile;
+    property Legenda:String read FLegenda write SetLegenda;
+    property CarregamentoCompleto:Boolean read FCarregamentoCompleto write SetCarregamentoCompleto;
     procedure ReadConfig;
     procedure WriteConfig;
     function IsFileAcceptable(AArquivo: String): Boolean;
@@ -151,6 +175,10 @@ type
     //procedure SendTrayMessage(ACaption, AText:String);
     function HTML_GetCode(AArquivo: String; var ASaveHTMLAs:String): String;
     function HTML_GetHello(ATexto:String):String;
+    procedure Main_Esconder;
+    procedure Main_Aparecer;
+    procedure Titlebar_Hide;
+    procedure Titlebar_Show;
   end;
 
 var
@@ -173,8 +201,8 @@ uses
   inifiles,
   StrUtils,
   ClipBrd,
-  fquero_resposta,
-  fexibicao;
+  fquero_resposta;
+  //fexibicao;
 
 {$R *.dfm}
 
@@ -241,6 +269,7 @@ begin
   FMediaLegendasList:=TStringList.Create;
   FHello_Message:='<h1>"Sua força está em permanecerem calmos e terem confiança - Isaías 30:50"</h1>';
   FHTML_TempFile:=GetEnvironmentVariable('TEMP')+'\'+ExtractFileName(ParamStr(0))+'.html';
+
   MediaProporcional_Width:=true;
   //BtnactMedia_Proporcional.Down:= FFMediaProporcional_Width;
   cmdFileName := ParamStr(1);
@@ -276,6 +305,18 @@ begin
   DragAcceptFiles(Self.Handle, true);
   //
 
+  // ex
+  //navegador.BrowserExecutableFolder := 'D:\Downloads\microsoft.web.webview2.1.0.961.33';
+  pnlLegenda.Caption:='';
+  lblLegenda.Caption:='';
+  BtnActPrincipal_Hide2.Caption:='';
+  Self.BorderStyle:=bsNone; // bsNone ou  bsSizeable
+  FCarregamentoCompleto:=false;
+  Hide;
+  ReadConfig;
+  //Navegador.StatusBarEnabled := false;
+  ActiveControl:=Navegador;
+  BtnActPrincipal_Hide.Caption:='';
 
   //
   ReadConfig;
@@ -287,6 +328,8 @@ begin
       ListaAtual := cmdFileName;
     end;
   end;
+  Application.OnHint := DisplayHint;
+
 end;
 
 procedure TfmPrincipal.FormShow(Sender: TObject);
@@ -309,6 +352,7 @@ begin
   //
   //PostMessage(Handle, wm_user, 0, 0);
   StatusMsg:='Arraste um arquivo para começar a criar uma lista ou carregue uma pré-existente.';
+  Self.Constraints.MinHeight:=pnl_Area_Botoes.Height+lblStatus.Height+20;
 end;
 
 procedure TfmPrincipal.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -328,6 +372,7 @@ begin
     end;
 
     WriteConfig;
+    Navegador.Navigate('blank://');
     ModalResult := mrClose;
   finally
 
@@ -515,6 +560,11 @@ begin
 
 end;
 
+procedure TfmPrincipal.lblLegendaDblClick(Sender: TObject);
+begin
+  actMedia_LegendaExecute(nil);
+end;
+
 procedure TfmPrincipal.Lista_ArquivosCustomDrawItem(Sender: TCustomListView;
   Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
 begin
@@ -580,11 +630,55 @@ begin
 
 end;
 
+procedure TfmPrincipal.ActPrincipal_HideExecute(Sender: TObject);
+begin
+  if pnl_Area_Controles.Visible then
+  begin
+    fmPrincipal.Main_Esconder;
+  end
+  else
+  begin
+    fmPrincipal.Main_Aparecer;
+  end;
+end;
+
+procedure TfmPrincipal.Main_Aparecer;
+begin
+  //pnl_Area_media.Align:=alTop;
+  pnl_Area_Controles.Visible:=true;
+  pnl_Area_media.Align:=alClient;
+  pnl_Area_Controles.Constraints.MinHeight:=0;
+  //Self.BorderStyle:=bsSizeable;
+end;
+
+procedure TfmPrincipal.Main_Esconder;
+begin
+  //FArea_Media_Height:=pnl_Area_media.Height;
+  //FArea_Controles_Height:=pnl_Area_Controles.Height;
+  //Self.BorderStyle:=bsNone;
+  pnl_Area_media.Align:=alTop;
+  pnl_Area_Controles.Constraints.MinHeight:=pnl_Area_Controles.Height;
+  pnl_Area_Controles.Visible:=false;
+  Self.AutoSize:=true;
+  Sleep(1000);
+  Self.AutoSize:=false;
+end;
+
+procedure TfmPrincipal.PermitirArrastarJanela(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+const
+   sc_DragMove = $f012;
+begin
+  ReleaseCapture;
+  Perform(wm_SysCommand, sc_DragMove, 0);
+
+end;
+
 procedure TfmPrincipal.actMedia_BordasExecute(Sender: TObject);
 begin
-  if fmExibicao.BorderStyle=bsNone then
+  if Self.BorderStyle=bsNone then
   begin
-    fmExibicao.BorderStyle:=bsSizeable;
+    Self.BorderStyle:=bsSizeable;
     //fmExibicao.Titlebar_Hide;
     //fmExibicao.pnlLegenda.Visible:=false;
     //fmExibicao.AutoSize:=false;
@@ -592,7 +686,7 @@ begin
   else
   begin
     //fmExibicao.Titlebar_Show;
-    fmExibicao.BorderStyle:=bsNone;
+    Self.BorderStyle:=bsNone;
     //fmExibicao.pnlLegenda.Visible:=true;
     //fmExibicao.AutoSize:=true;
     //fmExibicao.AutoSize:=false;
@@ -652,7 +746,7 @@ begin
     begin
       sLegenda := Trim(sLegenda);
       FMediaLegendasList.Values[ExtractFileName(sArquivo)]:= sLegenda;
-      fmExibicao.Legenda:=sLegenda;
+      Legenda:=sLegenda;
       FModificado := true;
     end;
   end;
@@ -665,14 +759,8 @@ end;
 
 procedure TfmPrincipal.actMedia_StopExecute(Sender: TObject);
 begin
-  if Assigned(fmExibicao) then
-  begin
-    if fmExibicao.Showing then
-    begin
-      fmExibicao.Navegador.NavigateToString(HTML_GetHello(Hello_Message));
-      fmExibicao.pnlLegenda.Visible:=false;
-    end;
-  end;
+  Navegador.NavigateToString(HTML_GetHello(Hello_Message));
+  Legenda:='';
 end;
 
 procedure TfmPrincipal.actMensagem_DescansoExecute(Sender: TObject);
@@ -806,6 +894,9 @@ var
   OpenDialog1:TOpenDialog;
 begin
   // adicionando arquivos
+  if not pnl_Area_Controles.Visible then
+    Exit;
+
   sListaParaAbrir := StringReplace(_APP_EXT_VIDEO + _APP_EXT_FIG + _APP_EXT_PDF,
     '|', ';*', [rfReplaceAll]);
   if LeftStr(sListaParaAbrir, 1) = ';' then
@@ -942,6 +1033,9 @@ var
   ItemAtual: String;
 begin
   // mover para baixo
+  if not pnl_Area_Controles.Visible then
+    Exit;
+
   i := Lista_Arquivos.ItemIndex;
   if i < Pred(Lista_Arquivos.Items.Count) then
   begin
@@ -970,6 +1064,9 @@ var
   ItemAtual: String;
 begin
   // mover para cima
+  if not pnl_Area_Controles.Visible then
+    Exit;
+
   i := Lista_Arquivos.ItemIndex;
   if i > 0 then
   begin
@@ -997,22 +1094,41 @@ var
   sArquivoCaption: String;
   sCurArquivo:String;
   ItemAtual: TListItem;
+  bRemoveMediaFile:Boolean;
 begin
   // Remover
+  if not pnl_Area_Controles.Visible then
+    Exit;
+
+  bRemoveMediaFile:=false;
   i := Lista_Arquivos.ItemIndex;
   if i >= 0 then
   begin
-    //ItemAtual := Lista_Arquivos.Items[i];
+    ItemAtual := Lista_Arquivos.Items[i];
     sCurArquivo := Lista_Arquivos.Items[i].SubItems[0];
     sArquivoCaption := ItemAtual.Caption;
     if SameText(MediaAtual, sCurArquivo) then
     begin
       //Figura.Picture := nil;
-      fmExibicao.Navegador.Navigate('blank://');
+      Navegador.Navigate('blank://');
     end;
     try
       Lista_Arquivos.DeleteSelected;
-      StatusMsg := 'Media excluída: ' + sArquivoCaption;
+      StatusMsg := 'Media removida: ' + sArquivoCaption;
+      if FileExists(sCurArquivo) then
+      begin
+        if bRemoveMediaFile then
+        begin
+          try
+            DeleteFile(sCurArquivo);
+            StatusMsg := 'Media removida e arquivo excluído: ' + sCurArquivo;
+          finally
+
+          end;
+        end;
+
+      end;
+
       if i <= Pred(Lista_Arquivos.Items.Count) then
       begin
         Lista_Arquivos.ItemIndex := i;
@@ -1060,20 +1176,7 @@ begin
   Arquivo_Lista_Salvar(ListaAtual);
 end;
 
-procedure TfmPrincipal.ActPrincipal_HideExecute(Sender: TObject);
-begin
-  if fmPrincipal.Showing then
-  begin
-    if fmExibicao.Showing then
-    begin
-      fmPrincipal.Hide;
-    end;
-  end
-  else
-  begin
-    fmPrincipal.Show;
-  end;
-end;
+
 
 function TfmPrincipal.Arquivo_Adicionar(AArquivo: String;
   ACanDuplicate: Boolean): String;
@@ -1173,6 +1276,8 @@ end;
 procedure TfmPrincipal.BtnMenuListaClick(Sender: TObject);
 begin
   //pnl_Lista.Align:=alRight;
+  if not pnl_Area_Controles.Visible then
+    Exit;
   mnuLista.Popup(Mouse.CursorPos.X, Mouse.CursorPos.Y);
 end;
 
@@ -1180,6 +1285,11 @@ procedure TfmPrincipal.CreateParams(var Params: TCreateParams);
 begin
   inherited;
     Params.Style := Params.Style or WS_THICKFRAME;
+end;
+
+procedure TfmPrincipal.DisplayHint(Sender: TObject);
+begin
+  lblStatus.Caption:=GetLongHint(Application.Hint);
 end;
 
 function TfmPrincipal.FilePathToURL(const FilePath: string): string;
@@ -1194,6 +1304,11 @@ end;
 
 
 
+procedure TfmPrincipal.SetCarregamentoCompleto(const Value: Boolean);
+begin
+  FCarregamentoCompleto := Value;
+end;
+
 procedure TfmPrincipal.SetConfigFile(const Value: String);
 begin
   FConfigFile := Value;
@@ -1206,19 +1321,24 @@ begin
   BtnactMedia_Proporcional.Transparent:= FFMediaProporcional_Width;
   BtnactMedia_Proporcional.Hint:='Proporção por largura ou altura (atualmente='+
     IfThen(MediaProporcional_Width,'largura','altura')+')';
-  if Assigned(fmExibicao) then
+  if Self.Showing then
   begin
-    if fmExibicao.Showing then
-    begin
-      MediaAtual:=FMediaAtual;
-    end;
+    MediaAtual:=FMediaAtual;
   end;
+
 end;
 
 procedure TfmPrincipal.SetHello_Message(const Value: String);
 begin
   FHello_Message := Value;
 
+end;
+
+procedure TfmPrincipal.SetLegenda(const Value: String);
+begin
+  FLegenda :=Trim(Value);
+  lblLegenda.Caption:=FLegenda;
+  lblLegenda.Visible:=true;
 end;
 
 procedure TfmPrincipal.SetListaAtual(const Value: String);
@@ -1300,40 +1420,25 @@ begin
       deleteFile(FHTML_TempFile);
     try
       sHTMLCode := HTML_GetCode(Value, FHTML_TempFile);
-      if Assigned(fmExibicao) then
+      Legenda:='';
+      Navegador.NavigateToString(HTML_GetHello(Hello_Message));
+      if FileExists(FHTML_TempFile) then
       begin
-        //if fmExibicao.Showing then
-        //begin
-          fmExibicao.Legenda:='';
-          fmExibicao.Navegador.NavigateToString(HTML_GetHello(Hello_Message));
-          if FileExists(FHTML_TempFile) then
-          begin
-            //fmExibicao.Navegador.NavigateToString('<html><body><h1>Aguardando seleção de mídia</h1></body></html>');
-            //fmExibicao.Navegador.NavigateToString(sHTMLCode);
-            sUriFile:=FilePathToURL(FHTML_TempFile);
-            fmExibicao.Navegador.Navigate(sUriFile);
-            //fmExibicao.CarregamentoCompleto:=false;
-            //fmExibicao.Navegador.OnContentLoading .NavigateToString(sHTMLCode);
-            {repeat
-              Application.ProcessMessages
-            until
-              (fmExibicao.CarregamentoCompleto)
-              and (fmExibicao.Showing)
-              and (fmExibicao.ModalResult <> mrClose);}
-            try
-              sLegenda:=FMediaLegendasList.Values[ExtractFileName(Value)];
-            finally
+        sUriFile:=FilePathToURL(FHTML_TempFile);
+        Navegador.Navigate(sUriFile);
+        try
+          sLegenda:=FMediaLegendasList.Values[ExtractFileName(Value)];
+        finally
 
-            end;
-            fmExibicao.Legenda:=sLegenda;
-            if IsVideo(FMediaAtual) then
-               fmExibicao.Legenda:='';
-            if IsPDF(FMediaAtual) then
-               fmExibicao.Legenda:='';
-          end;
-        //end;
-        fmExibicao.Show;
+        end;
+        Legenda:=sLegenda;
+        if IsVideo(FMediaAtual) then
+           Legenda:='';
+        if IsPDF(FMediaAtual) then
+           Legenda:='';
       end;
+      pnl_Area_media.Visible:=true;
+
     finally
 
     end;
@@ -1352,6 +1457,50 @@ begin
     lblStatus.Visible:=false;
     lblStatus.Caption:=FStatusMsg;
     lblStatus.Visible:=true;
+  end;
+
+end;
+
+procedure TfmPrincipal.Titlebar_Hide;
+var
+  Style: Longint;
+begin
+  //if Self.BorderStyle = bsNone
+  //  then Exit;
+  Style := GetWindowLong(Self.Handle, GWL_STYLE);
+  if (Style and WS_CAPTION) = WS_CAPTION then
+  begin
+    case Self.BorderStyle of
+      bsSingle,
+      bsSizeable: SetWindowLong(Self.Handle, GWL_STYLE, Style and
+          (not (WS_CAPTION)) or WS_BORDER);
+      bsDialog: SetWindowLong(Self.Handle, GWL_STYLE, Style and
+          (not (WS_CAPTION)) or DS_MODALFRAME or WS_DLGFRAME);
+    end;
+    Self.Height := Self.Height - GetSystemMetrics(SM_CYCAPTION);
+    Self.Refresh;
+  end;
+
+end;
+
+procedure TfmPrincipal.Titlebar_Show;
+var
+  Style: Longint;
+begin
+  //if Self.BorderStyle = bsNone
+  //  then Exit;
+  Style := GetWindowLong(Self.Handle, GWL_STYLE);
+  if (Style and WS_CAPTION) <> WS_CAPTION then
+  begin
+    case Self.BorderStyle of
+      bsSingle,
+      bsSizeable: SetWindowLong(Self.Handle, GWL_STYLE, Style or WS_CAPTION or
+          WS_BORDER);
+      bsDialog: SetWindowLong(Self.Handle, GWL_STYLE,
+          Style or WS_CAPTION or DS_MODALFRAME or WS_DLGFRAME);
+    end;
+    Self.Height := Self.Height + GetSystemMetrics(SM_CYCAPTION);
+    Self.Refresh;
   end;
 
 end;

@@ -28,7 +28,6 @@ object fmExibicao: TfmExibicao
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  KeyPreview = True
   OldCreateOrder = False
   OnActivate = FormActivate
   OnCloseQuery = FormCloseQuery
@@ -38,11 +37,21 @@ object fmExibicao: TfmExibicao
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object Splitter1: TSplitter
+    Left = 0
+    Top = 356
+    Width = 608
+    Height = 3
+    Cursor = crVSplit
+    Align = alBottom
+    ExplicitTop = 0
+    ExplicitWidth = 359
+  end
   object Navegador: TEdgeBrowser
     Left = 0
     Top = 0
     Width = 608
-    Height = 362
+    Height = 356
     Cursor = crHandPoint
     ParentCustomHint = False
     Align = alClient
@@ -52,9 +61,9 @@ object fmExibicao: TfmExibicao
   end
   object pnlLegenda: TPanel
     Left = 0
-    Top = 362
+    Top = 359
     Width = 608
-    Height = 41
+    Height = 44
     Align = alBottom
     BevelOuter = bvNone
     Caption = 'pnlLegenda'
@@ -63,7 +72,7 @@ object fmExibicao: TfmExibicao
       Left = 585
       Top = 0
       Width = 23
-      Height = 41
+      Height = 44
       Cursor = crHandPoint
       Action = fmPrincipal.ActPrincipal_Hide
       Align = alRight
@@ -71,13 +80,13 @@ object fmExibicao: TfmExibicao
       Flat = True
       ParentShowHint = False
       ShowHint = True
-      ExplicitTop = 6
+      ExplicitTop = 3
     end
     object lblLegenda: TLabel
       Left = 0
       Top = 0
       Width = 585
-      Height = 41
+      Height = 44
       Cursor = crHandPoint
       Align = alClient
       Alignment = taCenter
@@ -93,10 +102,77 @@ object fmExibicao: TfmExibicao
       ParentFont = False
       Layout = tlCenter
       WordWrap = True
+      OnClick = lblLegendaClick
       OnDblClick = lblLegendaDblClick
       OnMouseDown = PermitirArrastarjanela
-      ExplicitLeft = -6
-      ExplicitTop = 6
+      ExplicitTop = 3
+    end
+  end
+  object ActionList1: TActionList
+    Left = 508
+    Top = 120
+    object actMedia_Legenda: TAction
+      Category = 'Media'
+      Caption = 'Legenda'
+      Hint = 'Incluir ou remover a legenda para a m'#237'dia selecionada'
+      ImageIndex = 9
+      OnExecute = actMedia_LegendaExecute
+    end
+    object actMedia_Ir_Anterior: TAction
+      Category = 'Media'
+      Caption = 'Anterior'
+      Hint = 'Ir para a m'#237'dia anterior'
+      ImageIndex = 10
+      SecondaryShortCuts.Strings = (
+        'Ctrl+Q')
+      ShortCut = 16421
+      OnExecute = actMedia_Ir_AnteriorExecute
+    end
+    object actMedia_Ir_Proximo: TAction
+      Category = 'Media'
+      Caption = 'Pr'#243'ximo'
+      Hint = 'Ir para a pr'#243'xima m'#237'dia'
+      ImageIndex = 11
+      SecondaryShortCuts.Strings = (
+        'Ctrl+W')
+      ShortCut = 16423
+      OnExecute = actMedia_Ir_ProximoExecute
+    end
+    object actMedia_Proporcional: TAction
+      Category = 'Media'
+      Caption = 'Propor'#231#227'o'
+      Hint = 'Propor'#231#227'o vertial ou horizontal'
+      ImageIndex = 7
+      OnExecute = actMedia_ProporcionalExecute
+    end
+    object actMedia_Bordas: TAction
+      Category = 'Media'
+      Caption = 'Bordas'
+      Hint = 
+        'Exibe ou oculta as bordas para permitir redimensionar a janela d' +
+        'e visualiza'#231#227'o'
+      ImageIndex = 16
+      ShortCut = 16450
+      OnExecute = actMedia_BordasExecute
+    end
+    object actMedia_Stop: TAction
+      Category = 'Media'
+      Caption = 'Parar'
+      Hint = 'Parar qualquer exibi'#231#227'o em andamento'
+      ImageIndex = 12
+      ShortCut = 16464
+      OnExecute = actMedia_StopExecute
+    end
+    object ActPrincipal_Hide: TAction
+      Category = 'Media'
+      Caption = 'Esconder/Mostrar'
+      Hint = 'Esconder ou mostrar a janela principal'
+      ImageIndex = 8
+      SecondaryShortCuts.Strings = (
+        'Ctrl+F9'
+        'H')
+      ShortCut = 16456
+      OnExecute = ActPrincipal_HideExecute
     end
   end
 end
