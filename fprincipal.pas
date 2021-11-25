@@ -69,7 +69,7 @@ type
     Bevel2: TBevel;
     Bevel3: TBevel;
     BtnactMedia_Proporcional: TSpeedButton;
-    ActPrincipal_Hide: TAction;
+    ActPrincipal_ShowHide: TAction;
     BtnActPrincipal_Hide: TSpeedButton;
     pnl_Area_media: TPanel;
     pnlLegenda: TPanel;
@@ -78,6 +78,20 @@ type
     Splitter1: TSplitter;
     Navegador: TEdgeBrowser;
     pnl_Area_Controles: TPanel;
+    Menu_Navegacao: TPopupMenu;
+    Anterior1: TMenuItem;
+    Prximo1: TMenuItem;
+    Legenda1: TMenuItem;
+    Proporo1: TMenuItem;
+    Parar1: TMenuItem;
+    N2: TMenuItem;
+    N3: TMenuItem;
+    EsconderMostrar1: TMenuItem;
+    N4: TMenuItem;
+    N5: TMenuItem;
+    N6: TMenuItem;
+    actSair: TAction;
+    Fecharesairdoprograma1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormDestroy(Sender: TObject);
@@ -107,10 +121,12 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure actMedia_StopExecute(Sender: TObject);
     procedure actMensagem_DescansoExecute(Sender: TObject);
-    procedure ActPrincipal_HideExecute(Sender: TObject);
+    procedure ActPrincipal_ShowHideExecute(Sender: TObject);
     procedure PermitirArrastarJanela(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure lblLegendaDblClick(Sender: TObject);
+    procedure BtnActPrincipal_Hide2DblClick(Sender: TObject);
+    procedure actSairExecute(Sender: TObject);
   protected
     procedure CreateParams(var Params: TCreateParams); override;
   private
@@ -630,7 +646,7 @@ begin
 
 end;
 
-procedure TfmPrincipal.ActPrincipal_HideExecute(Sender: TObject);
+procedure TfmPrincipal.ActPrincipal_ShowHideExecute(Sender: TObject);
 begin
   if pnl_Area_Controles.Visible then
   begin
@@ -640,6 +656,11 @@ begin
   begin
     fmPrincipal.Main_Aparecer;
   end;
+end;
+
+procedure TfmPrincipal.actSairExecute(Sender: TObject);
+begin
+  close;
 end;
 
 procedure TfmPrincipal.Main_Aparecer;
@@ -1271,6 +1292,12 @@ begin
     FreeAndNil(L);
   SaveDialog1.Free;
 
+end;
+
+procedure TfmPrincipal.BtnActPrincipal_Hide2DblClick(Sender: TObject);
+begin
+ //Menu_Navegacao
+  Menu_Navegacao.Popup(Mouse.CursorPos.X, Mouse.CursorPos.Y);
 end;
 
 procedure TfmPrincipal.BtnMenuListaClick(Sender: TObject);
