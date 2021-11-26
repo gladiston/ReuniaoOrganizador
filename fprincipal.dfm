@@ -3,7 +3,7 @@ object fmPrincipal: TfmPrincipal
   Top = 0
   Caption = 'Sala de comando'
   ClientHeight = 837
-  ClientWidth = 856
+  ClientWidth = 480
   Color = clBlack
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,7 +20,7 @@ object fmPrincipal: TfmPrincipal
   object pnl_Area_media: TPanel
     Left = 0
     Top = 0
-    Width = 856
+    Width = 480
     Height = 480
     Align = alClient
     BevelOuter = bvNone
@@ -31,37 +31,38 @@ object fmPrincipal: TfmPrincipal
     ParentCtl3D = False
     ShowCaption = False
     TabOrder = 0
-    ExplicitWidth = 480
+    OnMouseMove = pnl_Area_mediaMouseMove
     object Splitter1: TSplitter
       Left = 0
-      Top = 475
-      Width = 856
+      Top = 44
+      Width = 480
       Height = 5
       Cursor = crVSplit
       Hint = 
         'Arraste essa linha para cima ou para baixo para aumentar ou dimi' +
         'nuir a base'
-      Align = alBottom
+      Align = alTop
       Beveled = True
       ResizeStyle = rsLine
       ExplicitTop = 422
+      ExplicitWidth = 856
     end
     object pnlLegenda: TPanel
       Left = 0
       Top = 0
-      Width = 856
+      Width = 480
       Height = 44
       Align = alTop
       BevelOuter = bvNone
+      Constraints.MinHeight = 4
       Ctl3D = False
       ParentColor = True
       ParentCtl3D = False
       ShowCaption = False
       TabOrder = 0
-      ExplicitTop = 390
-      ExplicitWidth = 983
-      object BtnActPrincipal_Hide2: TSpeedButton
-        Left = 833
+      ExplicitWidth = 856
+      object btnActPrincipal_ShowHide: TSpeedButton
+        Left = 457
         Top = 0
         Width = 23
         Height = 44
@@ -73,13 +74,15 @@ object fmPrincipal: TfmPrincipal
         ParentShowHint = False
         PopupMenu = Menu_Navegacao
         ShowHint = True
-        OnDblClick = BtnActPrincipal_Hide2DblClick
+        OnDblClick = btnActPrincipal_ShowHideDblClick
+        OnMouseEnter = btnActPrincipal_ShowHideMouseEnter
+        OnMouseLeave = btnActPrincipal_ShowHideMouseLeave
         ExplicitLeft = 839
       end
       object lblLegenda: TLabel
         Left = 0
         Top = 0
-        Width = 833
+        Width = 457
         Height = 44
         Cursor = crSizeAll
         Align = alClient
@@ -100,26 +103,26 @@ object fmPrincipal: TfmPrincipal
         OnDblClick = lblLegendaDblClick
         OnMouseDown = PermitirArrastarJanela
         ExplicitLeft = -6
+        ExplicitWidth = 833
       end
     end
     object Navegador: TEdgeBrowser
       Left = 0
-      Top = 44
-      Width = 856
+      Top = 49
+      Width = 480
       Height = 431
       Cursor = crHandPoint
       ParentCustomHint = False
       Align = alClient
       TabOrder = 1
-      ExplicitTop = 8
-      ExplicitWidth = 983
-      ExplicitHeight = 262
+      ExplicitTop = 44
+      ExplicitWidth = 856
     end
   end
   object pnl_Area_Controles: TPanel
     Left = 0
     Top = 480
-    Width = 856
+    Width = 480
     Height = 357
     Align = alBottom
     Anchors = [akBottom]
@@ -128,28 +131,25 @@ object fmPrincipal: TfmPrincipal
     ParentBackground = False
     ShowCaption = False
     TabOrder = 1
-    ExplicitTop = 326
-    ExplicitWidth = 983
+    ExplicitWidth = 856
     object pnl_Area_Lista: TPanel
       Left = 0
       Top = 0
-      Width = 856
+      Width = 480
       Height = 357
       Align = alClient
       BevelOuter = bvNone
       ParentColor = True
       ShowCaption = False
       TabOrder = 0
-      ExplicitLeft = -27
-      ExplicitTop = -97
-      ExplicitWidth = 981
-      ExplicitHeight = 208
+      ExplicitWidth = 856
       object lblStatus: TLabel
         Left = 0
         Top = 305
-        Width = 856
+        Width = 480
         Height = 17
         Align = alBottom
+        AutoSize = False
         Caption = '(...)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -157,13 +157,12 @@ object fmPrincipal: TfmPrincipal
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 189
-        ExplicitWidth = 981
+        ExplicitWidth = 22
       end
       object Lista_Arquivos: TListView
         Left = 0
         Top = 0
-        Width = 856
+        Width = 480
         Height = 305
         Align = alClient
         BevelInner = bvNone
@@ -183,24 +182,19 @@ object fmPrincipal: TfmPrincipal
         OnDragOver = Lista_ArquivosDragOver
         OnMouseDown = Lista_ArquivosMouseDown
         OnSelectItem = Lista_ArquivosSelectItem
-        ExplicitLeft = -1
-        ExplicitTop = -6
-        ExplicitWidth = 981
-        ExplicitHeight = 303
+        ExplicitWidth = 856
       end
       object pnl_Area_Botoes: TPanel
         Left = 0
         Top = 322
-        Width = 856
+        Width = 480
         Height = 35
         Align = alBottom
         BevelOuter = bvNone
         ParentColor = True
         ShowCaption = False
         TabOrder = 1
-        ExplicitLeft = 1
-        ExplicitTop = 321
-        ExplicitWidth = 981
+        ExplicitWidth = 856
         object pnl_Arquivos: TPanel
           Left = 164
           Top = 0
@@ -483,8 +477,8 @@ object fmPrincipal: TfmPrincipal
   end
   object ActionList1: TActionList
     Images = ImageList1
-    Left = 696
-    Top = 120
+    Left = 104
+    Top = 64
     object actLista_Carregar: TAction
       Category = 'Lista'
       Caption = 'Carregar lista'
@@ -587,10 +581,10 @@ object fmPrincipal: TfmPrincipal
     end
     object actMedia_Bordas: TAction
       Category = 'Media'
-      Caption = 'Bordas'
+      Caption = 'Ligar ou desligar a exibi'#231#227'o das bordas'
       Hint = 
-        'Exibe ou oculta as bordas para permitir redimensionar a janela d' +
-        'e visualiza'#231#227'o'
+        'Ligar ou desligar a exibi'#231#227'o das bordas: As bordas permitem redi' +
+        'mensionar a janela'
       ImageIndex = 7
       ShortCut = 16450
       OnExecute = actMedia_BordasExecute
@@ -612,8 +606,8 @@ object fmPrincipal: TfmPrincipal
     end
     object ActPrincipal_ShowHide: TAction
       Category = 'Media'
-      Caption = 'Esconder ou mostrar a janela principal'
-      Hint = 'Esconder ou mostrar a janela principal'
+      Caption = 'Ligar ou desligar o painel de listagem de arquivos'
+      Hint = 'Ligar ou desligar o painel de listagem de arquivos'
       ImageIndex = 8
       SecondaryShortCuts.Strings = (
         'F9')
@@ -630,8 +624,8 @@ object fmPrincipal: TfmPrincipal
   end
   object mnuLista: TPopupMenu
     Images = ImageList1
-    Left = 600
-    Top = 208
+    Left = 104
+    Top = 128
     object Carregarlista1: TMenuItem
       Action = actLista_Carregar
     end
@@ -648,8 +642,8 @@ object fmPrincipal: TfmPrincipal
   object ImageList1: TImageList
     Height = 24
     Width = 24
-    Left = 424
-    Top = 208
+    Left = 48
+    Top = 64
     Bitmap = {
       494C010113001800040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       00000000000036000000280000006000000078000000010020000000000000B4
@@ -2145,8 +2139,8 @@ object fmPrincipal: TfmPrincipal
   end
   object Menu_Navegacao: TPopupMenu
     Images = ImageList1
-    Left = 424
-    Top = 424
+    Left = 48
+    Top = 128
     object Prximo1: TMenuItem
       Action = actMedia_Ir_Proximo
       Caption = 'M'#237'dia seguinte'
@@ -2163,17 +2157,17 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Ligar ou desligar a Propor'#231#227'o vertical e horizontal'
       Hint = 'Ligar ou desligar a Propor'#231#227'o vertical e horizontal'
     end
-    object N2: TMenuItem
-      Caption = '-'
+    object EsconderMostrar1: TMenuItem
+      Action = ActPrincipal_ShowHide
     end
-    object Parar1: TMenuItem
-      Action = actMedia_Stop
+    object Bordas1: TMenuItem
+      Action = actMedia_Bordas
     end
     object N3: TMenuItem
       Caption = '-'
     end
-    object EsconderMostrar1: TMenuItem
-      Action = ActPrincipal_ShowHide
+    object Parar1: TMenuItem
+      Action = actMedia_Stop
     end
     object N4: TMenuItem
       Caption = '-'

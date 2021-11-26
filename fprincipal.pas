@@ -73,7 +73,7 @@ type
     BtnActPrincipal_Hide: TSpeedButton;
     pnl_Area_media: TPanel;
     pnlLegenda: TPanel;
-    BtnActPrincipal_Hide2: TSpeedButton;
+    btnActPrincipal_ShowHide: TSpeedButton;
     lblLegenda: TLabel;
     Splitter1: TSplitter;
     Navegador: TEdgeBrowser;
@@ -84,7 +84,6 @@ type
     Legenda1: TMenuItem;
     Proporo1: TMenuItem;
     Parar1: TMenuItem;
-    N2: TMenuItem;
     N3: TMenuItem;
     EsconderMostrar1: TMenuItem;
     N4: TMenuItem;
@@ -92,6 +91,7 @@ type
     N6: TMenuItem;
     actSair: TAction;
     Fecharesairdoprograma1: TMenuItem;
+    Bordas1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormDestroy(Sender: TObject);
@@ -125,8 +125,12 @@ type
     procedure PermitirArrastarJanela(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure lblLegendaDblClick(Sender: TObject);
-    procedure BtnActPrincipal_Hide2DblClick(Sender: TObject);
+    procedure btnActPrincipal_ShowHideDblClick(Sender: TObject);
     procedure actSairExecute(Sender: TObject);
+    procedure pnl_Area_mediaMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure btnActPrincipal_ShowHideMouseEnter(Sender: TObject);
+    procedure btnActPrincipal_ShowHideMouseLeave(Sender: TObject);
   protected
     procedure CreateParams(var Params: TCreateParams); override;
   private
@@ -195,6 +199,7 @@ type
     procedure Main_Aparecer;
     procedure Titlebar_Hide;
     procedure Titlebar_Show;
+    procedure Enable_Actions(ALigar:Boolean);
   end;
 
 var
@@ -325,8 +330,8 @@ begin
   //navegador.BrowserExecutableFolder := 'D:\Downloads\microsoft.web.webview2.1.0.961.33';
   pnlLegenda.Caption:='';
   lblLegenda.Caption:='';
-  BtnActPrincipal_Hide2.Caption:='';
-  Self.BorderStyle:=bsNone; // bsNone ou  bsSizeable
+  btnActPrincipal_ShowHide.Caption:='';
+  //Self.BorderStyle:=bsNone; // bsNone ou  bsSizeable
   FCarregamentoCompleto:=false;
   Hide;
   ReadConfig;
@@ -648,14 +653,17 @@ end;
 
 procedure TfmPrincipal.ActPrincipal_ShowHideExecute(Sender: TObject);
 begin
+  Enable_Actions(false);
   if pnl_Area_Controles.Visible then
   begin
     fmPrincipal.Main_Esconder;
+
   end
   else
   begin
     fmPrincipal.Main_Aparecer;
   end;
+  Enable_Actions(true);
 end;
 
 procedure TfmPrincipal.actSairExecute(Sender: TObject);
@@ -665,11 +673,13 @@ end;
 
 procedure TfmPrincipal.Main_Aparecer;
 begin
-  //pnl_Area_media.Align:=alTop;
+  btnActPrincipal_ShowHide.ImageIndex:=ActPrincipal_ShowHide.ImageIndex;
   pnl_Area_Controles.Visible:=true;
   pnl_Area_media.Align:=alClient;
   pnl_Area_Controles.Constraints.MinHeight:=0;
   //Self.BorderStyle:=bsSizeable;
+  pnl_Area_media.Align:=alClient;
+  pnl_Area_media.Repaint;
 end;
 
 procedure TfmPrincipal.Main_Esconder;
@@ -677,6 +687,7 @@ begin
   //FArea_Media_Height:=pnl_Area_media.Height;
   //FArea_Controles_Height:=pnl_Area_Controles.Height;
   //Self.BorderStyle:=bsNone;
+  btnActPrincipal_ShowHide.ImageIndex:=-1;
   pnl_Area_media.Align:=alTop;
   pnl_Area_Controles.Constraints.MinHeight:=pnl_Area_Controles.Height;
   pnl_Area_Controles.Visible:=false;
@@ -695,8 +706,21 @@ begin
 
 end;
 
+procedure TfmPrincipal.pnl_Area_mediaMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  if X>(pnl_Area_media.Width-btnActPrincipal_ShowHide.Width) then
+  begin
+    if Y<(pnl_Area_media.Height-btnActPrincipal_ShowHide.Height) then
+    begin
+      btnActPrincipal_ShowHide.Visible:=true;
+    end;
+  end;
+end;
+
 procedure TfmPrincipal.actMedia_BordasExecute(Sender: TObject);
 begin
+  Enable_Actions(false);
   if Self.BorderStyle=bsNone then
   begin
     Self.BorderStyle:=bsSizeable;
@@ -712,6 +736,7 @@ begin
     //fmExibicao.AutoSize:=true;
     //fmExibicao.AutoSize:=false;
   end;
+  Enable_Actions(true);
 end;
 
 procedure TfmPrincipal.actMedia_Ir_AnteriorExecute(Sender: TObject);
@@ -720,6 +745,7 @@ var
   sArquivo: String;
   ItemAtual: TListItem;
 begin
+  Enable_Actions(false);
   if Lista_Arquivos.ItemIndex > 0 then
   begin
     Lista_Arquivos.ItemIndex := Lista_Arquivos.ItemIndex - 1;
@@ -730,6 +756,7 @@ begin
   end;
   //if Lista_Arquivos.ItemIndex>0 then
   //  Lista_Arquivos.ItemIndex:=Lista_Arquivos.ItemIndex-1;
+  Enable_Actions(true);
 end;
 
 procedure TfmPrincipal.actMedia_Ir_ProximoExecute(Sender: TObject);
@@ -738,6 +765,7 @@ var
   sArquivo: String;
   ItemAtual: TListItem;
 begin
+  Enable_Actions(false);
   if Lista_Arquivos.ItemIndex < Pred(Lista_Arquivos.Items.Count) then
   begin
     Lista_Arquivos.ItemIndex := Lista_Arquivos.ItemIndex + 1;
@@ -748,6 +776,7 @@ begin
   end;
   //if Lista_Arquivos.ItemIndex<Pred(Lista_Arquivos.Items.Count) then
   //  Lista_Arquivos.ItemIndex:=Lista_Arquivos.ItemIndex+1;
+  Enable_Actions(true);
 end;
 
 procedure TfmPrincipal.actMedia_LegendaExecute(Sender: TObject);
@@ -757,6 +786,7 @@ var
   sLegenda: String;
   ItemAtual: TListItem;
 begin
+  Enable_Actions(false);
   if Lista_Arquivos.ItemIndex >= 0 then
   begin
     ItemAtual := Lista_Arquivos.Items[Lista_Arquivos.ItemIndex];
@@ -771,28 +801,38 @@ begin
       FModificado := true;
     end;
   end;
+  Enable_Actions(true);
 end;
 
 procedure TfmPrincipal.actMedia_ProporcionalExecute(Sender: TObject);
 begin
+  Enable_Actions(false);
   MediaProporcional_Width:=(not MediaProporcional_Width);
+  Enable_Actions(true);
 end;
 
 procedure TfmPrincipal.actMedia_StopExecute(Sender: TObject);
 begin
-  Navegador.NavigateToString(HTML_GetHello(Hello_Message));
-  Legenda:='';
+  Enable_Actions(false);
+  try
+    Navegador.NavigateToString(HTML_GetHello(Hello_Message));
+    Legenda:='';
+  finally
+    Enable_Actions(true);
+  end;
 end;
 
 procedure TfmPrincipal.actMensagem_DescansoExecute(Sender: TObject);
 var
   S:String;
 begin
+  Enable_Actions(false);
   S:=FHello_Message;
   if Quero_Resposta('Mensagem de descanso ou boas vindas:', S, S) then
   begin
     Hello_Message:=S;
   end;
+  Enable_Actions(true);
 end;
 
 procedure TfmPrincipal.ReadConfig;
@@ -917,7 +957,7 @@ begin
   // adicionando arquivos
   if not pnl_Area_Controles.Visible then
     Exit;
-
+  Enable_Actions(false);
   sListaParaAbrir := StringReplace(_APP_EXT_VIDEO + _APP_EXT_FIG + _APP_EXT_PDF,
     '|', ';*', [rfReplaceAll]);
   if LeftStr(sListaParaAbrir, 1) = ';' then
@@ -955,7 +995,7 @@ begin
   finally
     OpenDialog1.Free;
   end;
-
+  Enable_Actions(true);
 end;
 
 procedure TfmPrincipal.actArquivo_Caminho_AbrirExecute(Sender: TObject);
@@ -966,6 +1006,7 @@ var
   sys_last_error: String;
 begin
   sys_last_error := '';
+  Enable_Actions(false);
   if Lista_Arquivos.ItemIndex < 0 then
     sys_last_error := 'Selecione um arquivo para executar esta operação.';
   if sys_last_error = '' then
@@ -992,7 +1033,7 @@ begin
   begin
     StatusMsg := sys_last_error;
   end;
-
+  Enable_Actions(true);
 end;
 
 procedure TfmPrincipal.actArquivo_Caminho_ClipboardExecute(Sender: TObject);
@@ -1003,6 +1044,7 @@ var
   sMsg: String;
 begin
   sys_last_error := '';
+  Enable_Actions(false);
   if Lista_Arquivos.ItemIndex < 0 then
     sys_last_error := 'Nenhum arquivo selecionado!';
 
@@ -1043,7 +1085,7 @@ begin
   begin
     StatusMsg := sys_last_error;
   end;
-
+  Enable_Actions(true);
 
 end;
 
@@ -1056,7 +1098,7 @@ begin
   // mover para baixo
   if not pnl_Area_Controles.Visible then
     Exit;
-
+  Enable_Actions(false);
   i := Lista_Arquivos.ItemIndex;
   if i < Pred(Lista_Arquivos.Items.Count) then
   begin
@@ -1075,7 +1117,7 @@ begin
 
     end;
   end;
-
+  Enable_Actions(true);
 end;
 
 procedure TfmPrincipal.actArquivo_MoverPCimaExecute(Sender: TObject);
@@ -1087,7 +1129,7 @@ begin
   // mover para cima
   if not pnl_Area_Controles.Visible then
     Exit;
-
+  Enable_Actions(false);
   i := Lista_Arquivos.ItemIndex;
   if i > 0 then
   begin
@@ -1106,7 +1148,7 @@ begin
 
     end;
   end;
-
+  Enable_Actions(true);
 end;
 
 procedure TfmPrincipal.actArquivo_RemoverExecute(Sender: TObject);
@@ -1120,7 +1162,7 @@ begin
   // Remover
   if not pnl_Area_Controles.Visible then
     Exit;
-
+  Enable_Actions(false);
   bRemoveMediaFile:=false;
   i := Lista_Arquivos.ItemIndex;
   if i >= 0 then
@@ -1165,7 +1207,7 @@ begin
     end;
 
   end;
-
+  Enable_Actions(true);
 end;
 
 procedure TfmPrincipal.actLista_CarregarExecute(Sender: TObject);
@@ -1174,6 +1216,7 @@ var
   OpenDialog1:TOpenDialog;
 begin
   // Carregar lista
+  Enable_Actions(false);
   OpenDialog1:=TOpenDialog.Create(nil);
   try
     sFileName:='';
@@ -1189,12 +1232,18 @@ begin
 
   end;
   OpenDialog1.Free;
+  Enable_Actions(true);
 end;
 
 procedure TfmPrincipal.actlista_SalvarExecute(Sender: TObject);
 begin
   // salvar lista atual
-  Arquivo_Lista_Salvar(ListaAtual);
+  Enable_Actions(false);
+  try
+    Arquivo_Lista_Salvar(ListaAtual);
+  finally
+    Enable_Actions(true);
+  end;
 end;
 
 
@@ -1294,10 +1343,21 @@ begin
 
 end;
 
-procedure TfmPrincipal.BtnActPrincipal_Hide2DblClick(Sender: TObject);
+procedure TfmPrincipal.btnActPrincipal_ShowHideDblClick(Sender: TObject);
 begin
  //Menu_Navegacao
   Menu_Navegacao.Popup(Mouse.CursorPos.X, Mouse.CursorPos.Y);
+end;
+
+procedure TfmPrincipal.btnActPrincipal_ShowHideMouseEnter(Sender: TObject);
+begin
+  btnActPrincipal_ShowHide.ImageIndex:=ActPrincipal_ShowHide.ImageIndex;
+end;
+
+procedure TfmPrincipal.btnActPrincipal_ShowHideMouseLeave(Sender: TObject);
+begin
+  if not pnl_Area_Controles.Visible then
+    btnActPrincipal_ShowHide.ImageIndex:=-1;
 end;
 
 procedure TfmPrincipal.BtnMenuListaClick(Sender: TObject);
@@ -1317,6 +1377,18 @@ end;
 procedure TfmPrincipal.DisplayHint(Sender: TObject);
 begin
   lblStatus.Caption:=GetLongHint(Application.Hint);
+end;
+
+procedure TfmPrincipal.Enable_Actions(ALigar: Boolean);
+begin
+  if ALigar then
+  begin
+    ActionList1.State:=asNormal;
+  end
+  else
+  begin
+    ActionList1.State:=asSuspended;
+  end;
 end;
 
 function TfmPrincipal.FilePathToURL(const FilePath: string): string;
