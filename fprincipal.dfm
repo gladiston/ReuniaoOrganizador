@@ -60,24 +60,26 @@ object fmPrincipal: TfmPrincipal
       ParentCtl3D = False
       ShowCaption = False
       TabOrder = 0
-      ExplicitWidth = 856
       object btnActPrincipal_ShowHide: TSpeedButton
         Left = 457
         Top = 0
         Width = 23
         Height = 44
         Cursor = crHandPoint
-        Action = ActPrincipal_ShowHide
+        Hint = 'Ligar ou desligar o modo de exibi'#231#227'o'
         Align = alRight
+        Caption = 'Ligar ou desligar o modo de exibi'#231#227'o'
+        ImageIndex = 8
         Images = ImageList1
         Flat = True
         ParentShowHint = False
         PopupMenu = Menu_Navegacao
         ShowHint = True
-        OnDblClick = btnActPrincipal_ShowHideDblClick
+        OnClick = btnActPrincipal_ShowHideDblClick
         OnMouseEnter = btnActPrincipal_ShowHideMouseEnter
         OnMouseLeave = btnActPrincipal_ShowHideMouseLeave
-        ExplicitLeft = 839
+        ExplicitLeft = 463
+        ExplicitTop = -1
       end
       object lblLegenda: TLabel
         Left = 0
@@ -115,8 +117,6 @@ object fmPrincipal: TfmPrincipal
       ParentCustomHint = False
       Align = alClient
       TabOrder = 1
-      ExplicitTop = 44
-      ExplicitWidth = 856
     end
   end
   object pnl_Area_Controles: TPanel
@@ -131,7 +131,6 @@ object fmPrincipal: TfmPrincipal
     ParentBackground = False
     ShowCaption = False
     TabOrder = 1
-    ExplicitWidth = 856
     object pnl_Area_Lista: TPanel
       Left = 0
       Top = 0
@@ -142,7 +141,6 @@ object fmPrincipal: TfmPrincipal
       ParentColor = True
       ShowCaption = False
       TabOrder = 0
-      ExplicitWidth = 856
       object lblStatus: TLabel
         Left = 0
         Top = 305
@@ -182,7 +180,6 @@ object fmPrincipal: TfmPrincipal
         OnDragOver = Lista_ArquivosDragOver
         OnMouseDown = Lista_ArquivosMouseDown
         OnSelectItem = Lista_ArquivosSelectItem
-        ExplicitWidth = 856
       end
       object pnl_Area_Botoes: TPanel
         Left = 0
@@ -194,7 +191,6 @@ object fmPrincipal: TfmPrincipal
         ParentColor = True
         ShowCaption = False
         TabOrder = 1
-        ExplicitWidth = 856
         object pnl_Arquivos: TPanel
           Left = 164
           Top = 0
@@ -484,6 +480,7 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Carregar lista'
       Hint = 'Carregar lista previamente salva'
       ImageIndex = 15
+      ShortCut = 16463
       OnExecute = actLista_CarregarExecute
     end
     object actlista_Salvar: TAction
@@ -491,6 +488,7 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Salvar lista'
       Hint = 'Salvar a lista atual para poder reutilz'#225'-la posteriormente'
       ImageIndex = 13
+      ShortCut = 16467
       OnExecute = actlista_SalvarExecute
     end
     object actArquivo_Adicionar: TAction
@@ -548,7 +546,9 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Modificar a legenda'
       Hint = 'Incluir ou remover a legenda para a m'#237'dia selecionada'
       ImageIndex = 9
-      ShortCut = 16468
+      SecondaryShortCuts.Strings = (
+        'Ctrl+T')
+      ShortCut = 113
       OnExecute = actMedia_LegendaExecute
     end
     object actMedia_Ir_Anterior: TAction
@@ -557,8 +557,8 @@ object fmPrincipal: TfmPrincipal
       Hint = 'Ir para a m'#237'dia anterior'
       ImageIndex = 10
       SecondaryShortCuts.Strings = (
-        'Ctrl+Q')
-      ShortCut = 16421
+        'Ctrl+Left')
+      ShortCut = 117
       OnExecute = actMedia_Ir_AnteriorExecute
     end
     object actMedia_Ir_Proximo: TAction
@@ -567,8 +567,9 @@ object fmPrincipal: TfmPrincipal
       Hint = 'Ir para a pr'#243'xima m'#237'dia'
       ImageIndex = 11
       SecondaryShortCuts.Strings = (
-        'Ctrl+W')
-      ShortCut = 16423
+        'F8'
+        'Ctrl+Right')
+      ShortCut = 119
       OnExecute = actMedia_Ir_ProximoExecute
     end
     object actMedia_Proporcional: TAction
@@ -576,7 +577,7 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Propor'#231#227'o'
       Hint = 'Propor'#231#227'o vertial ou horizontal'
       ImageIndex = 17
-      ShortCut = 119
+      ShortCut = 123
       OnExecute = actMedia_ProporcionalExecute
     end
     object actMedia_Bordas: TAction
@@ -586,7 +587,9 @@ object fmPrincipal: TfmPrincipal
         'Ligar ou desligar a exibi'#231#227'o das bordas: As bordas permitem redi' +
         'mensionar a janela'
       ImageIndex = 7
-      ShortCut = 16450
+      SecondaryShortCuts.Strings = (
+        'Ctrl+B')
+      ShortCut = 122
       OnExecute = actMedia_BordasExecute
     end
     object actMedia_Stop: TAction
@@ -594,24 +597,25 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Parar qualquer exibi'#231#227'o em andamento'
       Hint = 'Parar qualquer exibi'#231#227'o em andamento'
       ImageIndex = 12
-      ShortCut = 16464
+      ShortCut = 116
       OnExecute = actMedia_StopExecute
     end
     object actMensagem_Descanso: TAction
       Category = 'Lista'
-      Caption = 'Mensagem de descanso ou boas vindas'
-      Hint = 'Mensagem de descanso ou boas vindas'
+      Caption = 'Modificar mensagem de descanso ou boas vindas'
+      Hint = 'Modificar mensagem de descanso ou boas vindas'
       ImageIndex = 14
+      ShortCut = 16500
       OnExecute = actMensagem_DescansoExecute
     end
     object ActPrincipal_ShowHide: TAction
       Category = 'Media'
-      Caption = 'Ligar ou desligar o painel de listagem de arquivos'
-      Hint = 'Ligar ou desligar o painel de listagem de arquivos'
+      Caption = 'Ligar ou desligar o modo de exibi'#231#227'o'
+      Hint = 'Ligar ou desligar o modo de exibi'#231#227'o'
       ImageIndex = 8
       SecondaryShortCuts.Strings = (
-        'F9')
-      ShortCut = 16456
+        'Ctrl+H')
+      ShortCut = 120
       OnExecute = ActPrincipal_ShowHideExecute
     end
     object actSair: TAction
@@ -2139,8 +2143,15 @@ object fmPrincipal: TfmPrincipal
   end
   object Menu_Navegacao: TPopupMenu
     Images = ImageList1
+    OnPopup = Menu_NavegacaoPopup
     Left = 48
     Top = 128
+    object EsconderMostrar1: TMenuItem
+      Action = ActPrincipal_ShowHide
+    end
+    object N2: TMenuItem
+      Caption = '-'
+    end
     object Prximo1: TMenuItem
       Action = actMedia_Ir_Proximo
       Caption = 'M'#237'dia seguinte'
@@ -2157,9 +2168,6 @@ object fmPrincipal: TfmPrincipal
       Caption = 'Ligar ou desligar a Propor'#231#227'o vertical e horizontal'
       Hint = 'Ligar ou desligar a Propor'#231#227'o vertical e horizontal'
     end
-    object EsconderMostrar1: TMenuItem
-      Action = ActPrincipal_ShowHide
-    end
     object Bordas1: TMenuItem
       Action = actMedia_Bordas
     end
@@ -2173,6 +2181,8 @@ object fmPrincipal: TfmPrincipal
       Caption = '-'
     end
     object N5: TMenuItem
+      Action = actArquivo_Caminho_Clipboard
+      Caption = 'Copiar caminho'
     end
     object N6: TMenuItem
     end

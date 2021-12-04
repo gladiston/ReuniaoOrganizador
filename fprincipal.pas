@@ -92,6 +92,7 @@ type
     actSair: TAction;
     Fecharesairdoprograma1: TMenuItem;
     Bordas1: TMenuItem;
+    N2: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormDestroy(Sender: TObject);
@@ -131,6 +132,7 @@ type
       Y: Integer);
     procedure btnActPrincipal_ShowHideMouseEnter(Sender: TObject);
     procedure btnActPrincipal_ShowHideMouseLeave(Sender: TObject);
+    procedure Menu_NavegacaoPopup(Sender: TObject);
   protected
     procedure CreateParams(var Params: TCreateParams); override;
   private
@@ -694,6 +696,11 @@ begin
   Self.AutoSize:=true;
   Sleep(1000);
   Self.AutoSize:=false;
+end;
+
+procedure TfmPrincipal.Menu_NavegacaoPopup(Sender: TObject);
+begin
+  actArquivo_Caminho_Clipboard.Caption:='Copiar caminho de '+ExtractFileName(FMediaAtual);
 end;
 
 procedure TfmPrincipal.PermitirArrastarJanela(Sender: TObject;
